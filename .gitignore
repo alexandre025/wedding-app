@@ -31,3 +31,6 @@
 !/app/assets/builds/.keep
 
 /node_modules
+
+# Bundler installs gems here in CI (bundler-cache: true).
+/vendor/bundle
