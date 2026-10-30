@@ -1,7 +1,7 @@
 class Admin::BaseController < ApplicationController
   layout "admin"
 
-  before_action :authenticate_couple
+  before_action :authenticate_couple, unless: -> { Rails.application.config.x.admin.skip_authentication }
 
   private
     def authenticate_couple
