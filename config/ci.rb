@@ -14,7 +14,7 @@ CI.run do
   step "Tests: Seeds", "env RAILS_ENV=test bin/rails db:seed:replant"
   step "Tests: System", "bin/rails test:system"
 
-  step "Build: Assets", "env RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 bin/rails assets:precompile"
+  step "Build: Assets", "env RAILS_ENV=production SECRET_KEY_BASE_DUMMY=1 bin/rails assets:clobber assets:precompile"
 
   # Optional: set a green GitHub commit status to unblock PR merge.
   # Requires the `gh` CLI and `gh extension install basecamp/gh-signoff`.

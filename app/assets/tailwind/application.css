@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+/* Tailwind scans the project for class names, and vendored dependencies are
+   full of example ones: tailwindcss-rails' own README has bg-[url('image.svg')],
+   which compiles to a url() pointing at a file we do not have. CI installs gems
+   into vendor/bundle inside the workspace, so keep both directories out. */
+@source not "../../../vendor";
+@source not "../../../node_modules";
+
 /* Design tokens from the "Mariage — prototype" canvas. */
 @theme {
   --color-ground: #f5f0e6;
