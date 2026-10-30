@@ -20,7 +20,7 @@ class Admin::DashboardControllerTest < ActionDispatch::IntegrationTest
 
     assert_response :success
     assert_select "h1", text: I18n.t("admin.dashboard.show.title")
-    assert_select "p", text: /#{Regexp.escape(I18n.l(Wedding::RSVP_DEADLINE, format: :long))}/
+    assert_select "p", text: /#{Regexp.escape(I18n.l(Wedding::RSVP_DEADLINE.to_date, format: :long))}/
   end
 
   test "the dashboard wears the admin chrome, not the public site's" do

@@ -5,7 +5,7 @@
     <h1 class="font-display text-[48px] leading-none font-medium"><%= t(".title") %></h1>
 
     <p class="text-[15px] text-ink-muted">
-      <%= t(".deadline", date: l(Wedding::RSVP_DEADLINE, format: :long), countdown: rsvp_countdown) %>
+      <%= t(".deadline", date: l(Wedding::RSVP_DEADLINE.to_date, format: :long), countdown: rsvp_countdown) %>
     </p>
   </div>
 </main>
