@@ -4,7 +4,9 @@ The invitation site for Chloé & Alexandre — 1–2 July 2028, Domaine de la Fe
 au Moulin, Pont-Saint-Mard.
 
 Rails 8.1 with Hotwire (Turbo + Stimulus), Propshaft, import maps and Tailwind
-CSS. HTML+ERB templates are linted and formatted with [Herb](https://herb-tools.dev).
+CSS. Ruby follows [Standard](https://github.com/standardrb/standard), run through
+RuboCop so `bin/rubocop` and the editor integration keep working. HTML+ERB
+templates are linted and formatted with [Herb](https://herb-tools.dev).
 Every word on screen is French; routes, actions, templates and locale keys are
 English. All copy lives in `config/locales/fr.yml`.
 
@@ -44,7 +46,7 @@ block of `app/assets/tailwind/application.css`.
 bin/ci
 ```
 
-runs the whole suite: RuboCop, `herb-lint`, `herb-format --check`, the gem and
+runs the whole suite: Standard, `herb-lint`, `herb-format --check`, the gem and
 import map audits, Brakeman, the Rails and system tests, the seeds file and the
 production asset build. Individually:
 

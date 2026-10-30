@@ -2,9 +2,9 @@ module ApplicationHelper
   # The three destinations shared by the desktop header and the mobile tab bar.
   def main_nav_items
     [
-      { label: t("nav.home"), path: root_path, icon: "home" },
-      { label: t("nav.schedule"), path: schedule_path, icon: "calendar" },
-      { label: t("nav.rsvp"), path: rsvp_path, icon: "mail" }
+      {label: t("nav.home"), path: root_path, icon: "home"},
+      {label: t("nav.schedule"), path: schedule_path, icon: "calendar"},
+      {label: t("nav.rsvp"), path: rsvp_path, icon: "mail"}
     ]
   end
 

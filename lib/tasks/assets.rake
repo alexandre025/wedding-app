@@ -38,7 +38,7 @@ namespace :assets do
   end
 end
 
-Rake::Task["assets:precompile"].enhance([ "assets:watch_unresolved_references" ]) do
+Rake::Task["assets:precompile"].enhance(["assets:watch_unresolved_references"]) do
   references = UnresolvedAssetReferences.references
 
   if references.any?

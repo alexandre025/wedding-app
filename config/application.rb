@@ -35,7 +35,7 @@ module WeddingApp
     #
     config.time_zone = "Paris"
     config.i18n.default_locale = :fr
-    config.i18n.available_locales = [ :fr ]
+    config.i18n.available_locales = [:fr]
 
     # config.eager_load_paths << Rails.root.join("extras")
   end

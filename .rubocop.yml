@@ -1,8 +1,26 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
-
-# Overwrite or add rules to create your own house style
+# Standard Ruby styling, run through RuboCop so bin/rubocop, the editor
+# integration and CI's GitHub annotations all keep working.
+# https://github.com/standardrb/standard
 #
-# # Use `[a, [b, c]]` not `[ a, [ b, c ] ]`
-# Layout/SpaceInsideArrayLiteralBrackets:
-#   Enabled: false
+# standard itself ships cops rather than a RuboCop plugin, so it is required
+# rather than listed under plugins.
+require:
+  - standard
+
+plugins:
+  - standard-custom
+  - standard-performance
+  - rubocop-performance
+  - rubocop-rails
+
+inherit_gem:
+  standard: config/base.yml
+  standard-custom: config/base.yml
+  standard-performance: config/base.yml
+  standard-rails: config/base.yml
+
+AllCops:
+  # Standard decides the rule set; a cop it has not pinned yet stays off until
+  # the gem enables it, rather than appearing when RuboCop is upgraded.
+  NewCops: disable
+  SuggestExtensions: false
