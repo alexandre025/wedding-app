@@ -1,0 +1,15 @@
+<%# locals: () %>
+<header class="relative z-20 hidden border-b border-rule-sage bg-ground md:block">
+  <div class="mx-auto flex max-w-[1200px] flex-wrap items-center justify-between gap-4 px-6 py-[18px]">
+    <%= render "shared/wordmark" %>
+
+    <nav aria-label="<%= t("nav.label") %>" class="flex flex-wrap items-center gap-x-7 gap-y-2 text-[15px]">
+      <%= render "shared/header_link", text: t("nav.home"), path: root_path %>
+      <%= render "shared/header_link", text: t("nav.schedule"), path: schedule_path %>
+
+      <%= link_to t("nav.rsvp_short"), rsvp_path,
+            aria: { current: ("page" if current_page?(rsvp_path)) },
+            class: "inline-flex h-11 items-center rounded-full bg-sage-deep px-5 font-semibold text-ground" %>
+    </nav>
+  </div>
+</header>

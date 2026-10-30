@@ -1,0 +1,53 @@
+<%# locals: (day:) %>
+<section class="flex flex-col gap-4 lg:flex-1 lg:basis-96 lg:gap-5">
+  <h2 class="flex items-baseline gap-2.5 font-display text-[26px] font-semibold lg:gap-3 lg:text-[32px]">
+    <span
+      class="
+        self-center rounded-full border border-sage-light px-2.5 py-1 font-sans text-[11px] font-semibold
+        tracking-label text-sage-deep uppercase lg:text-xs
+      "
+    >
+      <%= day[:badge] %>
+    </span>
+
+    <%= day[:label] %>
+    <span class="font-script text-[26px] font-normal text-clay lg:text-[32px]"><%= day[:date] %></span>
+  </h2>
+
+  <ol class="ml-1.5 flex list-none flex-col border-l-2 border-dashed border-rule-sand [&>li:last-child]:pb-0">
+    <% if day[:start_marker].present? %>
+      <li
+        class="
+          relative flex items-center gap-2 pb-[18px] pl-[22px] text-xs font-semibold tracking-label text-sage-deep
+          uppercase lg:pl-7 lg:text-[13px]
+        "
+      >
+        <span
+          aria-hidden="true"
+          class="absolute top-0.5 -left-1.5 size-[11px] rounded-full bg-sage-deep lg:-left-[7px] lg:size-[13px]"
+        ></span>
+
+        <%= day[:start_marker] %>
+      </li>
+    <% end %>
+
+    <%= render partial: "pages/timeline_item", collection: day[:items], as: :item %>
+
+    <% if day[:end_marker].present? %>
+      <li
+        class="
+          relative flex items-center gap-2 pl-[22px] text-xs font-semibold tracking-label text-sage-deep uppercase
+          lg:pl-7 lg:text-[13px]
+        "
+      >
+        <span
+          aria-hidden="true"
+          class="absolute top-0.5 -left-1.5 size-[11px] rounded-full bg-ink lg:-left-[7px] lg:size-[13px]"
+        ></span>
+
+        <%= icon("finish_flag", class_name: "size-4 text-ink") %>
+        <%= day[:end_marker] %>
+      </li>
+    <% end %>
+  </ol>
+</section>

@@ -1,0 +1,10 @@
+<%# locals: (text:, path:) %>
+<% current = current_page?(path) %>
+
+<%= link_to text, path,
+      aria: { current: ("page" if current) },
+      class: class_names(
+        "py-2.5",
+        "border-b-2 border-sage-deep font-semibold text-sage-deep" => current,
+        "font-medium text-ink-muted" => !current
+      ) %>

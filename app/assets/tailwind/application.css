@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+/* Design tokens from the "Mariage — prototype" canvas. */
+@theme {
+  --color-ground: #f5f0e6;
+  --color-ink: #3b3a2e;
+  --color-ink-muted: #5e5a4c;
+  --color-clay: #a6533a;
+  --color-sage-deep: #56684f;
+  --color-sage: #8a9e82;
+  --color-sage-light: #afc0a3;
+  --color-sage-pale: #e3e9dc;
+  --color-sage-mist: #c9d5bf;
+  --color-rule-sage: #d6ddcc;
+  --color-rule-sand: #c9bfa8;
+  --color-peach: #d9a77e;
+  --color-placeholder: #8a8573;
+
+  --font-sans: "DM Sans", system-ui, sans-serif;
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-script: "Pinyon Script", cursive;
+
+  --tracking-eyebrow: 0.18em;
+  --tracking-label: 0.14em;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-ground);
+    color: var(--color-ink);
+  }
+
+  a {
+    color: var(--color-ink);
+  }
+
+  a:hover {
+    color: var(--color-sage-deep);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-clay);
+    outline-offset: 2px;
+  }
+
+  ::placeholder {
+    color: var(--color-placeholder);
+  }
+}

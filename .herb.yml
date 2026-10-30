@@ -1,0 +1,27 @@
+# Herb — HTML+ERB linter, formatter and language server for this project.
+# Settings here take precedence over individual editor preferences.
+# Docs: https://herb-tools.dev/configuration
+
+version: 0.11.1
+
+framework: actionview
+template_engine: erubi
+
+files:
+  exclude:
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'node_modules/**/*'
+
+linter:
+  enabled: true
+
+formatter:
+  enabled: true
+  indentWidth: 2
+  indentStyle: space
+  maxLineLength: 120
+
+  rewriter:
+    pre:
+      - tailwind-class-sorter

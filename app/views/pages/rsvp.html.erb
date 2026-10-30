@@ -1,0 +1,91 @@
+<% content_for :title, t(".title") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/trail_rsvp" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+
+  <div class="relative mx-auto flex w-full max-w-[520px] flex-col gap-6 px-6 pt-14 pb-6 md:gap-7 md:pt-22 md:pb-24">
+    <div class="flex flex-col gap-2.5">
+      <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase"><%= t(".eyebrow") %></p>
+      <h1 class="font-display text-[44px] leading-none font-medium md:text-[64px]"><%= t(".title") %></h1>
+      <p class="text-[15px] leading-relaxed text-ink-muted md:text-[17px]"><%= t(".intro") %></p>
+    </div>
+
+    <div data-controller="email-gate" data-email-gate-invalid-class="border-[1.5px] border-clay">
+      <%= form_with url: rsvp_path, method: :get, html: { novalidate: true },
+            data: { email_gate_target: "form", action: "submit->email-gate#submit" },
+            class: "flex flex-col gap-3 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do %>
+        <%= label_tag "rsvp-email", t(".email_label"), class: "text-sm font-semibold" %>
+
+        <%= email_field_tag "email", nil, id: "rsvp-email", autocomplete: "email",
+              inputmode: "email", placeholder: t(".email_placeholder"),
+              aria: { describedby: "rsvp-email-invalid rsvp-email-unknown" },
+              data: { email_gate_target: "input", action: "input->email-gate#clear" },
+              class: "h-[50px] w-full rounded-[10px] border border-rule-sand bg-white px-4 text-base text-ink md:h-[52px]" %>
+
+        <p
+          id="rsvp-email-invalid"
+          role="alert"
+          hidden
+          data-email-gate-target="invalidError"
+          class="text-sm leading-snug text-clay"
+        >
+          <%= t(".error_invalid") %>
+        </p>
+
+        <%# Shown by the server once there is a guest list to check the address against. %>
+        <p id="rsvp-email-unknown" role="alert" hidden class="text-sm leading-snug text-clay">
+          <%= t(".error_unknown") %>
+        </p>
+
+        <button type="submit" class="mt-1 h-13 rounded-full bg-sage-deep font-semibold text-ground">
+          <%= t(".submit") %>
+        </button>
+      <% end %>
+
+      <div
+        role="status"
+        hidden
+        data-email-gate-target="panel"
+        class="flex flex-col items-start gap-3 rounded-2xl border border-rule-sage bg-white p-5 md:p-7"
+      >
+        <%= icon("check_badge", class_name: "size-9") %>
+
+        <h2 class="font-display text-[28px] leading-tight font-medium md:text-[34px]"><%= t(".found_title") %></h2>
+
+        <p class="text-[15px] leading-relaxed break-words text-ink-muted">
+          <%= t(".found_body_html",
+                email: tag.span(class: "font-semibold text-ink", data: { email_gate_target: "email" })) %>
+        </p>
+
+        <button
+          type="button"
+          disabled
+          class="
+            mt-1 flex h-13 w-full cursor-not-allowed items-center justify-center rounded-full bg-sage-deep
+            font-semibold text-ground opacity-60
+          "
+        >
+          <%= t(".found_continue") %>
+        </button>
+
+        <p class="self-center text-sm text-ink-muted"><%= t(".found_pending") %></p>
+
+        <button
+          type="button"
+          data-action="email-gate#reset"
+          class="min-h-11 self-center px-2 text-[15px] font-medium text-ink underline"
+        >
+          <%= t(".found_reset") %>
+        </button>
+      </div>
+    </div>
+
+    <p class="text-sm leading-relaxed text-ink-muted">
+      <%= t(".help_html",
+            link: link_to(t(".help_link"), schedule_path, class: "font-semibold text-sage-deep")) %>
+    </p>
+  </div>
+</main>

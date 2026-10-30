@@ -1,0 +1,16 @@
+{
+  "name": "wedding-app",
+  "version": "1.0.0",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "herb:lint": "herb-lint",
+    "herb:format": "herb-format",
+    "herb:format:check": "herb-format --check"
+  },
+  "devDependencies": {
+    "@herb-tools/formatter": "^0.11.1",
+    "@herb-tools/linter": "^0.11.1",
+    "tailwindcss": "^4.3.3"
+  }
+}

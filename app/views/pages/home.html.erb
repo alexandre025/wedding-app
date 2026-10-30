@@ -1,0 +1,87 @@
+<% content_for :title, t(".title") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/trail_mobile" %>
+  <%= render "shared/decorations/trail_desktop" %>
+
+  <%= render "shared/decorations/branch",
+        class_name: "pointer-events-none absolute -top-2 -left-3.5 h-[130px] w-[150px] lg:hidden" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2 -right-3.5 h-[130px] w-[150px] -scale-x-100 lg:hidden" %>
+
+  <%= render "shared/decorations/branch",
+        class_name: "pointer-events-none absolute -bottom-8 -left-8 hidden h-[225px] w-[260px] -scale-y-100 lg:block" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute top-15 -right-8 hidden h-[225px] w-[260px] -scale-x-100 lg:block" %>
+
+  <div
+    class="
+      relative mx-auto grid w-full max-w-[1200px] grow justify-items-center gap-3.5 px-7 pt-18 pb-5 text-center
+      lg:grid-cols-[minmax(0,560px)_auto] lg:content-center lg:items-center lg:justify-center lg:justify-items-start
+      lg:gap-x-24 lg:gap-y-5 lg:px-6 lg:py-16 lg:text-left
+    "
+  >
+    <div class="flex flex-col items-center gap-3.5 lg:col-start-1 lg:row-start-1 lg:items-start lg:gap-5">
+      <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase lg:text-[13px]">
+        <%= t(".eyebrow") %>
+      </p>
+
+      <h1
+        class="
+          flex flex-col items-center font-display text-[46px] leading-none font-medium lg:flex-row lg:flex-wrap
+          lg:items-baseline lg:gap-x-[18px] lg:text-[84px]
+        "
+      >
+        <span><%= t("wedding.partner_one") %></span>
+        <span class="font-script text-[44px] leading-[1.1] font-normal text-clay lg:text-[76px]">&amp;</span>
+        <span><%= t("wedding.partner_two") %></span>
+      </h1>
+
+      <%= render "shared/decorations/sprig_divider", class_name: "h-5 w-[140px] lg:h-[26px] lg:w-[180px]" %>
+
+      <div class="flex flex-col gap-1 lg:gap-1.5">
+        <p class="text-lg font-medium lg:text-[22px]"><%= t("wedding.dates") %></p>
+        <p class="text-[15px] text-ink-muted lg:text-[17px]"><%= t("wedding.venue") %></p>
+      </div>
+    </div>
+
+    <div
+      class="
+        rounded-t-[96px] rounded-b-[14px] border border-rule-sand p-1.5 lg:col-start-2 lg:row-span-2 lg:row-start-1
+        lg:justify-self-center lg:rounded-t-[200px] lg:rounded-b-[18px] lg:p-2.5
+      "
+    >
+      <div
+        role="img"
+        aria-label="<%= t(".photo_alt") %>"
+        class="
+          flex size-[172px] flex-col items-center justify-center gap-2 rounded-t-[90px] rounded-b-[10px]
+          bg-sage-pale text-[13px] text-ink-muted lg:h-[440px] lg:w-[340px] lg:gap-2.5 lg:rounded-t-[190px]
+          lg:rounded-b-[12px] lg:text-[15px]
+        "
+      >
+        <%= icon("photo", class_name: "size-7 lg:size-9") %>
+        <span><%= t(".photo_placeholder") %></span>
+      </div>
+    </div>
+
+    <div
+      class="
+        flex w-full max-w-[420px] flex-col items-center gap-3.5 lg:col-start-1 lg:row-start-2 lg:w-auto
+        lg:max-w-none lg:items-start lg:gap-5
+      "
+    >
+      <p class="text-sm text-ink-muted lg:text-[15px]"><%= t("wedding.rsvp_deadline") %></p>
+
+      <div class="flex w-full flex-col items-center gap-3.5 lg:w-auto lg:flex-row lg:items-center lg:gap-x-6 lg:pt-2">
+        <%= link_to t("wedding.rsvp_cta"), rsvp_path,
+              class: "flex h-13 w-full items-center justify-center rounded-full bg-sage-deep font-semibold text-ground lg:h-[54px] lg:w-auto lg:px-8" %>
+
+        <%= link_to t(".schedule_link"), schedule_path,
+              class: "inline-flex min-h-11 items-center px-2 py-2.5 text-[15px] font-medium text-ink lg:text-base" %>
+      </div>
+    </div>
+  </div>
+</main>

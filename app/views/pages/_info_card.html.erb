@@ -1,0 +1,14 @@
+<%# locals: (icon_name:, name:) %>
+<div
+  class="
+    flex gap-3.5 rounded-[14px] border border-rule-sage bg-white p-[18px] lg:flex-1 lg:basis-80 lg:gap-4
+    lg:rounded-2xl lg:p-6
+  "
+>
+  <%= icon(icon_name, class_name: "mt-0.5 size-[22px] flex-none text-sage-deep lg:size-6") %>
+
+  <div class="flex min-w-0 flex-col gap-1.5 lg:gap-2">
+    <h3 class="text-base font-semibold lg:text-[17px]"><%= name %></h3>
+    <%= yield %>
+  </div>
+</div>

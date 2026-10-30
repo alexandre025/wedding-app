@@ -1,0 +1,100 @@
+fr:
+  # Facts that show up on more than one page.
+  wedding:
+    partner_one: Chloé
+    partner_two: Alexandre
+    dates: Samedi 1er & dimanche 2 juillet 2028
+    venue: Domaine de la Ferme au Moulin · Pont-Saint-Mard
+    address: Domaine de la Ferme au Moulin, 16 rue du Général Mangin, 02380 Pont-Saint-Mard.
+    maps_url: https://www.google.com/maps/place//data=!4m2!3m1!1s0x47e842ea3afced99:0x547de3def424dc85
+    rsvp_deadline: Merci de nous répondre avant le 31 janvier 2028.
+    rsvp_cta: Répondre à l’invitation
+
+  nav:
+    label: Navigation principale
+    home: Accueil
+    schedule: Programme
+    rsvp: Réponse
+    rsvp_short: Répondre
+
+  pages:
+    home:
+      title: Chloé & Alexandre
+      eyebrow: Nous nous marions
+      photo_alt: Emplacement pour une photo du Domaine de la Ferme au Moulin
+      photo_placeholder: "[Photo du domaine]"
+      schedule_link: Voir le programme →
+
+    schedule:
+      title: Programme
+      eyebrow: Le parcours du week-end
+      subtitle: Tout le week-end au Domaine de la Ferme au Moulin · Pont-Saint-Mard
+      days:
+        - badge: Étape 1
+          label: Samedi
+          date: 1er juillet
+          start_marker: Départ
+          items:
+            - time: 15h30
+              name: Cérémonie laïque
+              body: On échange nos vœux, entourés de celles et ceux qu’on aime.
+            - time: 17h00
+              name: Vin d’honneur & scène musicale ouverte
+              body: On trinque ensemble, et la scène est ouverte à celles et ceux qui veulent jouer ou chanter.
+            - time: 20h30
+              name: Repas & soirée dansante
+              body: On passe à table tous ensemble, puis place à la piste de danse.
+        - badge: Étape 2
+          label: Dimanche
+          date: 2 juillet
+          end_marker: Arrivée
+          items:
+            - time: 10h00
+              name: Le 5K des mariés
+              body: 5 km à votre rythme, en courant, pour bien commencer la journée.
+              highlight: true
+            - time: 11h00
+              name: Brunch
+              body: Un dernier moment tout en douceur avant de se dire au revoir.
+      infos_title: Infos pratiques
+      info_cards:
+        access:
+          name: Accès & parking
+          body: Parking directement sur le domaine.
+          link: Ouvrir l’itinéraire →
+        lodging:
+          name: Hébergement
+          body: De nombreux Airbnb sont disponibles à proximité du domaine. Pensez à réserver tôt !
+        dress:
+          name: Tenue
+          body: Pas de dress code, venez comme vous êtes. Calechemise autorisé !
+        contact:
+          name: Une question ?
+          people:
+            - name: Alexandre
+              phone: 07 50 33 25 63
+              phone_url: tel:+33750332563
+              email: alexandre.ferraille@gmail.com
+            - name: Chloé
+              phone: 06 33 07 29 97
+              phone_url: tel:+33633072997
+              email: pelletierchloe0@gmail.com
+        cta:
+          name: Prêts à prendre le départ ?
+
+    rsvp:
+      title: Votre réponse
+      eyebrow: Réponse attendue avant le 31 janvier 2028
+      intro: Pour accéder au formulaire, indiquez l’adresse email à laquelle vous avez reçu notre invitation.
+      email_label: Adresse email
+      email_placeholder: prenom.nom@exemple.fr
+      submit: Accéder au formulaire
+      error_invalid: Cette adresse ne semble pas valide. Vérifiez qu’elle est complète.
+      error_unknown: Nous ne retrouvons pas cette adresse dans notre liste. Essayez celle à laquelle vous avez reçu le faire-part, ou contactez-nous.
+      found_title: Invitation retrouvée
+      found_body_html: Nous avons bien trouvé l’invitation liée à %{email}.
+      found_continue: Continuer
+      found_pending: Le formulaire arrive bientôt.
+      found_reset: Utiliser une autre adresse
+      help_html: Un souci ? Nos coordonnées sont dans les %{link}.
+      help_link: infos pratiques

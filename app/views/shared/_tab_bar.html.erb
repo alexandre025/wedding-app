@@ -1,0 +1,7 @@
+<%# locals: () %>
+<nav
+  aria-label="<%= t("nav.label") %>"
+  class="fixed inset-x-0 bottom-0 z-20 flex h-18 border-t border-rule-sage bg-ground md:hidden"
+>
+  <%= render partial: "shared/tab_bar_link", collection: main_nav_items, as: :item %>
+</nav>

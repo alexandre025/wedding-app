@@ -1,0 +1,75 @@
+<% content_for :title, t(".title") %>
+<% cards = t(".info_cards") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+
+  <div class="relative mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 pt-12 pb-8 lg:gap-18 lg:pt-16 lg:pb-24">
+    <div class="flex flex-col gap-2 lg:gap-2.5">
+      <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase lg:text-[13px]">
+        <%= t(".eyebrow") %>
+      </p>
+
+      <h1 class="font-display text-[44px] leading-none font-medium lg:text-[64px]"><%= t(".title") %></h1>
+
+      <p class="text-[15px] text-ink-muted lg:text-[17px]"><%= t(".subtitle") %></p>
+    </div>
+
+    <div class="flex flex-col gap-8 lg:flex-row lg:flex-wrap lg:gap-x-18 lg:gap-y-10">
+      <%= render partial: "pages/timeline_day", collection: t(".days"), as: :day %>
+    </div>
+
+    <section class="flex flex-col gap-3.5 lg:gap-6">
+      <h2 class="font-display text-[34px] leading-tight font-medium lg:text-[44px]"><%= t(".infos_title") %></h2>
+
+      <div class="flex flex-col gap-3.5 lg:flex-row lg:flex-wrap lg:gap-5">
+        <%= render layout: "pages/info_card",
+              locals: { icon_name: "pin", name: cards[:access][:name] } do %>
+          <p class="text-sm leading-relaxed text-ink-muted lg:text-[15px]">
+            <%= t("wedding.address") %><br>
+            <%= cards[:access][:body] %>
+          </p>
+
+          <%= link_to cards[:access][:link], t("wedding.maps_url"),
+                class: "inline-flex min-h-11 items-center text-sm font-semibold text-sage-deep lg:text-[15px]" %>
+        <% end %>
+
+        <%= render layout: "pages/info_card",
+              locals: { icon_name: "bed", name: cards[:lodging][:name] } do %>
+          <p class="text-sm leading-relaxed text-ink-muted lg:text-[15px]"><%= cards[:lodging][:body] %></p>
+        <% end %>
+
+        <%= render layout: "pages/info_card",
+              locals: { icon_name: "shirt", name: cards[:dress][:name] } do %>
+          <p class="text-sm leading-relaxed text-ink-muted lg:text-[15px]"><%= cards[:dress][:body] %></p>
+        <% end %>
+
+        <%= render layout: "pages/info_card",
+              locals: { icon_name: "phone", name: cards[:contact][:name] } do %>
+          <% cards[:contact][:people].each do |person| %>
+            <p class="text-sm leading-relaxed text-ink-muted lg:text-[15px]">
+              <span class="font-semibold text-ink"><%= person[:name] %></span><br>
+              <%= link_to person[:phone], person[:phone_url], class: "font-medium text-sage-deep" %><br>
+
+              <%= link_to person[:email], "mailto:#{person[:email]}",
+                    class: "font-medium break-words text-sage-deep" %>
+            </p>
+          <% end %>
+        <% end %>
+
+        <div
+          class="
+            hidden flex-col items-start justify-center gap-3.5 rounded-2xl bg-sage-deep p-6 text-ground lg:flex
+            lg:flex-1 lg:basis-80
+          "
+        >
+          <p class="font-display text-[26px] leading-tight font-medium"><%= cards[:cta][:name] %></p>
+
+          <%= link_to t("wedding.rsvp_cta"), rsvp_path,
+                class: "inline-flex h-12 items-center rounded-full bg-ground px-6 text-[15px] font-semibold text-ink" %>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>

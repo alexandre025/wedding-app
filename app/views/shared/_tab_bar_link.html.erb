@@ -1,0 +1,13 @@
+<%# locals: (item:) %>
+<% current = current_page?(item[:path]) %>
+
+<%= link_to item[:path],
+      aria: { current: ("page" if current) },
+      class: class_names(
+        "flex flex-1 flex-col items-center justify-center gap-1 text-xs",
+        "font-semibold text-sage-deep" => current,
+        "font-medium text-ink-muted" => !current
+      ) do %>
+  <%= icon(item[:icon]) %>
+  <span><%= item[:label] %></span>
+<% end %>
