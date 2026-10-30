@@ -84,4 +84,10 @@ Rails.application.configure do
   #
   # Skip DNS rebinding protection for the default health check endpoint.
   # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+
+  # The admin screens sit behind HTTP Basic. Plain ENV[] rather than ENV.fetch so
+  # that booting production to precompile assets does not need them; a request
+  # with either value missing is refused outright.
+  config.x.admin.username = ENV["ADMIN_USERNAME"]
+  config.x.admin.password = ENV["ADMIN_PASSWORD"]
 end
