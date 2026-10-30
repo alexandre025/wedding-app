@@ -1,5 +1,6 @@
-<%# locals: () %>
-<%= link_to root_path, class: "flex items-baseline gap-1.5 font-display text-[26px] font-semibold text-ink" do %>
+<%# locals: (linked: true) %>
+<%= content_tag linked ? :a : :span, href: (root_path if linked),
+      class: "flex items-baseline gap-1.5 font-display text-[26px] font-semibold text-ink" do %>
   <span><%= t("wedding.partner_one") %></span>
   <span class="font-script text-2xl font-normal text-clay">&amp;</span>
   <span><%= t("wedding.partner_two") %></span>

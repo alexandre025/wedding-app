@@ -10,6 +10,24 @@ fr:
     rsvp_deadline: Merci de nous répondre avant le 31 janvier 2028.
     rsvp_cta: Répondre à l’invitation
 
+  admin:
+    title: Espace mariés
+    realm: Espace mariés
+    badge: Espace mariés
+    view_site: Voir le site →
+    nav:
+      label: Navigation de l'espace mariés
+      dashboard: Tableau de bord
+    countdown:
+      remaining:
+        one: plus qu'un jour
+        other: plus que %{count} jours
+      passed: date limite passée
+    dashboard:
+      show:
+        title: Suivi des réponses
+        deadline: Réponses attendues avant le %{date} · %{countdown}
+
   nav:
     label: Navigation principale
     home: Accueil
@@ -98,3 +116,13 @@ fr:
       found_reset: Utiliser une autre adresse
       help_html: Un souci ? Nos coordonnées sont dans les %{link}.
       help_link: infos pratiques
+
+  date:
+    formats:
+      default: "%d/%m/%Y"
+      short: "%-d %b"
+      long: "%-d %B %Y"
+    day_names: [dimanche, lundi, mardi, mercredi, jeudi, vendredi, samedi]
+    abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
+    month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
+    abbr_month_names: [~, janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.]

@@ -10,6 +10,13 @@ module ActiveSupport
     # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
     fixtures :all
 
-    # Add more helper methods to be used by all tests here...
+    def admin_headers
+      encoded = ActionController::HttpAuthentication::Basic.encode_credentials(
+        Rails.application.config.x.admin.username,
+        Rails.application.config.x.admin.password
+      )
+
+      { "HTTP_AUTHORIZATION" => encoded }
+    end
   end
 end

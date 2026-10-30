@@ -1,0 +1,11 @@
+<% content_for :title, t(".title") %>
+
+<main class="mx-auto flex w-full max-w-[1200px] grow flex-col gap-6 px-6 pt-10 pb-20">
+  <div class="flex flex-col gap-1.5">
+    <h1 class="font-display text-[48px] leading-none font-medium"><%= t(".title") %></h1>
+
+    <p class="text-[15px] text-ink-muted">
+      <%= t(".deadline", date: l(Wedding::RSVP_DEADLINE.to_date, format: :long), countdown: rsvp_countdown) %>
+    </p>
+  </div>
+</main>

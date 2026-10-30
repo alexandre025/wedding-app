@@ -13,4 +13,8 @@ Rails.application.routes.draw do
   root "pages#home"
   get "schedule", to: "pages#schedule"
   get "rsvp", to: "pages#rsvp"
+
+  namespace :admin do
+    root "dashboard#show"
+  end
 end

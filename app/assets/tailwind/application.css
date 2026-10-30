@@ -29,9 +29,14 @@
 
   --tracking-eyebrow: 0.18em;
   --tracking-label: 0.14em;
+  --tracking-badge: 0.12em;
 }
 
 @layer base {
+  html {
+    scrollbar-gutter: stable;
+  }
+
   body {
     background-color: var(--color-ground);
     color: var(--color-ink);
