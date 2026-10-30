@@ -48,8 +48,6 @@ Rails.application.configure do
   # Raise error when a before_action's only/except options reference missing actions.
   config.action_controller.raise_on_missing_callback_actions = true
 
-  # The admin screens sit behind HTTP Basic. Fixed credentials here so bin/dev
-  # and the test suite can get in; production reads them from the environment.
   config.x.admin.username = "admin"
   config.x.admin.password = "admin"
 end
