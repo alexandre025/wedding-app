@@ -45,11 +45,18 @@ bin/ci
 ```
 
 runs the whole suite: RuboCop, `herb-lint`, `herb-format --check`, the gem and
-import map audits, Brakeman and the Rails tests. Individually:
+import map audits, Brakeman, the Rails and system tests, the seeds file and the
+production asset build. Individually:
 
 ```sh
 bin/rubocop
 npm run herb:lint
 npm run herb:format
 bin/rails test
+bin/rails test:system
 ```
+
+GitHub Actions runs the same checks as seven jobs — `scan_ruby`, `scan_js`,
+`lint`, `lint_erb`, `test`, `system-test` and `build` — on every pull request
+and every push to `main`. All seven must be green before a pull request can be
+merged; `main` takes no direct pushes.
