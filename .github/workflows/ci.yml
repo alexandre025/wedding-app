@@ -199,4 +199,4 @@ jobs:
         env:
           RAILS_ENV: production
           SECRET_KEY_BASE_DUMMY: 1
-        run: bin/rails assets:precompile
+        run: bin/rails assets:clobber assets:precompile
