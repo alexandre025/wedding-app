@@ -1,5 +1,4 @@
 module ApplicationHelper
-  # The three destinations shared by the desktop header and the mobile tab bar.
   def main_nav_items
     [
       { label: t("nav.home"), path: root_path, icon: "home" },
@@ -8,7 +7,6 @@ module ApplicationHelper
     ]
   end
 
-  # Inline stroke icon from app/views/shared/icons.
   def icon(name, class_name: "size-[22px]")
     render "shared/icons/#{name}", class_name:
   end

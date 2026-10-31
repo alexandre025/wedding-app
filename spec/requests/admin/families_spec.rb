@@ -89,7 +89,7 @@ RSpec.describe "The admin families screens" do
     end
 
     it "shows each member's age group" do
-      sylvain.update!(age_group: "teen")
+      sylvain.update!(age_group: FamilyMember::TEEN)
 
       get admin_family_path(melchior), headers: admin_headers
 

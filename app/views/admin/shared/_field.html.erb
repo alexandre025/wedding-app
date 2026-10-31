@@ -1,0 +1,14 @@
+<%# locals: (f:, name:, caption:, placeholder: nil, hint: nil, kind: :text_field, choices: nil) %>
+<div class="flex flex-col gap-1.5">
+  <%= f.label name, caption, class: "text-[15px] font-semibold" %>
+
+  <% if kind == :select %>
+    <%= f.select name, choices, {}, class: "field-input" %>
+  <% else %>
+    <%= f.public_send(kind, name, placeholder:, class: "field-input") %>
+  <% end %>
+
+  <% if hint %>
+    <span class="text-[13px] text-ink-muted"><%= hint %></span>
+  <% end %>
+</div>

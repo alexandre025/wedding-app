@@ -8,9 +8,7 @@ RSpec.describe "The admin dashboard" do
   end
 
   it "refuses the wrong credentials" do
-    encoded = ActionController::HttpAuthentication::Basic.encode_credentials("admin", "pas-le-bon")
-
-    get admin_root_path, headers: { "HTTP_AUTHORIZATION" => encoded }
+    get admin_root_path, headers: basic_auth_headers("admin", "pas-le-bon")
 
     expect(response).to have_http_status(:unauthorized)
   end

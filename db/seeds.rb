@@ -1,9 +1,9 @@
-FAMILIES = {
+families = {
   "Melchior" => [
     { first_name: "Mélanie", email: "famille.melchior@exemple.fr" },
     { first_name: "Sylvain" },
-    { first_name: "Célie", age_group: "teen" },
-    { first_name: "Léna", age_group: "kid" }
+    { first_name: "Célie", age_group: FamilyMember::TEEN },
+    { first_name: "Léna", age_group: FamilyMember::KID }
   ],
   "Martin" => [
     { first_name: "Camille", email: "camille.martin@exemple.fr" },
@@ -12,18 +12,19 @@ FAMILIES = {
   "Dubois" => [
     { first_name: "Hélène", email: "helene.dubois@exemple.fr" },
     { first_name: "Marc" },
-    { first_name: "Lucas", age_group: "baby" }
+    { first_name: "Lucas", age_group: FamilyMember::BABY }
   ],
   "Roux" => [
     { first_name: "Antoine", email: "antoine.roux@exemple.fr" }
   ]
 }
 
-FAMILIES.each do |name, members|
-  family = Family.find_or_create_by!(name:)
+families.each do |name, members|
+  form = Admin::FamilyForm.new(Family.new)
+  form.submit(name:)
+  family = form.family
 
-  members.each do |attributes|
-    member = family.family_members.find_or_initialize_by(first_name: attributes[:first_name])
-    member.update!(email: attributes[:email], age_group: attributes.fetch(:age_group, "adult"))
+  members.each do |member_params|
+    Admin::FamilyMemberForm.new(family.family_members.build).submit(member_params)
   end
 end

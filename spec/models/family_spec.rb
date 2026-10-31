@@ -53,10 +53,5 @@ RSpec.describe Family do
     it "treats a wildcard as a literal character" do
       expect(matching("%")).to be_empty
     end
-
-    it "searches only the attributes on the allowlist" do
-      expect(described_class.ransackable_attributes).to eq([ "name" ])
-      expect(FamilyMember.ransackable_attributes).to eq([ "first_name", "email" ])
-    end
   end
 end

@@ -27,7 +27,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_10_31_122123) do
     t.string "email"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "age_group", default: "adult", null: false
+    t.string "age_group", default: FamilyMember::ADULT, null: false
     t.index ["email"], name: "index_family_members_on_email", unique: true
     t.index ["family_id"], name: "index_family_members_on_family_id"
   end

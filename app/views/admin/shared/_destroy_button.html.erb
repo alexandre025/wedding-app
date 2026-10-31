@@ -1,0 +1,4 @@
+<%# locals: (caption:, path:, confirm:) %>
+<%= button_to caption, path, method: :delete,
+      form: { data: { turbo_confirm: confirm } },
+      class: "btn-danger-sm" %>

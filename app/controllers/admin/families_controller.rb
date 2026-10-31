@@ -2,9 +2,9 @@ class Admin::FamiliesController < Admin::BaseController
   before_action :set_family, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @query = search_params[Family::SEARCH_PREDICATE].to_s.strip
     @search = Family.ransack(search_params)
-    @families = @search.result(distinct: true).includes(:family_members).order(:name)
+    @query = @search.public_send(Family::SEARCH_PREDICATE).to_s
+    @families = @search.result(distinct: true).includes(:family_members).order(:name).load
 
     @families_count = Family.count
     @guests_count = FamilyMember.count
@@ -12,6 +12,7 @@ class Admin::FamiliesController < Admin::BaseController
   end
 
   def show
+    @members = @family.family_members.load
   end
 
   def new
@@ -59,6 +60,6 @@ class Admin::FamiliesController < Admin::BaseController
     end
 
     def search_params
-      params[:q].is_a?(ActionController::Parameters) ? params[:q].permit(Family::SEARCH_PREDICATE) : {}
+      params.permit(q: Family::SEARCH_PREDICATE).fetch(:q, {})
     end
 end

@@ -7,6 +7,8 @@ class Admin::FamilyForm < ApplicationForm
 
   validates :name, presence: true
 
+  attr_reader :family
+
   def setup(family)
     @family = family
     self.name = family.name
