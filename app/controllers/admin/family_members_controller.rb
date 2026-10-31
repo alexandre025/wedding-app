@@ -34,7 +34,7 @@ class Admin::FamilyMembersController < Admin::BaseController
     name = @family_member.first_name
     @family_member.destroy
 
-    redirect_to admin_family_path(@family), notice: t("admin.family_members.destroy.destroyed", name: name)
+    redirect_to admin_family_path(@family), notice: t("admin.family_members.destroy.destroyed", name:)
   end
 
   private
@@ -48,6 +48,6 @@ class Admin::FamilyMembersController < Admin::BaseController
     end
 
     def family_member_params
-      params.require(:family_member).permit(:first_name, :email)
+      params.require(:family_member).permit(:first_name, :email, :age_group)
     end
 end

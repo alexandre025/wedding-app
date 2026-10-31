@@ -1,4 +1,6 @@
 class FamilyMember < ApplicationRecord
+  AGE_GROUPS = %w[baby kid teen adult].freeze
+
   belongs_to :family
 
   def self.ransackable_attributes(_auth_object = nil) = [ "first_name", "email" ]

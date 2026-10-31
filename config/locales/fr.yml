@@ -47,6 +47,7 @@ fr:
         add: Ajouter une famille
         search_label: Rechercher
         search_placeholder: Nom, prénom ou email…
+        search_clear: Effacer la recherche
         none: Aucune famille pour l'instant.
         none_matching: Aucune famille ne correspond à « %{query} ».
         columns:
@@ -83,12 +84,19 @@ fr:
         destroyed: Famille %{name} supprimée
         confirm: Supprimer la famille %{name} ? Ses membres et sa réponse éventuelle seront supprimés, et leurs adresses ne donneront plus accès au formulaire.
     family_members:
+      age_groups:
+        baby: Bébé
+        kid: Enfant
+        teen: Adolescent
+        adult: Adulte
       form:
         first_name_label: Prénom
         first_name_placeholder: Mélanie
         email_label: Email
         email_placeholder: prenom.nom@exemple.fr
         email_hint: Laissez vide si cette personne n'a pas d'adresse ; une seule adresse de la famille suffit pour répondre.
+        age_group_label: Tranche d'âge
+        age_group_hint: Sert à prévoir les repas et le couchage.
       new:
         title: Ajouter une personne
         intro: Elle rejoindra la %{family}.
@@ -210,3 +218,5 @@ fr:
       email:
         invalid: Indiquez une adresse email valide.
         taken: Cette adresse est déjà utilisée par un autre invité.
+      age_group:
+        inclusion: Choisissez une tranche d'âge.

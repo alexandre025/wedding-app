@@ -10,6 +10,6 @@ module ApplicationHelper
 
   # Inline stroke icon from app/views/shared/icons.
   def icon(name, class_name: "size-[22px]")
-    render "shared/icons/#{name}", class_name: class_name
+    render "shared/icons/#{name}", class_name:
   end
 end

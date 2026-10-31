@@ -46,7 +46,7 @@ class Admin::FamiliesController < Admin::BaseController
     name = @family.name
     @family.destroy
 
-    redirect_to admin_families_path, notice: t("admin.families.destroy.destroyed", name: name)
+    redirect_to admin_families_path, notice: t("admin.families.destroy.destroyed", name:)
   end
 
   private

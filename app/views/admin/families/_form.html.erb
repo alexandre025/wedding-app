@@ -1,6 +1,6 @@
 <%# locals: (form:, url:, cancel_path:) %>
-<%= form_with model: form, url: url, class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
-  <%= render "admin/shared/form_errors", form: form %>
+<%= form_with model: form, url:, class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
+  <%= render "admin/shared/form_errors", form: %>
 
   <div class="flex flex-col gap-1.5">
     <%= f.label :name, t("admin.families.form.name_label"), class: "text-[15px] font-semibold" %>

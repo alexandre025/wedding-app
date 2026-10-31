@@ -41,6 +41,29 @@ RSpec.describe Admin::FamilyMemberForm do
       expect(form.errors[:first_name]).to eq([ I18n.t("errors.attributes.first_name.blank") ])
     end
 
+    it "defaults a new member to adult" do
+      form_for_new_member.submit(first_name: "Antoine", email: "", age_group: "adult")
+
+      expect(family.family_members.last.age_group).to eq("adult")
+    end
+
+    it "accepts every age group the model lists" do
+      FamilyMember::AGE_GROUPS.each do |group|
+        form = described_class.new(family.family_members.build)
+
+        expect(form.submit(first_name: "Antoine", email: "", age_group: group)).to be(true)
+        expect(family.family_members.last.age_group).to eq(group)
+      end
+    end
+
+    it "refuses an age group outside the list" do
+      form = form_for_new_member
+
+      expect { form.submit(first_name: "Antoine", email: "", age_group: "vieux") }
+        .not_to change(FamilyMember, :count)
+      expect(form.errors[:age_group]).to eq([ I18n.t("errors.attributes.age_group.inclusion") ])
+    end
+
     it "refuses a malformed email" do
       form = form_for_new_member
 
@@ -48,16 +71,24 @@ RSpec.describe Admin::FamilyMemberForm do
       expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.invalid") ])
     end
 
-    it "refuses an address another member already holds" do
-      create(:family_member, email: "melanie@exemple.fr")
+    it "refuses an address held by a member of another family" do
+      create(:family_member, family: create(:family), email: "melanie@exemple.fr")
       form = form_for_new_member
 
       expect { form.submit(first_name: "Antoine", email: "MELANIE@exemple.fr") }.not_to change(FamilyMember, :count)
       expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.taken") ])
     end
 
+    it "refuses an address held by a member of the same family" do
+      create(:family_member, family:, email: "melanie@exemple.fr")
+      form = form_for_new_member
+
+      expect { form.submit(first_name: "Antoine", email: "melanie@exemple.fr") }.not_to change(FamilyMember, :count)
+      expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.taken") ])
+    end
+
     it "does not count a member's own address as taken" do
-      member = create(:family_member, :with_email, family: family)
+      member = create(:family_member, :with_email, family:)
 
       expect(described_class.new(member).submit(first_name: member.first_name, email: member.email)).to be(true)
     end

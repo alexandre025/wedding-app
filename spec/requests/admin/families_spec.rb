@@ -41,6 +41,24 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(roux.name)}/, count: 0
     end
 
+    it "wires the search box up for auto-submit and clearing" do
+      get admin_families_path, headers: admin_headers
+
+      assert_select "form[data-controller=?]", "search-field"
+      assert_select "form[data-turbo-frame=?]", "families_results"
+      assert_select "input[data-search-field-target=?]", "field"
+      assert_select "button[data-search-field-target=?]", "clear" do |buttons|
+        expect(buttons.first["aria-label"]).to eq(I18n.t("admin.families.index.search_clear"))
+        expect(buttons.first["hidden"]).not_to be_nil
+      end
+    end
+
+    it "puts the results in a frame the search can replace on its own" do
+      get admin_families_path, headers: admin_headers
+
+      assert_select "turbo-frame#families_results li", text: /#{Regexp.escape(melchior.name)}/
+    end
+
     it "names the term that found nothing" do
       get admin_families_path(q: { Family::SEARCH_PREDICATE => "introuvable" }), headers: admin_headers
 
@@ -61,6 +79,14 @@ RSpec.describe "The admin families screens" do
       expect(response).to have_http_status(:success)
       assert_select "li", text: /#{Regexp.escape(sylvain.first_name)}/
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.show.no_email"))}/
+    end
+
+    it "shows each member's age group" do
+      sylvain.update!(age_group: "teen")
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
     end
 
     it "says so when the family has no members at all" do

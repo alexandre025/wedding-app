@@ -15,7 +15,7 @@ class Admin::FamilyForm < ApplicationForm
   def perform
     @family.name = name
 
-    @family.save || add_errors_from(@family)
+    @family.save!
   end
 
   private

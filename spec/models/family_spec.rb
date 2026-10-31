@@ -11,7 +11,7 @@ RSpec.describe Family do
   describe "destroying one" do
     it "takes its members with it" do
       family = create(:family)
-      create_list(:family_member, 2, family: family)
+      create_list(:family_member, 2, family:)
 
       expect { family.destroy }.to change(FamilyMember, :count).by(-2)
     end

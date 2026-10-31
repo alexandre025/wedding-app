@@ -26,14 +26,40 @@
   </div>
 
   <%= search_form_for @search, url: admin_families_path,
-        html: { class: "flex max-w-[420px] flex-col gap-1.5" } do |f| %>
+        html: {
+          class: "flex max-w-[420px] flex-col gap-1.5",
+          data: {
+            controller: "search-field",
+            search_field_delay_value: 300,
+            turbo_frame: "families_results"
+          }
+        } do |f| %>
     <%= f.label Family::SEARCH_PREDICATE, t("admin.families.index.search_label"), class: "text-sm font-semibold" %>
 
-    <%= f.search_field Family::SEARCH_PREDICATE, placeholder: t("admin.families.index.search_placeholder"),
-          class: "h-[46px] w-full rounded-[10px] border border-rule-sand bg-white px-[14px] text-base text-ink" %>
+    <div class="relative">
+      <%= f.search_field Family::SEARCH_PREDICATE, placeholder: t("admin.families.index.search_placeholder"),
+            autocomplete: "off",
+            data: { search_field_target: "field", action: "input->search-field#search" },
+            class: "
+              h-[46px] w-full rounded-[10px] border border-rule-sand bg-white pr-12 pl-[14px] text-base text-ink
+              [&::-webkit-search-cancel-button]:appearance-none
+            " %>
+
+      <button
+        type="button"
+        hidden
+        aria-label="<%= t("admin.families.index.search_clear") %>"
+        data-search-field-target="clear"
+        data-action="search-field#clear"
+        class="absolute top-1/2 right-[1px] flex size-11 -translate-y-1/2 items-center justify-center text-ink-muted"
+      >
+        <%= icon("close") %>
+      </button>
+    </div>
   <% end %>
 
-  <div class="overflow-x-auto rounded-2xl border border-rule-sage bg-white">
+  <%= turbo_frame_tag "families_results",
+        class: "block overflow-x-auto rounded-2xl border border-rule-sage bg-white" do %>
     <div class="min-w-[800px]">
       <div
         aria-hidden="true"
@@ -58,5 +84,5 @@
         </p>
       <% end %>
     </div>
-  </div>
+  <% end %>
 </main>
