@@ -96,7 +96,7 @@ fr:
         email_placeholder: prenom.nom@exemple.fr
         email_hint: Laissez vide si cette personne n'a pas d'adresse ; une seule adresse de la famille suffit pour répondre.
         age_group_label: Tranche d'âge
-        age_group_hint: Sert à prévoir les repas et le couchage.
+        age_group_hint: Sert à prévoir les repas.
       new:
         title: Ajouter une personne
         intro: Elle rejoindra la %{family}.
