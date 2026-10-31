@@ -59,6 +59,13 @@ RSpec.describe "The admin families screens" do
       assert_select "turbo-frame#families_results li", text: /#{Regexp.escape(melchior.name)}/
     end
 
+    it "lets the row controls leave the frame rather than navigate inside it" do
+      get admin_families_path, headers: admin_headers
+
+      assert_select "turbo-frame#families_results[target=?]", "_top"
+      assert_select "turbo-frame#families_results a[href=?]", admin_family_path(melchior)
+    end
+
     it "names the term that found nothing" do
       get admin_families_path(q: { Family::SEARCH_PREDICATE => "introuvable" }), headers: admin_headers
 
