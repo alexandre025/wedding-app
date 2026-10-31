@@ -1,7 +1,8 @@
 module AdminHelper
   def admin_nav_items
     [
-      { label: t("admin.nav.dashboard"), path: admin_root_path }
+      { label: t("admin.nav.dashboard"), path: admin_root_path },
+      { label: t("admin.nav.families"), path: admin_families_path }
     ]
   end
 

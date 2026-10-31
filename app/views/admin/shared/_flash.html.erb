@@ -1,0 +1,19 @@
+<%# locals: () %>
+<% if flash.any? %>
+  <div class="mx-auto w-full max-w-[1200px] px-6 pt-6">
+    <% flash.each do |kind, message| %>
+      <p
+        role="status"
+        class="
+          <%= class_names(
+          'rounded-[10px] px-4 py-3 text-[15px] font-medium',
+          'bg-ink text-ground' => kind.to_s == 'notice',
+          'bg-clay-pale text-clay-deep' => kind.to_s != 'notice'
+          ) %>
+        "
+      >
+        <%= message %>
+      </p>
+    <% end %>
+  </div>
+<% end %>

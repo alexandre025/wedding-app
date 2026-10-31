@@ -1,0 +1,28 @@
+<%# locals: (family:) %>
+<li
+  class="
+    grid grid-cols-[minmax(150px,1fr)_minmax(320px,2.6fr)_130px_200px] items-center gap-4 border-b border-rule-row
+    px-5 py-3.5
+  "
+>
+  <span class="font-semibold"><%= t("admin.families.family_name", name: family.name) %></span>
+
+  <span class="flex flex-wrap items-start gap-1.5">
+    <% if family.family_members.any? %>
+      <%= render partial: "admin/families/member_chip", collection: family.family_members, as: :member %>
+    <% else %>
+      <span class="text-[13px] text-ink-muted"><%= t("admin.families.no_members") %></span>
+    <% end %>
+  </span>
+
+  <span><%= render "admin/families/status_badge", answered: family.answered? %></span>
+
+  <span class="flex justify-end gap-2">
+    <%= link_to t("admin.families.manage"), admin_family_path(family),
+          class: "inline-flex h-10 items-center rounded-full border-[1.5px] border-rule-sand px-3.5 text-sm font-semibold" %>
+
+    <%= button_to t("admin.families.destroy.action"), admin_family_path(family), method: :delete,
+          form: { data: { turbo_confirm: t("admin.families.destroy.confirm", name: family.name) } },
+          class: "h-10 rounded-full px-3 text-sm font-semibold text-clay" %>
+  </span>
+</li>

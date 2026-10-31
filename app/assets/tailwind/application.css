@@ -18,8 +18,13 @@
   --color-sage-light: #afc0a3;
   --color-sage-pale: #e3e9dc;
   --color-sage-mist: #c9d5bf;
+  --color-sage-darker: #3f5139;
+  --color-clay-pale: #f5e4d9;
+  --color-clay-deep: #8a4330;
   --color-rule-sage: #d6ddcc;
   --color-rule-sand: #c9bfa8;
+  --color-rule-row: #ece6da;
+  --color-rule-chip: #e3dccb;
   --color-peach: #d9a77e;
   --color-placeholder: #8a8573;
 
@@ -30,6 +35,7 @@
   --tracking-eyebrow: 0.18em;
   --tracking-label: 0.14em;
   --tracking-badge: 0.12em;
+  --tracking-column: 0.1em;
 }
 
 @layer base {

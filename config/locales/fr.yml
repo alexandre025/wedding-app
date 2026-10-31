@@ -18,6 +18,7 @@ fr:
     nav:
       label: Navigation de l'espace mariés
       dashboard: Tableau de bord
+      families: Familles
     countdown:
       remaining:
         one: plus qu'un jour
@@ -27,6 +28,79 @@ fr:
       show:
         title: Suivi des réponses
         deadline: Réponses attendues avant le %{date} · %{countdown}
+    cancel: Annuler
+    save: Enregistrer
+    families:
+      family_name: Famille %{name}
+      manage: Gérer
+      no_members: Aucun membre
+      status:
+        answered: Répondu
+        pending: En attente
+      form:
+        name_label: Nom de la famille
+        name_placeholder: Melchior
+        name_hint: Affiché « Famille … » sur le formulaire.
+      index:
+        title: Familles invitées
+        intro: Chaque invité se connecte au formulaire avec son adresse email et répond pour sa famille.
+        add: Ajouter une famille
+        search_label: Rechercher
+        search_placeholder: Nom, prénom ou email…
+        none: Aucune famille pour l'instant.
+        none_matching: Aucune famille ne correspond à « %{query} ».
+        columns:
+          family: Famille
+          members: Membres
+          answer: Réponse
+        stats:
+          families: Familles
+          guests: Invités
+          answered: Familles ayant répondu
+          pending: En attente de réponse
+          ratio: "%{answered} / %{total}"
+      show:
+        title: Famille %{name}
+        back: ← Toutes les familles
+        rename: Modifier le nom
+        members: Membres de la famille
+        add_member: Ajouter une personne
+        edit_member: Modifier
+        remove_member: Supprimer
+        remove_confirm: Retirer %{name} de cette famille ?
+        no_email: Pas d'adresse
+        no_members: Aucun membre pour l'instant.
+      new:
+        title: Nouvelle famille
+      edit:
+        title: Modifier la famille
+      create:
+        created: Famille %{name} ajoutée
+      update:
+        updated: Famille %{name} modifiée
+      destroy:
+        action: Supprimer
+        destroyed: Famille %{name} supprimée
+        confirm: Supprimer la famille %{name} ? Ses membres et sa réponse éventuelle seront supprimés, et leurs adresses ne donneront plus accès au formulaire.
+    family_members:
+      form:
+        first_name_label: Prénom
+        first_name_placeholder: Mélanie
+        email_label: Email
+        email_placeholder: prenom.nom@exemple.fr
+        email_hint: Laissez vide si cette personne n'a pas d'adresse ; une seule adresse de la famille suffit pour répondre.
+      new:
+        title: Ajouter une personne
+        intro: Elle rejoindra la %{family}.
+      edit:
+        title: Modifier la personne
+        intro: Elle fait partie de la %{family}.
+      create:
+        created: "%{name} ajouté·e"
+      update:
+        updated: "%{name} modifié·e"
+      destroy:
+        destroyed: "%{name} retiré·e"
 
   nav:
     label: Navigation principale
@@ -126,3 +200,13 @@ fr:
     abbr_day_names: [dim, lun, mar, mer, jeu, ven, sam]
     month_names: [~, janvier, février, mars, avril, mai, juin, juillet, août, septembre, octobre, novembre, décembre]
     abbr_month_names: [~, janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.]
+
+  errors:
+    attributes:
+      name:
+        blank: Indiquez le nom de la famille.
+      first_name:
+        blank: Indiquez le prénom.
+      email:
+        invalid: Indiquez une adresse email valide.
+        taken: Cette adresse est déjà utilisée par un autre invité.

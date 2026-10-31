@@ -16,10 +16,11 @@ English. All copy lives in `config/locales/fr.yml`.
 | `/schedule` | Programme & infos pratiques |
 | `/rsvp` | Réponse — the invitation email gate |
 
-The couple's admin screens live under `/admin`, behind HTTP Basic. The RSVP form
-is not built yet. The gate's "invitation retrouvée" state is client-side only:
-it checks the shape of the address, not a guest list, so it must be replaced by
-a real lookup before the site goes live.
+The couple's own screens live under `/admin`, behind HTTP Basic — the guest list
+is managed there. The RSVP form itself is not built yet: the gate's "invitation
+retrouvée" state is client-side only, checking the shape of the address rather
+than the guest list, so it must be replaced by a real lookup before the site
+goes live.
 
 ## Getting started
 
