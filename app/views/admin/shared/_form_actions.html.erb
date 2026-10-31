@@ -1,0 +1,6 @@
+<%# locals: (f:, cancel_path:) %>
+<div class="flex flex-wrap justify-end gap-3">
+  <%= link_to t("admin.cancel"), cancel_path, class: "btn-ghost" %>
+
+  <%= f.submit t("admin.save"), class: "h-12 rounded-full bg-sage-deep px-6 font-semibold text-ground" %>
+</div>

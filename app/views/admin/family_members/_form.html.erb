@@ -1,0 +1,19 @@
+<%# locals: (form:, url:, cancel_path:) %>
+<%= form_with model: form, url:, class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
+  <%= render "admin/shared/form_errors", form: %>
+
+  <%= render "admin/shared/field", f:, name: :first_name,
+        caption: t("admin.family_members.form.first_name_label"),
+        placeholder: t("admin.family_members.form.first_name_placeholder") %>
+
+  <%= render "admin/shared/field", f:, name: :email, kind: :email_field,
+        caption: t("admin.family_members.form.email_label"),
+        placeholder: t("admin.family_members.form.email_placeholder"),
+        hint: t("admin.family_members.form.email_hint") %>
+
+  <%= render "admin/shared/field", f:, name: :age_group, kind: :select, choices: age_group_options,
+        caption: t("admin.family_members.form.age_group_label"),
+        hint: t("admin.family_members.form.age_group_hint") %>
+
+  <%= render "admin/shared/form_actions", f:, cancel_path: %>
+<% end %>

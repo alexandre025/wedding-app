@@ -1,0 +1,79 @@
+<% content_for :title, t("admin.families.index.title") %>
+
+<main class="admin-main max-w-[1200px] gap-7">
+  <div class="flex flex-wrap items-end justify-between gap-x-6 gap-y-4">
+    <%= render "admin/shared/page_header", title: t("admin.families.index.title"),
+          intro: t("admin.families.index.intro") %>
+
+    <%= link_to new_admin_family_path,
+          class: "btn-primary" do %>
+      <%= icon("plus", class_name: "size-[18px]") %>
+      <%= t("admin.families.index.add") %>
+    <% end %>
+  </div>
+
+  <div class="flex flex-wrap gap-4">
+    <%= render "admin/families/stat_card", caption: t("admin.families.index.stats.families"), value: @families_count %>
+    <%= render "admin/families/stat_card", caption: t("admin.families.index.stats.guests"), value: @guests_count %>
+
+    <%= render "admin/families/stat_card", caption: t("admin.families.index.stats.answered"),
+          value: t("admin.families.index.stats.ratio", answered: @answered_count, total: @families_count) %>
+
+    <%= render "admin/families/stat_card", caption: t("admin.families.index.stats.pending"),
+          value: @families_count - @answered_count, emphasis: true %>
+  </div>
+
+  <%= search_form_for @search, url: admin_families_path,
+        html: {
+          class: "flex max-w-[420px] flex-col gap-1.5",
+          data: {
+            controller: "search-field",
+            turbo_frame: "families_results",
+            turbo_action: "advance"
+          }
+        } do |f| %>
+    <%= f.label Family::SEARCH_PREDICATE, t("admin.families.index.search_label"), class: "text-sm font-semibold" %>
+
+    <div class="relative">
+      <%= f.search_field Family::SEARCH_PREDICATE, placeholder: t("admin.families.index.search_placeholder"),
+            autocomplete: "off",
+            data: { search_field_target: "field", action: "input->search-field#search" },
+            class: "field-input pr-12 [&::-webkit-search-cancel-button]:appearance-none" %>
+
+      <button
+        type="button"
+        hidden
+        aria-label="<%= t("admin.families.index.search_clear") %>"
+        data-search-field-target="clear"
+        data-action="search-field#clear"
+        class="absolute top-1/2 right-[1px] flex size-11 -translate-y-1/2 items-center justify-center text-ink-muted"
+      >
+        <%= icon("close", class_name: "size-[18px]") %>
+      </button>
+    </div>
+  <% end %>
+
+  <%= turbo_frame_tag "families_results", target: "_top",
+        class: "block overflow-x-auto rounded-2xl border border-rule-sage bg-white" do %>
+    <div class="min-w-[800px]">
+      <div
+        aria-hidden="true"
+        class="families-row border-b border-rule-sage text-xs font-semibold tracking-column text-ink-muted uppercase"
+      >
+        <span><%= t("admin.families.index.columns.family") %></span>
+        <span><%= t("admin.families.index.columns.members") %></span>
+        <span><%= t("admin.families.index.columns.answer") %></span>
+        <span></span>
+      </div>
+
+      <% if @families.any? %>
+        <ul class="flex flex-col [&>li:last-child]:border-b-0">
+          <%= render partial: "admin/families/family_row", collection: @families, as: :family %>
+        </ul>
+      <% else %>
+        <%= render "admin/shared/empty_state",
+              message: @query.present? ? t("admin.families.index.none_matching", query: @query) : t("admin.families.index.none") %>
+      <% end %>
+    </div>
+  <% end %>
+</main>

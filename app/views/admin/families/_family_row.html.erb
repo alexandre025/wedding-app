@@ -1,0 +1,22 @@
+<%# locals: (family:) %>
+<li class="families-row items-center border-b border-rule-row">
+  <span class="font-semibold"><%= t("admin.families.family_name", name: family.name) %></span>
+
+  <span class="flex flex-wrap items-start gap-1.5">
+    <% if family.family_members.any? %>
+      <%= render partial: "admin/families/member_chip", collection: family.family_members, as: :member %>
+    <% else %>
+      <span class="text-[13px] text-ink-muted"><%= t("admin.families.no_members") %></span>
+    <% end %>
+  </span>
+
+  <span><%= render "admin/families/status_badge", answered: family.answered? %></span>
+
+  <span class="flex justify-end gap-2">
+    <%= link_to t("admin.families.manage"), admin_family_path(family), class: "btn-ghost-sm" %>
+
+    <%= render "admin/shared/destroy_button", caption: t("admin.families.destroy.action"),
+          path: admin_family_path(family),
+          confirm: t("admin.families.destroy.confirm", name: family.name) %>
+  </span>
+</li>

@@ -1,5 +1,5 @@
-<% content_for :title, t(".title") %>
-<% cards = t(".info_cards") %>
+<% content_for :title, t("pages.schedule.title") %>
+<% cards = t("pages.schedule.info_cards") %>
 
 <main class="relative isolate flex grow flex-col overflow-hidden">
   <%= render "shared/decorations/branch", inverted: true,
@@ -8,20 +8,22 @@
   <div class="relative mx-auto flex w-full max-w-[1200px] flex-col gap-8 px-6 pt-12 pb-8 lg:gap-18 lg:pt-16 lg:pb-24">
     <div class="flex flex-col gap-2 lg:gap-2.5">
       <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase lg:text-[13px]">
-        <%= t(".eyebrow") %>
+        <%= t("pages.schedule.eyebrow") %>
       </p>
 
-      <h1 class="font-display text-[44px] leading-none font-medium lg:text-[64px]"><%= t(".title") %></h1>
+      <h1 class="font-display text-[44px] leading-none font-medium lg:text-[64px]"><%= t("pages.schedule.title") %></h1>
 
-      <p class="text-[15px] text-ink-muted lg:text-[17px]"><%= t(".subtitle") %></p>
+      <p class="text-[15px] text-ink-muted lg:text-[17px]"><%= t("pages.schedule.subtitle") %></p>
     </div>
 
     <div class="flex flex-col gap-8 lg:flex-row lg:flex-wrap lg:gap-x-18 lg:gap-y-10">
-      <%= render partial: "pages/timeline_day", collection: t(".days"), as: :day %>
+      <%= render partial: "pages/timeline_day", collection: t("pages.schedule.days"), as: :day %>
     </div>
 
     <section class="flex flex-col gap-3.5 lg:gap-6">
-      <h2 class="font-display text-[34px] leading-tight font-medium lg:text-[44px]"><%= t(".infos_title") %></h2>
+      <h2 class="font-display text-[34px] leading-tight font-medium lg:text-[44px]">
+        <%= t("pages.schedule.infos_title") %>
+      </h2>
 
       <div class="flex flex-col gap-3.5 lg:flex-row lg:flex-wrap lg:gap-5">
         <%= render layout: "pages/info_card",

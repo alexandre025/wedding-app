@@ -1,0 +1,8 @@
+<%# locals: (form:) %>
+<% if form.errors.any? %>
+  <div role="alert" class="flex flex-col gap-1 rounded-[10px] bg-clay-pale px-4 py-3">
+    <% form.errors.map(&:message).uniq.each do |message| %>
+      <p class="text-sm leading-snug text-clay-deep"><%= message %></p>
+    <% end %>
+  </div>
+<% end %>

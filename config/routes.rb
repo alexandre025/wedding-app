@@ -16,5 +16,9 @@ Rails.application.routes.draw do
 
   namespace :admin do
     root "dashboard#show"
+
+    resources :families do
+      resources :members, except: [ :index, :show ], controller: "family_members", shallow: true
+    end
   end
 end

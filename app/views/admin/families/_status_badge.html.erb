@@ -1,0 +1,23 @@
+<%# locals: (answered:) %>
+<span
+  class="
+    <%= class_names(
+    'inline-flex items-center gap-1.5 rounded-full px-2.5 py-1 text-[13px] font-semibold',
+    'bg-sage-pale text-sage-darker' => answered,
+    'bg-clay-pale text-clay-deep' => !answered
+    ) %>
+  "
+>
+  <span
+    aria-hidden="true"
+    class="
+      <%= class_names(
+      'size-1.5 rounded-full',
+      'bg-sage-deep' => answered,
+      'bg-clay' => !answered
+      ) %>
+    "
+  ></span>
+
+  <%= answered ? t("admin.families.status.answered") : t("admin.families.status.pending") %>
+</span>

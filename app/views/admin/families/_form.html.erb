@@ -1,0 +1,11 @@
+<%# locals: (form:, url:, cancel_path:) %>
+<%= form_with model: form, url:, class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
+  <%= render "admin/shared/form_errors", form: %>
+
+  <%= render "admin/shared/field", f:, name: :name,
+        caption: t("admin.families.form.name_label"),
+        placeholder: t("admin.families.form.name_placeholder"),
+        hint: t("admin.families.form.name_hint") %>
+
+  <%= render "admin/shared/form_actions", f:, cancel_path: %>
+<% end %>
