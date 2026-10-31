@@ -16,10 +16,10 @@ English. All copy lives in `config/locales/fr.yml`.
 | `/schedule` | Programme & infos pratiques |
 | `/rsvp` | Réponse — the invitation email gate |
 
-The RSVP form and the couple's admin screens are not built yet. The gate's
-"invitation retrouvée" state is client-side only: it checks the shape of the
-address, not a guest list, so it must be replaced by a real lookup before the
-site goes live.
+The couple's admin screens live under `/admin`, behind HTTP Basic. The RSVP form
+is not built yet. The gate's "invitation retrouvée" state is client-side only:
+it checks the shape of the address, not a guest list, so it must be replaced by
+a real lookup before the site goes live.
 
 ## Getting started
 
@@ -45,18 +45,17 @@ bin/ci
 ```
 
 runs the whole suite: RuboCop, `herb-lint`, `herb-format --check`, the gem and
-import map audits, Brakeman, the Rails and system tests, the seeds file and the
-production asset build. Individually:
+import map audits, Brakeman, the specs, the seeds file and the production asset
+build. Individually:
 
 ```sh
 bin/rubocop
 npm run herb:lint
 npm run herb:format
-bin/rails test
-bin/rails test:system
+bundle exec rspec
 ```
 
-GitHub Actions runs the same checks as seven jobs — `scan_ruby`, `scan_js`,
-`lint`, `lint_erb`, `test`, `system-test` and `build` — on every pull request
-and every push to `main`. All seven must be green before a pull request can be
-merged; `main` takes no direct pushes.
+GitHub Actions runs the same checks as six jobs — `scan_ruby`, `scan_js`,
+`lint`, `lint_erb`, `test` and `build` — on every pull request and every push to
+`main`. All six must be green before a pull request can be merged; `main` takes
+no direct pushes.
