@@ -1,4 +1,4 @@
-<% content_for :title, t(".title") %>
+<% content_for :title, t("pages.home.title") %>
 
 <main class="relative isolate flex grow flex-col overflow-hidden">
   <%= render "shared/decorations/trail_mobile" %>
@@ -25,7 +25,7 @@
   >
     <div class="flex flex-col items-center gap-3.5 lg:col-start-1 lg:row-start-1 lg:items-start lg:gap-5">
       <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase lg:text-[13px]">
-        <%= t(".eyebrow") %>
+        <%= t("pages.home.eyebrow") %>
       </p>
 
       <h1
@@ -55,7 +55,7 @@
     >
       <div
         role="img"
-        aria-label="<%= t(".photo_alt") %>"
+        aria-label="<%= t("pages.home.photo_alt") %>"
         class="
           flex size-[172px] flex-col items-center justify-center gap-2 rounded-t-[90px] rounded-b-[10px]
           bg-sage-pale text-[13px] text-ink-muted lg:h-[440px] lg:w-[340px] lg:gap-2.5 lg:rounded-t-[190px]
@@ -63,7 +63,7 @@
         "
       >
         <%= icon("photo", class_name: "size-7 lg:size-9") %>
-        <span><%= t(".photo_placeholder") %></span>
+        <span><%= t("pages.home.photo_placeholder") %></span>
       </div>
     </div>
 
@@ -79,7 +79,7 @@
         <%= link_to t("wedding.rsvp_cta"), rsvp_path,
               class: "flex h-13 w-full items-center justify-center rounded-full bg-sage-deep font-semibold text-ground lg:h-[54px] lg:w-auto lg:px-8" %>
 
-        <%= link_to t(".schedule_link"), schedule_path,
+        <%= link_to t("pages.home.schedule_link"), schedule_path,
               class: "inline-flex min-h-11 items-center px-2 py-2.5 text-[15px] font-medium text-ink lg:text-base" %>
       </div>
     </div>
