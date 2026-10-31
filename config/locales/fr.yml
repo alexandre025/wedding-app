@@ -61,7 +61,6 @@ fr:
           pending: En attente de réponse
           ratio: "%{answered} / %{total}"
       show:
-        title: Famille %{name}
         back: ← Toutes les familles
         rename: Modifier le nom
         members: Membres de la famille
@@ -210,6 +209,16 @@ fr:
     abbr_month_names: [~, janv., févr., mars, avr., mai, juin, juil., août, sept., oct., nov., déc.]
 
   errors:
+    messages:
+      required: doit exister
+      blank: doit être rempli
+      taken: est déjà utilisé
+      invalid: n'est pas valide
+      inclusion: n'est pas dans la liste
+      confirmation: ne correspond pas
+      too_long: est trop long (%{count} caractères maximum)
+      too_short: est trop court (%{count} caractères minimum)
+      not_a_number: n'est pas un nombre
     attributes:
       name:
         blank: Indiquez le nom de la famille.

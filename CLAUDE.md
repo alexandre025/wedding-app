@@ -50,8 +50,8 @@ can silently resolve to `Admin::Family` if one ever appears.
 ## Forms own the rules; models own almost nothing
 
 Validations and normalization live on the form objects in `app/forms` — built
-on [HyperActiveForm](https://github.com/Intrepidd/hyperactiveform) — never on
-the model:
+on [HyperActiveForm](https://github.com/Intrepidd/hyperactiveform) — rather than
+on the model, with the single exception named below:
 
 ```ruby
 class Admin::FamilyMemberForm < ApplicationForm
@@ -72,11 +72,23 @@ re-stating it.
 
 A model therefore carries only: associations, constants (`AGE_GROUPS`,
 `SEARCH_PREDICATE`), small predicates (`answered?`), and the Ransack
-allowlists. No `validates`, no `normalizes`, no callbacks.
+allowlists. No `normalizes`, no callbacks, and no `validates` — with one
+exception.
+
+**Uniqueness is the exception.** It lives on the model, because it is a
+statement about the table rather than about one submission, and the database
+already backs it with a unique index. A nullable unique column needs
+`allow_nil: true` or every member without an address collides with the others,
+and `case_sensitive: false`, because the model cannot normalize the value first.
 
 Each form implements `setup` (read the record into attributes) and `perform`
-(write them back, then `save || add_errors_from(record)`). Controllers call
-`@form.submit(params)` and branch on the result.
+(write them back, then save). A form over a model with no validations ends in
+`save!` — a falsey return is unreachable, and a constraint violation raises
+whichever call you use. A form over a model that *can* fail validation ends in
+`save || add_errors_from(record)`, so the failure renders as a field error
+instead of a 500: `Admin::FamilyMemberForm` is the one that does, because of the
+uniqueness rule above. Controllers call `@form.submit(params)` and branch on the
+result.
 
 ## The database
 

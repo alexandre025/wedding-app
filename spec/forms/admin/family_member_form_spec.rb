@@ -41,12 +41,6 @@ RSpec.describe Admin::FamilyMemberForm do
       expect(form.errors[:first_name]).to eq([ I18n.t("errors.attributes.first_name.blank") ])
     end
 
-    it "defaults a new member to adult" do
-      form_for_new_member.submit(first_name: "Antoine", email: "", age_group: "adult")
-
-      expect(family.family_members.last.age_group).to eq("adult")
-    end
-
     it "accepts every age group the model lists" do
       FamilyMember::AGE_GROUPS.each do |group|
         form = described_class.new(family.family_members.build)
@@ -71,26 +65,12 @@ RSpec.describe Admin::FamilyMemberForm do
       expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.invalid") ])
     end
 
-    it "refuses an address held by a member of another family" do
+    it "surfaces the model's duplicate-address error rather than raising" do
       create(:family_member, family: create(:family), email: "melanie@exemple.fr")
       form = form_for_new_member
 
       expect { form.submit(first_name: "Antoine", email: "MELANIE@exemple.fr") }.not_to change(FamilyMember, :count)
       expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.taken") ])
-    end
-
-    it "refuses an address held by a member of the same family" do
-      create(:family_member, family:, email: "melanie@exemple.fr")
-      form = form_for_new_member
-
-      expect { form.submit(first_name: "Antoine", email: "melanie@exemple.fr") }.not_to change(FamilyMember, :count)
-      expect(form.errors[:email]).to eq([ I18n.t("errors.attributes.email.taken") ])
-    end
-
-    it "does not count a member's own address as taken" do
-      member = create(:family_member, :with_email, family:)
-
-      expect(described_class.new(member).submit(first_name: member.first_name, email: member.email)).to be(true)
     end
   end
 end
