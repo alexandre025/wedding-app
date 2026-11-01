@@ -201,6 +201,11 @@ then a statement about that method rather than about a feature, and anything
 that does not fit under one is a sign the spec is testing something the object
 does not actually expose.
 
+A request spec names the endpoint, because routes are the public surface a
+controller has — `describe "GET /admin/members/:id/edit"`,
+`describe "POST /admin/families/:family_id/members"`. The path is written as the
+route defines it, placeholders and all, not with an id substituted in.
+
 **Each one names its subject**, so the examples read against a noun rather than
 re-building the object every time:
 

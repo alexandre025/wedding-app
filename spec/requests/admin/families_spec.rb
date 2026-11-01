@@ -20,7 +20,7 @@ RSpec.describe "The admin families screens" do
     expect(response).to have_http_status(:unauthorized)
   end
 
-  describe "the list" do
+  describe "GET /admin/families" do
     it "names every family and its members" do
       get admin_families_path, headers: admin_headers
 
@@ -82,7 +82,7 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  describe "the family page" do
+  describe "GET /admin/families/:id" do
     it "lists its members, and says which have no address" do
       get admin_family_path(melchior), headers: admin_headers
 
@@ -169,7 +169,7 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  describe "creating one" do
+  describe "POST /admin/families" do
     it "sends you on to add its first member" do
       expect { post admin_families_path, params: { family: { name: "Nouvelle" } }, headers: admin_headers }
         .to change(Family, :count).by(1)
@@ -186,19 +186,23 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  it "keeps a family's members when it is renamed" do
-    patch admin_family_path(melchior), params: { family: { name: "Melchior-Dupont" } }, headers: admin_headers
+  describe "PATCH /admin/families/:id" do
+    it "keeps a family's members when it is renamed" do
+      patch admin_family_path(melchior), params: { family: { name: "Melchior-Dupont" } }, headers: admin_headers
 
-    expect(response).to redirect_to(admin_family_path(melchior))
-    expect(melchior.reload.name).to eq("Melchior-Dupont")
-    expect(melchior.family_members.count).to eq(2)
+      expect(response).to redirect_to(admin_family_path(melchior))
+      expect(melchior.reload.name).to eq("Melchior-Dupont")
+      expect(melchior.family_members.count).to eq(2)
+    end
   end
 
-  it "takes the members along when a family is deleted" do
-    expect { delete admin_family_path(melchior), headers: admin_headers }
-      .to change(Family, :count).by(-1)
-      .and change(FamilyMember, :count).by(-2)
+  describe "DELETE /admin/families/:id" do
+    it "takes the members along when a family is deleted" do
+      expect { delete admin_family_path(melchior), headers: admin_headers }
+        .to change(Family, :count).by(-1)
+        .and change(FamilyMember, :count).by(-2)
 
-    expect(response).to redirect_to(admin_families_path)
+      expect(response).to redirect_to(admin_families_path)
+    end
   end
 end
