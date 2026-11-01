@@ -56,7 +56,7 @@ class Admin::FamiliesController < Admin::BaseController
     end
 
     def family_params
-      params.require(:family).permit(:name)
+      params.require(:family)
     end
 
     def search_params

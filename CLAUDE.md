@@ -90,6 +90,27 @@ instead of a 500: `Admin::FamilyMemberForm` is the one that does, because of the
 uniqueness rule above. Controllers call `@form.submit(params)` and branch on the
 result.
 
+**A controller never calls `permit` for a form.** `assign_form_attributes` walks
+the form's own `attribute` list and reads each one by name, so that list *is* the
+allowlist — anything else in the params is never looked at. A `permit` beside it
+is a second copy of the same list to keep in sync, and the two failing to agree
+does not raise: an attribute the controller forgot is simply absent, which the
+form reads as "not submitted" and resets to its default. A silent wipe, on save.
+So a form's params method is the `require` and nothing else:
+
+```ruby
+    def family_member_params
+      params.require(:family_member)
+    end
+```
+
+Ransack is not a form, and `search_params` keeps its `permit` for a reason that
+has nothing to do with allowlisting — `ransackable_attributes` on the model is
+what decides which attributes may be searched, and Ransack accepts unpermitted
+params happily. `params.permit(q: Family::SEARCH_PREDICATE)` is there because it
+also drops a `q` that arrives as a bare string rather than a hash, which is what
+a stale URL sends. Removing it trades a filtered search for a 500.
+
 ## The database
 
 **No foreign keys.** Not on any of the app's own tables, not in any migration we
