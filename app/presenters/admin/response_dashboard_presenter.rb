@@ -1,11 +1,10 @@
 class Admin::ResponseDashboardPresenter
   Option = Struct.new(:label, :count, :of, :percent, :names)
   Diet = Struct.new(:label, :count)
-  Pending = Struct.new(:name, :members, :emails)
+  Pending = Struct.new(:name, :members)
   Answer = Struct.new(:name, :changed_at, :coming, :missing)
 
   MEMBER_NAMES = "string_agg(family_members.first_name, ', ' ORDER BY family_members.id)".freeze
-  MEMBER_EMAILS = "string_agg(family_members.email, ',' ORDER BY family_members.id)".freeze
   ANSWERED_AT = "max(family_members.updated_at)".freeze
 
   def families_count = Family.count
@@ -37,6 +36,7 @@ class Admin::ResponseDashboardPresenter
 
   def diets
     [
+      Diet.new(I18n.t("admin.dashboard.show.diets.alcohol"), tally[:alcohol_count]),
       Diet.new(I18n.t("admin.dashboard.show.diets.no_alcohol"), tally[:no_alcohol_count]),
       Diet.new(I18n.t("admin.dashboard.show.diets.allergies"), tally[:allergies_count])
     ]
@@ -47,7 +47,7 @@ class Admin::ResponseDashboardPresenter
       .joins(:family_members)
       .group(:id)
       .order(:name)
-      .pluck(:name, Arel.sql(MEMBER_NAMES), Arel.sql(MEMBER_EMAILS))
+      .pluck(:name, Arel.sql(MEMBER_NAMES))
       .map { |row| Pending.new(*row) }
   end
 
@@ -69,14 +69,17 @@ class Admin::ResponseDashboardPresenter
         Arel.sql("#{MEMBER_NAMES} filter (where attends_run)"),
         Arel.sql("count(*) filter (where attends_brunch)"),
         Arel.sql("#{MEMBER_NAMES} filter (where attends_brunch)"),
-        Arel.sql(teetotal),
+        Arel.sql(adults_where_alcohol_is(false)),
+        Arel.sql(adults_where_alcohol_is(true)),
         Arel.sql("count(*) filter (where btrim(coalesce(allergies, '')) <> '')")
-      ).then { |row| %i[run_count run_names brunch_count brunch_names no_alcohol_count allergies_count].zip(row).to_h }
+      ).then do |row|
+        %i[run_count run_names brunch_count brunch_names alcohol_count no_alcohol_count allergies_count].zip(row).to_h
+      end
     end
 
-    def teetotal
+    def adults_where_alcohol_is(no_alcohol)
       FamilyMember.sanitize_sql_array(
-        [ "count(*) filter (where no_alcohol and age_group = ?)", FamilyMember::ADULT ]
+        [ "count(*) filter (where no_alcohol is ? and age_group = ?)", no_alcohol, FamilyMember::ADULT ]
       )
     end
 

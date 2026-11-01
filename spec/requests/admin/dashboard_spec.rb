@@ -39,9 +39,7 @@ RSpec.describe "The admin dashboard" do
       end
 
       let!(:sylvain) { create(:family_member, :not_coming, family: melchior, first_name: "Sylvain") }
-      let!(:antoine) { create(:family_member, **antoine_attributes) }
-
-      let(:antoine_attributes) { { family: roux, first_name: "Antoine", email: "antoine@exemple.fr" } }
+      let!(:antoine) { create(:family_member, family: roux, first_name: "Antoine") }
 
       before { get admin_root_path, headers: admin_headers }
 
@@ -74,27 +72,15 @@ RSpec.describe "The admin dashboard" do
         assert_select "li", text: /Arachides/, count: 0
       end
 
-      it "offers to chase the family that has not answered" do
+      it "names the family that has not answered, and who is in it" do
         assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.family_name", name: roux.name))}/
-
-        assert_select "a[aria-label=?]", I18n.t("admin.dashboard.show.remind_label", name: roux.name) do |links|
-          expect(links.first["href"]).to start_with("mailto:#{antoine.email}?")
-        end
+        assert_select "li", text: /Antoine/
       end
 
       it "lists what the family that answered said" do
         assert_select "li", text: /#{Regexp.escape(I18n.t("admin.dashboard.show.present_prefix"))}/
         assert_select "li", text: /Mélanie/
         assert_select "li", text: /Sylvain/
-      end
-
-      context "when the pending family has no address at all" do
-        let(:antoine_attributes) { super().merge(email: nil) }
-
-        it "says so rather than offering a link to nowhere" do
-          assert_select "a[aria-label=?]", I18n.t("admin.dashboard.show.remind_label", name: roux.name), count: 0
-          assert_select "span", text: I18n.t("admin.families.show.no_email")
-        end
       end
     end
 

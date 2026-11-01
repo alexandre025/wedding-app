@@ -46,20 +46,11 @@ fr:
         options_of: "/ %{of}"
         diets_title: Régimes & allergies
         diets:
+          alcohol: Avec alcool
           no_alcohol: Sans alcool
           allergies: Allergies
         pending_title: En attente de réponse
         manage_families: Gérer les familles →
-        remind: Relancer
-        remind_label: Relancer la famille %{name} par email
-        remind_subject: Mariage de Chloé & Alexandre · votre réponse
-        remind_body: |-
-          Bonjour,
-
-          Petit rappel : merci de nous répondre avant le %{date}.
-
-          À très vite,
-          Chloé & Alexandre
         none_pending: Toutes les familles ont répondu.
         recent_title: Dernières réponses
         changed_at: Modifié le %{date}

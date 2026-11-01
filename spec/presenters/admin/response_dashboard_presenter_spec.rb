@@ -113,17 +113,34 @@ RSpec.describe Admin::ResponseDashboardPresenter do
   end
 
   describe "#diets" do
-    subject(:no_alcohol) { presenter.diets.first }
+    subject(:alcohol) { presenter.diets.first }
 
-    it "counts the adults who are coming and do not drink" do
+    let(:no_alcohol) { presenter.diets.second }
+
+    it "counts the adults who are coming and drink" do
+      expect(alcohol).to have_attributes(label: I18n.t("admin.dashboard.show.diets.alcohol"), count: 2)
+    end
+
+    it "counts the adults who are coming and do not" do
       expect(no_alcohol).to have_attributes(label: I18n.t("admin.dashboard.show.diets.no_alcohol"), count: 1)
+    end
+
+    context "when an adult who is coming stops drinking" do
+      let(:melanie) do
+        create(:family_member, :coming, :runner, :brunching, :with_allergies, :teetotal, family: melchior,
+          first_name: "Mélanie")
+      end
+
+      it "moves them from one row to the other" do
+        expect([ alcohol.count, no_alcohol.count ]).to eq([ 1, 2 ])
+      end
     end
 
     context "when a teenager is coming" do
       let(:lena) { create(:family_member, :teen, :coming, family: melchior, first_name: "Léna") }
 
-      it "leaves them out, since the age rule set their value rather than they did" do
-        expect(no_alcohol.count).to eq(1)
+      it "leaves them out of both, since nobody under age is the caterer's to pour for" do
+        expect([ alcohol.count, no_alcohol.count ]).to eq([ 2, 1 ])
       end
     end
 
@@ -133,17 +150,8 @@ RSpec.describe Admin::ResponseDashboardPresenter do
   end
 
   describe "#pending_families" do
-    it "lists the families still owing an answer, with somewhere to write" do
-      expect(presenter.pending_families)
-        .to contain_exactly(have_attributes(name: "Roux", members: "Antoine", emails: antoine.email))
-    end
-
-    context "when the pending family has no address at all" do
-      let(:antoine) { create(:family_member, family: roux, first_name: "Antoine") }
-
-      it "lists them with nowhere to write" do
-        expect(presenter.pending_families.sole.emails).to be_nil
-      end
+    it "lists the families still owing an answer, and who is in them" do
+      expect(presenter.pending_families).to contain_exactly(have_attributes(name: "Roux", members: "Antoine"))
     end
 
     context "when a family has no members at all" do
