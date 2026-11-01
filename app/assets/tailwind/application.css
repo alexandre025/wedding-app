@@ -78,6 +78,14 @@
   @apply h-[46px] w-full rounded-[10px] border border-rule-sand bg-white px-[14px] text-base text-ink;
 }
 
+@utility field-textarea {
+  @apply min-h-[96px] w-full resize-y rounded-[10px] border border-rule-sand bg-white px-[14px] py-3 text-base text-ink;
+}
+
+@utility member-tag {
+  @apply rounded-full bg-sage-pale px-2 py-0.5 text-xs font-medium text-sage-darker;
+}
+
 @utility btn-primary {
   @apply inline-flex h-12 items-center gap-2 rounded-full bg-sage-deep px-[22px] font-semibold text-ground;
 }

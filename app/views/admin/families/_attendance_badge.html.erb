@@ -1,0 +1,14 @@
+<%# locals: (attends:) %>
+<% unless attends.nil? %>
+  <span
+    class="
+      <%= class_names(
+      'inline-flex items-center rounded-full px-2 py-0.5 text-xs font-semibold',
+      'bg-sage-pale text-sage-darker' => attends,
+      'bg-clay-pale text-clay-deep' => !attends
+      ) %>
+    "
+  >
+    <%= attendance_label(attends) %>
+  </span>
+<% end %>

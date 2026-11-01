@@ -48,6 +48,6 @@ class Admin::FamilyMembersController < Admin::BaseController
     end
 
     def family_member_params
-      params.require(:family_member).permit(:first_name, :email, :age_group)
+      params.require(:family_member)
     end
 end

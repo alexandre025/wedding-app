@@ -1,11 +1,11 @@
-<%# locals: (f:, name:, caption:, placeholder: nil, hint: nil, kind: :text_field, choices: nil) %>
+<%# locals: (f:, name:, caption:, placeholder: nil, hint: nil, kind: :text_field, choices: nil, input_class: "field-input", data: {}) %>
 <div class="flex flex-col gap-1.5">
   <%= f.label name, caption, class: "text-[15px] font-semibold" %>
 
   <% if kind == :select %>
-    <%= f.select name, choices, {}, class: "field-input" %>
+    <%= f.select name, choices, {}, data:, class: input_class %>
   <% else %>
-    <%= f.public_send(kind, name, placeholder:, class: "field-input") %>
+    <%= f.public_send(kind, name, placeholder:, data:, class: input_class) %>
   <% end %>
 
   <% if hint %>

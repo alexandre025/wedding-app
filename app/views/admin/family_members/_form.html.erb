@@ -1,5 +1,11 @@
 <%# locals: (form:, url:, cancel_path:) %>
-<%= form_with model: form, url:, class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
+<%= form_with model: form, url:,
+      data: {
+        controller: "member-options",
+        member_options_adult_group_value: FamilyMember::ADULT,
+        member_options_child_groups_value: FamilyMember::CHILD_AGE_GROUPS
+      },
+      class: "flex flex-col gap-5 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
   <%= render "admin/shared/form_errors", form: %>
 
   <%= render "admin/shared/field", f:, name: :first_name,
@@ -13,7 +19,38 @@
 
   <%= render "admin/shared/field", f:, name: :age_group, kind: :select, choices: age_group_options,
         caption: t("admin.family_members.form.age_group_label"),
-        hint: t("admin.family_members.form.age_group_hint") %>
+        hint: t("admin.family_members.form.age_group_hint"),
+        data: { member_options_target: "ageGroup", action: "change->member-options#refresh" } %>
+
+  <%= render "admin/shared/field", f:, name: :attends, kind: :select, choices: attendance_options,
+        caption: t("admin.family_members.form.attends_label"),
+        hint: t("admin.family_members.form.attends_hint") %>
+
+  <fieldset class="flex flex-col gap-5 border-0 p-0">
+    <legend class="pb-1.5 text-[17px] font-semibold">
+      <%= t("admin.family_members.form.options_title") %>
+    </legend>
+
+    <%= render "admin/shared/check_box_field", f:, name: :attends_brunch,
+          caption: t("admin.family_members.form.attends_brunch_label"),
+          hint: t("admin.family_members.form.attends_brunch_hint") %>
+
+    <%= render "admin/shared/check_box_field", f:, name: :attends_run,
+          caption: t("admin.family_members.form.attends_run_label"),
+          hint: t("admin.family_members.form.attends_run_hint"),
+          data: { member_options_target: "run" } %>
+
+    <%= render "admin/shared/check_box_field", f:, name: :no_alcohol,
+          caption: t("admin.family_members.form.no_alcohol_label"),
+          hint: t("admin.family_members.form.no_alcohol_hint"),
+          data: { member_options_target: "alcohol" } %>
+
+    <%= render "admin/shared/field", f:, name: :allergies, kind: :text_area,
+          input_class: "field-textarea",
+          caption: t("admin.family_members.form.allergies_label"),
+          placeholder: t("admin.family_members.form.allergies_placeholder"),
+          hint: t("admin.family_members.form.allergies_hint") %>
+  </fieldset>
 
   <%= render "admin/shared/form_actions", f:, cancel_path: %>
 <% end %>

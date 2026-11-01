@@ -96,6 +96,57 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
     end
 
+    it "badges a member who is coming and one who is not" do
+      melanie.update!(attends: true)
+      sylvain.update!(attends: false)
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.not_coming"))}/
+    end
+
+    it "badges nothing for a member who has not answered" do
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/, count: 0
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.unanswered"))}/, count: 0
+    end
+
+    it "tags the options a member has taken up, and only those" do
+      sylvain.update!(attends_run: true, attends_brunch: true)
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.brunch"))}/
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+    end
+
+    it "tags an adult who does not drink" do
+      sylvain.update!(no_alcohol: true)
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/
+    end
+
+    it "leaves the tag off a child, who is kept off the alcohol by rule" do
+      sylvain.update!(age_group: FamilyMember::KID, no_alcohol: true)
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+    end
+
+    it "shows a member's allergies" do
+      sylvain.update!(allergies: "Arachides et fruits à coque")
+
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "li", text: /Arachides et fruits à coque/
+    end
+
     it "says so when the family has no members at all" do
       get admin_family_path(roux), headers: admin_headers
 
