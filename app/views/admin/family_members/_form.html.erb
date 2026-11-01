@@ -31,25 +31,23 @@
       <%= t("admin.family_members.form.options_title") %>
     </legend>
 
-    <%= render "admin/shared/check_box_field", f:, name: :attends_brunch,
-          caption: t("admin.family_members.form.attends_brunch_label"),
-          hint: t("admin.family_members.form.attends_brunch_hint") %>
+    <div class="flex flex-col gap-3">
+      <%= render "admin/shared/check_box_field", f:, name: :attends_brunch,
+            caption: t("admin.family_members.form.attends_brunch_label") %>
 
-    <%= render "admin/shared/check_box_field", f:, name: :attends_run,
-          caption: t("admin.family_members.form.attends_run_label"),
-          hint: t("admin.family_members.form.attends_run_hint"),
-          data: { member_options_target: "run" } %>
+      <%= render "admin/shared/check_box_field", f:, name: :attends_run,
+            caption: t("admin.family_members.form.attends_run_label"),
+            data: { member_options_target: "run" } %>
 
-    <%= render "admin/shared/check_box_field", f:, name: :no_alcohol,
-          caption: t("admin.family_members.form.no_alcohol_label"),
-          hint: t("admin.family_members.form.no_alcohol_hint"),
-          data: { member_options_target: "alcohol" } %>
+      <%= render "admin/shared/check_box_field", f:, name: :no_alcohol,
+            caption: t("admin.family_members.form.no_alcohol_label"),
+            data: { member_options_target: "alcohol" } %>
+    </div>
 
     <%= render "admin/shared/field", f:, name: :allergies, kind: :text_area,
           input_class: "field-textarea",
           caption: t("admin.family_members.form.allergies_label"),
-          placeholder: t("admin.family_members.form.allergies_placeholder"),
-          hint: t("admin.family_members.form.allergies_hint") %>
+          placeholder: t("admin.family_members.form.allergies_placeholder") %>
   </fieldset>
 
   <%= render "admin/shared/form_actions", f:, cancel_path: %>

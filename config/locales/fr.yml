@@ -96,18 +96,14 @@ fr:
         email_hint: Laissez vide si cette personne n'a pas d'adresse ; une seule adresse de la famille suffit pour répondre.
         age_group_label: Tranche d'âge
         age_group_hint: Sert à prévoir les repas.
-        options_title: Le dimanche & à table
+        options_title: Options
         attends_label: Présence
         attends_hint: Laissez « Pas encore répondu » tant que la famille n'a pas répondu.
         no_alcohol_label: Ne boit pas d'alcool
-        no_alcohol_hint: Coché d'office pour les moins de 18 ans.
         attends_brunch_label: Vient au brunch
-        attends_brunch_hint: Dimanche 11h00 · sert à prévoir les couverts.
         attends_run_label: Court le 5K des mariés
-        attends_run_hint: Dimanche 10h00 · 5 km à son rythme.
         allergies_label: Allergies et régime alimentaire
         allergies_placeholder: Arachides, sans gluten…
-        allergies_hint: Laissez vide s'il n'y a rien à signaler.
       attendance:
         unanswered: Pas encore répondu
         coming: Vient
