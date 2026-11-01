@@ -2,9 +2,12 @@ require "rails_helper"
 
 RSpec.describe "The admin families screens" do
   let!(:melchior) { create(:family, name: "Melchior") }
-  let!(:melanie) { create(:family_member, family: melchior, first_name: "Mélanie", email: "melanie@exemple.fr") }
-  let!(:sylvain) { create(:family_member, family: melchior, first_name: "Sylvain") }
+  let!(:melanie) { create(:family_member, **melanie_attributes) }
+  let!(:sylvain) { create(:family_member, **sylvain_attributes) }
   let!(:roux) { create(:family, name: "Roux") }
+
+  let(:melanie_attributes) { { family: melchior, first_name: "Mélanie", email: "melanie@exemple.fr" } }
+  let(:sylvain_attributes) { { family: melchior, first_name: "Sylvain" } }
 
   it "asks for credentials on every action" do
     get admin_families_path
@@ -17,7 +20,7 @@ RSpec.describe "The admin families screens" do
     expect(response).to have_http_status(:unauthorized)
   end
 
-  describe "the list" do
+  describe "GET /admin/families" do
     it "names every family and its members" do
       get admin_families_path, headers: admin_headers
 
@@ -79,7 +82,7 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  describe "the family page" do
+  describe "GET /admin/families/:id" do
     it "lists its members, and says which have no address" do
       get admin_family_path(melchior), headers: admin_headers
 
@@ -88,12 +91,75 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.show.no_email"))}/
     end
 
-    it "shows each member's age group" do
-      sylvain.update!(age_group: FamilyMember::TEEN)
+    context "when a member is a teenager" do
+      let(:sylvain_attributes) { super().merge(age_group: FamilyMember::TEEN) }
 
+      it "shows the age group" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
+      end
+    end
+
+    context "when one member is coming and another is not" do
+      let(:melanie_attributes) { super().merge(attends: true) }
+      let(:sylvain_attributes) { super().merge(attends: false) }
+
+      it "badges each of them" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.not_coming"))}/
+      end
+    end
+
+    it "badges nothing for a member who has not answered" do
       get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/, count: 0
+      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.unanswered"))}/, count: 0
+    end
+
+    context "when a member runs and brunches" do
+      let(:sylvain_attributes) { super().merge(attends_run: true, attends_brunch: true) }
+
+      it "tags those, and only those" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.brunch"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+      end
+    end
+
+    context "when an adult does not drink" do
+      let(:sylvain_attributes) { super().merge(no_alcohol: true) }
+
+      it "tags them" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/
+      end
+    end
+
+    context "when a child does not drink" do
+      let(:sylvain_attributes) { super().merge(age_group: FamilyMember::KID, no_alcohol: true) }
+
+      it "leaves the tag off, since the rule decided it" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+      end
+    end
+
+    context "when a member has allergies" do
+      let(:sylvain_attributes) { super().merge(allergies: "Arachides et fruits à coque") }
+
+      it "shows them" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /Arachides et fruits à coque/
+      end
     end
 
     it "says so when the family has no members at all" do
@@ -103,7 +169,7 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  describe "creating one" do
+  describe "POST /admin/families" do
     it "sends you on to add its first member" do
       expect { post admin_families_path, params: { family: { name: "Nouvelle" } }, headers: admin_headers }
         .to change(Family, :count).by(1)
@@ -120,19 +186,23 @@ RSpec.describe "The admin families screens" do
     end
   end
 
-  it "keeps a family's members when it is renamed" do
-    patch admin_family_path(melchior), params: { family: { name: "Melchior-Dupont" } }, headers: admin_headers
+  describe "PATCH /admin/families/:id" do
+    it "keeps a family's members when it is renamed" do
+      patch admin_family_path(melchior), params: { family: { name: "Melchior-Dupont" } }, headers: admin_headers
 
-    expect(response).to redirect_to(admin_family_path(melchior))
-    expect(melchior.reload.name).to eq("Melchior-Dupont")
-    expect(melchior.family_members.count).to eq(2)
+      expect(response).to redirect_to(admin_family_path(melchior))
+      expect(melchior.reload.name).to eq("Melchior-Dupont")
+      expect(melchior.family_members.count).to eq(2)
+    end
   end
 
-  it "takes the members along when a family is deleted" do
-    expect { delete admin_family_path(melchior), headers: admin_headers }
-      .to change(Family, :count).by(-1)
-      .and change(FamilyMember, :count).by(-2)
+  describe "DELETE /admin/families/:id" do
+    it "takes the members along when a family is deleted" do
+      expect { delete admin_family_path(melchior), headers: admin_headers }
+        .to change(Family, :count).by(-1)
+        .and change(FamilyMember, :count).by(-2)
 
-    expect(response).to redirect_to(admin_families_path)
+      expect(response).to redirect_to(admin_families_path)
+    end
   end
 end
