@@ -1,15 +1,21 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["ageGroup", "alcohol", "run"]
+  static targets = ["ageGroup", "attendance", "options", "alcohol", "run"]
   static values = { adultGroup: String, childGroups: Array }
 
   connect() {
     this.applyAgeRules(false)
+    this.toggleOptions()
   }
 
   refresh() {
     this.applyAgeRules(true)
+    this.toggleOptions()
+  }
+
+  toggleOptions() {
+    this.optionsTarget.hidden = this.attendanceTarget.value !== "true"
   }
 
   applyAgeRules(resetWhenEditable) {
