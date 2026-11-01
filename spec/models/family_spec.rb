@@ -1,23 +1,24 @@
 require "rails_helper"
 
 RSpec.describe Family do
+  subject(:family) { create(:family) }
+
   describe "#answered?" do
     it "follows answered_at" do
       expect(create(:family, :answered)).to be_answered
-      expect(create(:family)).not_to be_answered
+      expect(family).not_to be_answered
     end
   end
 
-  describe "destroying one" do
-    it "takes its members with it" do
-      family = create(:family)
-      create_list(:family_member, 2, family:)
+  describe "#destroy" do
+    before { create_list(:family_member, 2, family:) }
 
+    it "takes its members with it" do
       expect { family.destroy }.to change(FamilyMember, :count).by(-2)
     end
   end
 
-  describe "searching with Ransack" do
+  describe ".ransack" do
     let!(:melchior) { create(:family, name: "Melchior") }
     let!(:dubois) { create(:family, name: "Dubois") }
 

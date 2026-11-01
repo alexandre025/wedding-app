@@ -2,9 +2,12 @@ require "rails_helper"
 
 RSpec.describe "The admin families screens" do
   let!(:melchior) { create(:family, name: "Melchior") }
-  let!(:melanie) { create(:family_member, family: melchior, first_name: "Mélanie", email: "melanie@exemple.fr") }
-  let!(:sylvain) { create(:family_member, family: melchior, first_name: "Sylvain") }
+  let!(:melanie) { create(:family_member, **melanie_attributes) }
+  let!(:sylvain) { create(:family_member, **sylvain_attributes) }
   let!(:roux) { create(:family, name: "Roux") }
+
+  let(:melanie_attributes) { { family: melchior, first_name: "Mélanie", email: "melanie@exemple.fr" } }
+  let(:sylvain_attributes) { { family: melchior, first_name: "Sylvain" } }
 
   it "asks for credentials on every action" do
     get admin_families_path
@@ -88,22 +91,26 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.show.no_email"))}/
     end
 
-    it "shows each member's age group" do
-      sylvain.update!(age_group: FamilyMember::TEEN)
+    context "when a member is a teenager" do
+      let(:sylvain_attributes) { super().merge(age_group: FamilyMember::TEEN) }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "shows the age group" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.age_groups.teen"))}/
+      end
     end
 
-    it "badges a member who is coming and one who is not" do
-      melanie.update!(attends: true)
-      sylvain.update!(attends: false)
+    context "when one member is coming and another is not" do
+      let(:melanie_attributes) { super().merge(attends: true) }
+      let(:sylvain_attributes) { super().merge(attends: false) }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "badges each of them" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.not_coming"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.coming"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.not_coming"))}/
+      end
     end
 
     it "badges nothing for a member who has not answered" do
@@ -113,38 +120,46 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.attendance.unanswered"))}/, count: 0
     end
 
-    it "tags the options a member has taken up, and only those" do
-      sylvain.update!(attends_run: true, attends_brunch: true)
+    context "when a member runs and brunches" do
+      let(:sylvain_attributes) { super().merge(attends_run: true, attends_brunch: true) }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "tags those, and only those" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.brunch"))}/
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.brunch"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+      end
     end
 
-    it "tags an adult who does not drink" do
-      sylvain.update!(no_alcohol: true)
+    context "when an adult does not drink" do
+      let(:sylvain_attributes) { super().merge(no_alcohol: true) }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "tags them" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/
+      end
     end
 
-    it "leaves the tag off a child, who is kept off the alcohol by rule" do
-      sylvain.update!(age_group: FamilyMember::KID, no_alcohol: true)
+    context "when a child does not drink" do
+      let(:sylvain_attributes) { super().merge(age_group: FamilyMember::KID, no_alcohol: true) }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "leaves the tag off, since the rule decided it" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.no_alcohol"))}/, count: 0
+      end
     end
 
-    it "shows a member's allergies" do
-      sylvain.update!(allergies: "Arachides et fruits à coque")
+    context "when a member has allergies" do
+      let(:sylvain_attributes) { super().merge(allergies: "Arachides et fruits à coque") }
 
-      get admin_family_path(melchior), headers: admin_headers
+      it "shows them" do
+        get admin_family_path(melchior), headers: admin_headers
 
-      assert_select "li", text: /Arachides et fruits à coque/
+        assert_select "li", text: /Arachides et fruits à coque/
+      end
     end
 
     it "says so when the family has no members at all" do

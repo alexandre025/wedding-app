@@ -10,38 +10,50 @@ RSpec.describe AdminHelper do
   end
 
   describe "#attendance_options" do
+    subject(:options) { helper.attendance_options }
+
     it "offers the unanswered choice first" do
-      expect(helper.attendance_options.first).to eq([ I18n.t("admin.family_members.attendance.unanswered"), "" ])
+      expect(options.first).to eq([ I18n.t("admin.family_members.attendance.unanswered"), "" ])
     end
 
     it "offers values that cast back to the three states" do
-      cast = helper.attendance_options.map { |_caption, value| ActiveModel::Type::Boolean.new.cast(value) }
+      cast = options.map { |_caption, value| ActiveModel::Type::Boolean.new.cast(value) }
 
       expect(cast).to eq([ nil, true, false ])
     end
   end
 
   describe "#member_tags" do
+    subject(:tags) { helper.member_tags(member) }
+
+    let(:member) { build(:family_member) }
+
     it "names nothing for a member who has taken nothing up" do
-      expect(helper.member_tags(build(:family_member))).to be_empty
+      expect(tags).to be_empty
     end
 
-    it "names only the options taken up" do
-      member = build(:family_member, :runner)
+    context "when the member runs" do
+      let(:member) { build(:family_member, :runner) }
 
-      expect(helper.member_tags(member)).to eq([ I18n.t("admin.family_members.tags.run") ])
+      it "names only that" do
+        expect(tags).to eq([ I18n.t("admin.family_members.tags.run") ])
+      end
     end
 
-    it "names the alcohol tag for an adult who does not drink" do
-      member = build(:family_member, :teetotal)
+    context "when an adult does not drink" do
+      let(:member) { build(:family_member, :teetotal) }
 
-      expect(helper.member_tags(member)).to eq([ I18n.t("admin.family_members.tags.no_alcohol") ])
+      it "names the alcohol tag" do
+        expect(tags).to eq([ I18n.t("admin.family_members.tags.no_alcohol") ])
+      end
     end
 
-    it "leaves the alcohol tag off a teenager, who is kept off it by rule" do
-      member = build(:family_member, :teen)
+    context "when a teenager does not drink" do
+      let(:member) { build(:family_member, :teen) }
 
-      expect(helper.member_tags(member)).to be_empty
+      it "leaves the alcohol tag off, since the rule decided it" do
+        expect(tags).to be_empty
+      end
     end
   end
 

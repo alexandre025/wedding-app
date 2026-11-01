@@ -191,6 +191,32 @@ A Stimulus controller stays small enough to read in one screen, declares its
 
 RSpec and FactoryBot. `spec/` mirrors `app/`.
 
+The DSL is always called on its module — `RSpec.describe`, `FactoryBot.define`,
+never the bare `describe` or `define` that the monkey-patched global syntax
+allows. One line tells you which library you are reading.
+
+**A `describe` block names a public method**, written the way you would call it:
+`describe "#valid?"`, `describe "#submit"`, `describe ".ransack"`. The block is
+then a statement about that method rather than about a feature, and anything
+that does not fit under one is a sign the spec is testing something the object
+does not actually expose.
+
+**Each one names its subject**, so the examples read against a noun rather than
+re-building the object every time:
+
+```ruby
+subject(:form) { described_class.new(family.family_members.build) }
+```
+
+A nested `context` that needs a different object redefines `subject` under the
+same name, and the examples below it do not change.
+
+**Set state up in `let`, do not `update!` your way to it.** A record created one
+way and then corrected reads as two facts the example has to reconcile, and it
+exercises a save the scenario never performs. Where one example needs a variant,
+it goes in a `context` that overrides the `let` — `let(:params) { super().merge(...) }`
+keeps the override to the part that differs.
+
 Request specs over controller specs: they exercise routing, authentication and
 rendering together. `assert_select` is kept for assertions about rendered copy —
 it decodes entities, and the French copy is full of apostrophes that `include`
