@@ -1,0 +1,27 @@
+<%# locals: (options:) %>
+<%= render "admin/shared/card", title: t("admin.dashboard.show.options_title"),
+      class_name: "min-w-0 flex-1 basis-[320px]" do %>
+  <% options.each do |option| %>
+    <div class="flex flex-col gap-1.5">
+      <div class="flex justify-between gap-3 text-[15px]">
+        <span><%= option.label %></span>
+
+        <span class="font-semibold">
+          <%= option.count %>
+
+          <span class="font-normal text-ink-muted">
+            <%= t("admin.dashboard.show.options_of", of: option.of) %>
+          </span>
+        </span>
+      </div>
+
+      <div aria-hidden="true" class="h-2 overflow-hidden rounded-full bg-sand-pale">
+        <div class="h-full rounded-full bg-sage" style="width: <%= option.percent %>%"></div>
+      </div>
+
+      <span class="text-[13px] text-ink-muted">
+        <%= option.names || t("admin.dashboard.show.none") %>
+      </span>
+    </div>
+  <% end %>
+<% end %>

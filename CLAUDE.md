@@ -71,9 +71,16 @@ index where uniqueness matters — so the data stays sound without the model
 re-stating it.
 
 A model therefore carries only: associations, constants (`AGE_GROUPS`,
-`SEARCH_PREDICATE`), small predicates (`answered?`), and the Ransack
+`SEARCH_PREDICATE`), small predicates (`answered?`), scopes, and the Ransack
 allowlists. No `normalizes`, no callbacks, and no `validates` — with one
 exception.
+
+Scopes belong here for the same reason the Ransack allowlist does: a scope is a
+question put to the table, not a rule about a submission. Where a scope and a
+predicate state the same rule — `Family.answered` in SQL for a count across the
+table, `Family#answered?` in Ruby for a record whose members are already
+loaded — keep the two next to each other, because nothing but proximity stops
+them drifting apart.
 
 **Uniqueness is the exception.** It lives on the model, because it is a
 statement about the table rather than about one submission, and the database
@@ -130,6 +137,19 @@ model, and the `i_cont` predicate rather than `cont`: plain `cont` is `LIKE`,
 case sensitive on Postgres, and would miss "Melchior" for "melch". The
 predicate itself is a model constant so the controller, the view and the specs
 all name the same thing.
+
+## Presenters
+
+A screen that reads rather than writes gets a plain object in `app/presenters`,
+the way a screen that writes gets a form in `app/forms`:
+`Admin::ResponseDashboardPresenter` loads what it needs once in `initialize`
+and answers every figure the dashboard shows from memory. The controller
+assigns one ivar; the templates ask it questions and lay the answers out.
+
+The counting rules live there, not in the templates, because they are the part
+worth testing — which guests a figure includes, how a percentage rounds, which
+of two numbers a bar segment takes. A presenter returns numbers, strings and
+small `Struct`s; it never returns markup.
 
 ## Controllers
 

@@ -1,0 +1,33 @@
+<%# locals: (pending:) %>
+<%= render "admin/shared/card", title: t("admin.dashboard.show.pending_title"),
+      action: link_to(t("admin.dashboard.show.manage_families"), admin_families_path,
+        class: "text-sm font-semibold text-sage-deep"),
+      class_name: "min-w-0 flex-1 basis-[420px]" do %>
+  <% if pending.any? %>
+    <ul class="flex flex-col [&>li:last-child]:border-b-0">
+      <% pending.each do |family| %>
+        <li class="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 border-b border-rule-row py-3">
+          <div class="flex min-w-0 flex-col gap-0.5">
+            <span class="text-[15px] font-semibold">
+              <%= t("admin.families.family_name", name: family.name) %>
+            </span>
+
+            <span class="text-[13px] break-words text-ink-muted"><%= family.members %></span>
+          </div>
+
+          <% if family.emails %>
+            <%= mail_to family.emails, t("admin.dashboard.show.remind"),
+                  subject: t("admin.dashboard.show.remind_subject"),
+                  body: t("admin.dashboard.show.remind_body", date: l(Wedding::RSVP_DEADLINE.to_date, format: :long)),
+                  class: "btn-ghost-sm",
+                  aria: { label: t("admin.dashboard.show.remind_label", name: family.name) } %>
+          <% else %>
+            <span class="text-[13px] text-ink-muted"><%= t("admin.families.show.no_email") %></span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <%= render "admin/shared/empty_state", message: t("admin.dashboard.show.none_pending") %>
+  <% end %>
+<% end %>

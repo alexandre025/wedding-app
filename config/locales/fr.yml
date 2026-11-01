@@ -28,6 +28,45 @@ fr:
       show:
         title: Suivi des réponses
         deadline: Réponses attendues avant le %{date} · %{countdown}
+        progress_title:
+          one: Où en est l'invité
+          other: Où en sont les %{count} invités
+        answered_percent: "%{percent} %"
+        answered_caption: ont répondu
+        bar_label: "%{present} présents, %{absent} absents, %{pending} en attente sur %{total} invités"
+        present: Présents
+        absent: Absents
+        pending: En attente
+        families_answered: Familles ayant répondu
+        families_ratio: "%{answered} / %{total}"
+        options_title: Options du dimanche
+        options:
+          run: Le 5K des mariés
+          brunch: Brunch
+        options_of: "/ %{of}"
+        diets_title: Régimes & allergies
+        diets:
+          no_alcohol: Sans alcool
+          allergies: Allergies
+        pending_title: En attente de réponse
+        manage_families: Gérer les familles →
+        remind: Relancer
+        remind_label: Relancer la famille %{name} par email
+        remind_subject: Mariage de Chloé & Alexandre · votre réponse
+        remind_body: |-
+          Bonjour,
+
+          Petit rappel : merci de nous répondre avant le %{date}.
+
+          À très vite,
+          Chloé & Alexandre
+        none_pending: Toutes les familles ont répondu.
+        recent_title: Dernières réponses
+        changed_at: Modifié le %{date}
+        present_prefix: "Présents :"
+        absent_prefix: "Absents :"
+        none_recent: Aucune famille n'a encore répondu.
+        none: —
     cancel: Annuler
     save: Enregistrer
     families:

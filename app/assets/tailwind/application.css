@@ -25,6 +25,8 @@
   --color-rule-sand: #c9bfa8;
   --color-rule-row: #ece6da;
   --color-rule-chip: #e3dccb;
+  --color-sand: #ddd5c4;
+  --color-sand-pale: #f0ebe0;
   --color-peach: #d9a77e;
   --color-placeholder: #8a8573;
 
@@ -80,6 +82,14 @@
 
 @utility field-textarea {
   @apply min-h-[96px] w-full resize-y rounded-[10px] border border-rule-sand bg-white px-[14px] py-3 text-base text-ink;
+}
+
+@utility admin-card {
+  @apply flex flex-col gap-4 rounded-2xl border border-rule-sage bg-white p-6;
+}
+
+@utility card-title {
+  @apply text-[17px] font-semibold;
 }
 
 @utility member-tag {

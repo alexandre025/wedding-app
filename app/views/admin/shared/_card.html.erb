@@ -1,0 +1,10 @@
+<%# locals: (title:, action: nil, class_name: "") %>
+<section class="<%= class_names("admin-card", class_name) %>">
+  <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
+    <h2 class="card-title"><%= title %></h2>
+
+    <%= action %>
+  </div>
+
+  <%= yield %>
+</section>
