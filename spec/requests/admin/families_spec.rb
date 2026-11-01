@@ -36,6 +36,29 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.no_members"))}/
     end
 
+    it "counts no family as answered while one of its members has not" do
+      get admin_families_path, headers: admin_headers
+
+      expect(captioned_figures(response.body)).to include(
+        I18n.t("admin.families.index.stats.answered") =>
+          I18n.t("admin.families.index.stats.ratio", answered: 0, total: 2)
+      )
+    end
+
+    context "when every member of a family has answered" do
+      let(:melanie_attributes) { super().merge(attends: true) }
+      let(:sylvain_attributes) { super().merge(attends: false) }
+
+      it "counts it, refusals included" do
+        get admin_families_path, headers: admin_headers
+
+        expect(captioned_figures(response.body)).to include(
+          I18n.t("admin.families.index.stats.answered") =>
+            I18n.t("admin.families.index.stats.ratio", answered: 1, total: 2)
+        )
+      end
+    end
+
     it "narrows by a member's email when searched" do
       get admin_families_path(q: { Family::SEARCH_PREDICATE => melanie.email }), headers: admin_headers
 

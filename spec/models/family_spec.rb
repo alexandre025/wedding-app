@@ -4,9 +4,38 @@ RSpec.describe Family do
   subject(:family) { create(:family) }
 
   describe "#answered?" do
-    it "follows answered_at" do
-      expect(create(:family, :answered)).to be_answered
+    it "says no while a family has no members at all" do
       expect(family).not_to be_answered
+    end
+
+    it "says no while one member is still unanswered" do
+      create(:family_member, :coming, family:)
+      create(:family_member, family:)
+
+      expect(family).not_to be_answered
+    end
+
+    it "says yes once every member has an answer, refusals included" do
+      expect(create(:family, :answered)).to be_answered
+    end
+  end
+
+  describe ".answered" do
+    let!(:answered) { create(:family, :answered) }
+    let!(:partly) { create(:family) }
+
+    before do
+      create(:family_member, :coming, family: partly)
+      create(:family_member, family: partly)
+    end
+
+    it "returns the families the predicate calls answered, and only those" do
+      expect(described_class.answered).to contain_exactly(answered)
+      expect(described_class.all.select(&:answered?)).to contain_exactly(answered)
+    end
+
+    it "leaves out a family with no members" do
+      expect(described_class.answered).not_to include(family)
     end
   end
 
