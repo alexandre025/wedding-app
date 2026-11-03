@@ -19,8 +19,8 @@
   <div
     class="
       relative mx-auto grid w-full max-w-[1200px] grow justify-items-center gap-3.5 px-7 pt-18 pb-5 text-center
-      lg:grid-cols-[minmax(0,560px)_auto] lg:content-center lg:items-center lg:justify-center lg:justify-items-start
-      lg:gap-x-24 lg:gap-y-5 lg:px-6 lg:py-16 lg:text-left
+      lg:grid-cols-[minmax(0,520px)_minmax(0,640px)] lg:content-center lg:items-center lg:justify-center
+      lg:justify-items-start lg:gap-x-16 lg:gap-y-5 lg:px-6 lg:py-16 lg:text-left
     "
   >
     <div class="flex flex-col items-center gap-3.5 lg:col-start-1 lg:row-start-1 lg:items-start lg:gap-5">
@@ -47,25 +47,12 @@
       </div>
     </div>
 
-    <div
-      class="
-        rounded-t-[96px] rounded-b-[14px] border border-rule-sand p-1.5 lg:col-start-2 lg:row-span-2 lg:row-start-1
-        lg:justify-self-center lg:rounded-t-[200px] lg:rounded-b-[18px] lg:p-2.5
-      "
-    >
-      <div
-        role="img"
-        aria-label="<%= t("pages.home.photo_alt") %>"
-        class="
-          flex size-[172px] flex-col items-center justify-center gap-2 rounded-t-[90px] rounded-b-[10px]
-          bg-sage-pale text-[13px] text-ink-muted lg:h-[440px] lg:w-[340px] lg:gap-2.5 lg:rounded-t-[190px]
-          lg:rounded-b-[12px] lg:text-[15px]
-        "
-      >
-        <%= icon("photo", class_name: "size-7 lg:size-9") %>
-        <span><%= t("pages.home.photo_placeholder") %></span>
+    <figure class="m-0 w-full max-w-[420px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none">
+      <div class="rounded-[18px] border border-rule-sand p-[5px] lg:rounded-3xl lg:p-2.5">
+        <%= image_tag "engagement.jpg", alt: t("pages.home.photo_alt"),
+              class: "block aspect-[3/2] w-full rounded-[14px] object-cover lg:rounded-2xl" %>
       </div>
-    </div>
+    </figure>
 
     <div
       class="
