@@ -3,7 +3,10 @@ FactoryBot.define do
     sequence(:name) { |n| "Melchior#{n}" }
 
     trait :answered do
-      answered_at { 2.days.ago }
+      after(:create) do |family|
+        create(:family_member, :coming, family:)
+        create(:family_member, :not_coming, family:)
+      end
     end
   end
 end

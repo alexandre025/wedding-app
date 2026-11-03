@@ -1,0 +1,13 @@
+<%# locals: (diets:) %>
+<%= render "admin/shared/card", title: t("admin.dashboard.show.diets_title"),
+      class_name: "min-w-0 flex-1 basis-[320px]" do %>
+  <ul class="flex flex-col [&>li:last-child]:border-b-0">
+    <% diets.each do |diet| %>
+      <li class="flex items-baseline justify-between gap-3 border-b border-rule-row py-2.5 text-[15px]">
+        <span><%= diet.label %></span>
+
+        <span class="font-semibold"><%= diet.count %></span>
+      </li>
+    <% end %>
+  </ul>
+<% end %>

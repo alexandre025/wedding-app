@@ -8,7 +8,7 @@ class Admin::FamiliesController < Admin::BaseController
 
     @families_count = Family.count
     @guests_count = FamilyMember.count
-    @answered_count = Family.where.not(answered_at: nil).count
+    @answered_count = Family.answered.count
   end
 
   def show

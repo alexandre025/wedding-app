@@ -1,0 +1,35 @@
+<%# locals: (answers:) %>
+<%= render "admin/shared/card", title: t("admin.dashboard.show.recent_title"),
+      class_name: "min-w-0 flex-1 basis-[420px]" do %>
+  <% if answers.any? %>
+    <ul class="flex flex-col [&>li:last-child]:border-b-0">
+      <% answers.each do |answer| %>
+        <li class="flex flex-col gap-1 border-b border-rule-row py-3">
+          <div class="flex flex-wrap justify-between gap-2">
+            <span class="text-[15px] font-semibold">
+              <%= t("admin.families.family_name", name: answer.name) %>
+            </span>
+
+            <span class="text-[13px] text-ink-muted">
+              <%= t("admin.dashboard.show.changed_at", date: l(answer.changed_at.to_date, format: :short)) %>
+            </span>
+          </div>
+
+          <span class="text-sm">
+            <span class="font-semibold text-sage-deep"><%= t("admin.dashboard.show.present_prefix") %></span>
+            <%= answer.coming || t("admin.dashboard.show.none") %>
+          </span>
+
+          <% if answer.missing %>
+            <span class="text-sm">
+              <span class="font-semibold text-clay"><%= t("admin.dashboard.show.absent_prefix") %></span>
+              <%= answer.missing %>
+            </span>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <%= render "admin/shared/empty_state", message: t("admin.dashboard.show.none_recent") %>
+  <% end %>
+<% end %>

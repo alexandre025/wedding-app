@@ -1,0 +1,21 @@
+<%# locals: (pending:) %>
+<%= render "admin/shared/card", title: t("admin.dashboard.show.pending_title"),
+      action: link_to(t("admin.dashboard.show.manage_families"), admin_families_path,
+        class: "text-sm font-semibold text-sage-deep"),
+      class_name: "min-w-0 flex-1 basis-[420px]" do %>
+  <% if pending.any? %>
+    <ul class="flex flex-col [&>li:last-child]:border-b-0">
+      <% pending.each do |family| %>
+        <li class="flex flex-col gap-0.5 border-b border-rule-row py-3">
+          <span class="text-[15px] font-semibold">
+            <%= t("admin.families.family_name", name: family.name) %>
+          </span>
+
+          <span class="text-[13px] break-words text-ink-muted"><%= family.members %></span>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <%= render "admin/shared/empty_state", message: t("admin.dashboard.show.none_pending") %>
+  <% end %>
+<% end %>

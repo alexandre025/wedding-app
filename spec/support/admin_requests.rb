@@ -10,6 +10,15 @@ module AdminRequests
     { "HTTP_AUTHORIZATION" => ActionController::HttpAuthentication::Basic.encode_credentials(username, password) }
   end
 
+  def captioned_figures(body)
+    Nokogiri::HTML5(body).css("div").filter_map do |node|
+      children = node.element_children
+      next unless children.size == 2 && children.all? { |child| child.name == "span" }
+
+      children.map { |child| child.text.squish }
+    end.to_h
+  end
+
   def submitted_form_fields(body, scope: "family_member")
     document = Nokogiri::HTML5(body)
     fields = {}
