@@ -38,7 +38,6 @@ fr:
         absent: Absents
         pending: En attente
         families_answered: Familles ayant répondu
-        families_ratio: "%{answered} / %{total}"
         options_title: Options du dimanche
         options:
           run: Le 5K des mariés

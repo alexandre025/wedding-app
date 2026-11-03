@@ -7,6 +7,18 @@ class Admin::ResponseDashboardPresenter
   MEMBER_NAMES = "string_agg(family_members.first_name, ', ' ORDER BY family_members.id)".freeze
   ANSWERED_AT = "max(family_members.updated_at)".freeze
 
+  ADULTS = "age_group = '#{FamilyMember::ADULT}'".freeze
+
+  TALLY = {
+    run_count: "count(*) filter (where attends_run)",
+    run_names: "#{MEMBER_NAMES} filter (where attends_run)",
+    brunch_count: "count(*) filter (where attends_brunch)",
+    brunch_names: "#{MEMBER_NAMES} filter (where attends_brunch)",
+    alcohol_count: "count(*) filter (where not no_alcohol and #{ADULTS})",
+    no_alcohol_count: "count(*) filter (where no_alcohol and #{ADULTS})",
+    allergies_count: "count(*) filter (where btrim(coalesce(allergies, '')) <> '')"
+  }.freeze
+
   def families_count = Family.count
 
   def answered_families_count = Family.answered.count
@@ -64,23 +76,7 @@ class Admin::ResponseDashboardPresenter
     def attendance = @attendance ||= FamilyMember.group(:attends).count
 
     def tally
-      @tally ||= FamilyMember.where(attends: true).pick(
-        Arel.sql("count(*) filter (where attends_run)"),
-        Arel.sql("#{MEMBER_NAMES} filter (where attends_run)"),
-        Arel.sql("count(*) filter (where attends_brunch)"),
-        Arel.sql("#{MEMBER_NAMES} filter (where attends_brunch)"),
-        Arel.sql(adults_where_alcohol_is(false)),
-        Arel.sql(adults_where_alcohol_is(true)),
-        Arel.sql("count(*) filter (where btrim(coalesce(allergies, '')) <> '')")
-      ).then do |row|
-        %i[run_count run_names brunch_count brunch_names alcohol_count no_alcohol_count allergies_count].zip(row).to_h
-      end
-    end
-
-    def adults_where_alcohol_is(no_alcohol)
-      FamilyMember.sanitize_sql_array(
-        [ "count(*) filter (where no_alcohol is ? and age_group = ?)", no_alcohol, FamilyMember::ADULT ]
-      )
+      @tally ||= TALLY.keys.zip(FamilyMember.where(attends: true).pick(*TALLY.values.map { Arel.sql(_1) })).to_h
     end
 
     def coming = "#{MEMBER_NAMES} filter (where family_members.attends)"

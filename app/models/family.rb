@@ -5,10 +5,7 @@ class Family < ApplicationRecord
 
   scope :pending, -> { where(id: FamilyMember.where(attends: nil).select(:family_id)) }
 
-  scope :answered, -> {
-    where(id: FamilyMember.select(:family_id))
-      .where.not(id: FamilyMember.where(attends: nil).select(:family_id))
-  }
+  scope :answered, -> { where(id: FamilyMember.select(:family_id)).where.not(id: pending.select(:id)) }
 
   def self.ransackable_attributes(_auth_object = nil) = [ "name" ]
 

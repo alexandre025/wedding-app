@@ -1,19 +1,16 @@
 <%# locals: (presenter:) %>
-<section class="admin-card gap-[18px]">
-  <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2">
-    <h2 class="card-title">
-      <%= t("admin.dashboard.show.progress_title", count: presenter.guests_count) %>
-    </h2>
+<% answered = capture do %>
+  <p class="text-[15px] text-ink-muted">
+    <span class="font-display text-3xl font-semibold text-ink">
+      <%= t("admin.dashboard.show.answered_percent", percent: presenter.answered_percent) %>
+    </span>
 
-    <p class="text-[15px] text-ink-muted">
-      <span class="font-display text-3xl font-semibold text-ink">
-        <%= t("admin.dashboard.show.answered_percent", percent: presenter.answered_percent) %>
-      </span>
+    <%= t("admin.dashboard.show.answered_caption") %>
+  </p>
+<% end %>
 
-      <%= t("admin.dashboard.show.answered_caption") %>
-    </p>
-  </div>
-
+<%= render "admin/shared/card", title: t("admin.dashboard.show.progress_title", count: presenter.guests_count),
+      action: answered do %>
   <div
     role="img"
     aria-label="<%= t("admin.dashboard.show.bar_label", present: presenter.present_count, absent: presenter.absent_count, pending: presenter.pending_count, total: presenter.guests_count) %>"
@@ -35,7 +32,7 @@
           value: presenter.pending_count, rule: "border-sand" %>
 
     <%= render "admin/dashboard/figure", caption: t("admin.dashboard.show.families_answered"),
-          value: t("admin.dashboard.show.families_ratio", answered: presenter.answered_families_count, total: presenter.families_count),
+          value: t("admin.families.index.stats.ratio", answered: presenter.answered_families_count, total: presenter.families_count),
           rule: "border-sage-pale" %>
   </div>
-</section>
+<% end %>

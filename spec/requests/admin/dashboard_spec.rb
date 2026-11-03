@@ -51,7 +51,7 @@ RSpec.describe "The admin dashboard" do
           I18n.t("admin.dashboard.show.absent") => "1",
           I18n.t("admin.dashboard.show.pending") => "1",
           I18n.t("admin.dashboard.show.families_answered") =>
-            I18n.t("admin.dashboard.show.families_ratio", answered: 1, total: 2)
+            I18n.t("admin.families.index.stats.ratio", answered: 1, total: 2)
         )
       end
 
