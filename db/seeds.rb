@@ -4,7 +4,7 @@ families = {
       attends_run: "1" },
     { first_name: "Sylvain", attends: "true", attends_brunch: "1", no_alcohol: "1" },
     { first_name: "Célie", age_group: FamilyMember::TEEN, attends: "true", attends_run: "1" },
-    { first_name: "Léna", age_group: FamilyMember::KID, attends: "true", attends_brunch: "1" }
+    { first_name: "Léna", age_group: FamilyMember::KID, attends: "true", attends_brunch: "1", vegetarian: "1" }
   ],
   "Martin" => [
     { first_name: "Camille", email: "camille.martin@exemple.fr", attends: "true", attends_brunch: "1",

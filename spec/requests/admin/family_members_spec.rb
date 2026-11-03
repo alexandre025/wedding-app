@@ -42,14 +42,15 @@ RSpec.describe "The admin family member screens" do
 
     context "with every option answered" do
       let(:params) do
-        super().merge(email: "", attends_run: "1", attends_brunch: "0", no_alcohol: "1", allergies: "Arachides")
+        super().merge(email: "", attends_run: "1", attends_brunch: "0", no_alcohol: "1", vegetarian: "1",
+          allergies: "Arachides")
       end
 
       it "records every one of them" do
         create_member
 
         expect(roux.family_members.last).to have_attributes(attends_run: true, attends_brunch: false,
-          no_alcohol: true, allergies: "Arachides")
+          no_alcohol: true, vegetarian: true, allergies: "Arachides")
       end
     end
 
@@ -128,11 +129,12 @@ RSpec.describe "The admin family member screens" do
     end
 
     context "for a member with options stored" do
-      let(:member_attributes) { super().merge(attends_run: true, no_alcohol: true) }
+      let(:member_attributes) { super().merge(attends_run: true, no_alcohol: true, vegetarian: true) }
 
       it "ticks the boxes that are stored and leaves the others alone" do
         assert_select "input[type=checkbox][name=?][checked]", "family_member[attends_run]"
         assert_select "input[type=checkbox][name=?][checked]", "family_member[no_alcohol]"
+        assert_select "input[type=checkbox][name=?][checked]", "family_member[vegetarian]"
         assert_select "input[type=checkbox][name=?][checked]", "family_member[attends_brunch]", count: 0
       end
     end

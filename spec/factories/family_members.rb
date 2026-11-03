@@ -35,6 +35,10 @@ FactoryBot.define do
       no_alcohol { true }
     end
 
+    trait :vegetarian do
+      vegetarian { true }
+    end
+
     trait :brunching do
       attends_brunch { true }
     end

@@ -48,6 +48,14 @@ RSpec.describe AdminHelper do
       end
     end
 
+    context "when the member is vegetarian" do
+      let(:member) { build(:family_member, :vegetarian) }
+
+      it "names the vegetarian tag" do
+        expect(tags).to eq([ I18n.t("admin.family_members.tags.vegetarian") ])
+      end
+    end
+
     context "when a teenager does not drink" do
       let(:member) { build(:family_member, :teen) }
 

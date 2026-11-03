@@ -144,6 +144,22 @@ RSpec.describe Admin::ResponseDashboardPresenter do
       end
     end
 
+    context "when guests are vegetarian" do
+      subject(:vegetarian) { presenter.diets.third }
+
+      let(:sylvain) { create(:family_member, :coming, :vegetarian, family: melchior, first_name: "Sylvain") }
+      let(:lena) { create(:family_member, :kid, :coming, :vegetarian, family: melchior, first_name: "Léna") }
+      let(:antoine) { create(:family_member, :vegetarian, family: roux, first_name: "Antoine") }
+
+      it "counts those who are coming, whatever their age" do
+        expect(vegetarian).to have_attributes(label: I18n.t("admin.dashboard.show.diets.vegetarian"), count: 2)
+      end
+    end
+
+    it "counts no vegetarian when nobody is" do
+      expect(presenter.diets.third).to have_attributes(label: I18n.t("admin.dashboard.show.diets.vegetarian"), count: 0)
+    end
+
     it "counts the guests who signalled an allergy" do
       expect(presenter.diets.last).to have_attributes(label: I18n.t("admin.dashboard.show.diets.allergies"), count: 1)
     end
