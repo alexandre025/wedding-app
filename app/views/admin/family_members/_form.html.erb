@@ -44,6 +44,9 @@
         <%= render "admin/shared/check_box_field", f:, name: :no_alcohol,
               caption: t("admin.family_members.form.no_alcohol_label"),
               data: { member_options_target: "alcohol" } %>
+
+        <%= render "admin/shared/check_box_field", f:, name: :vegetarian,
+              caption: t("admin.family_members.form.vegetarian_label") %>
       </div>
 
       <%= render "admin/shared/field", f:, name: :allergies, kind: :text_area,

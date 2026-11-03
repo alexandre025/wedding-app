@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_11_01_104700) do
+ActiveRecord::Schema[8.1].define(version: 2026_11_03_100000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -32,6 +32,7 @@ ActiveRecord::Schema[8.1].define(version: 2026_11_01_104700) do
     t.boolean "attends_brunch", default: false, null: false
     t.boolean "attends_run", default: false, null: false
     t.text "allergies"
+    t.boolean "vegetarian", default: false, null: false
     t.index ["email"], name: "index_family_members_on_email", unique: true
     t.index ["family_id"], name: "index_family_members_on_family_id"
   end

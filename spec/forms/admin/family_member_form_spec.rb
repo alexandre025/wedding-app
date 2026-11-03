@@ -10,17 +10,45 @@ RSpec.describe Admin::FamilyMemberForm do
   describe ".new" do
     subject(:form) { described_class.new(stored) }
 
-    let(:stored) { create(:family_member, :runner, :brunching, :teetotal, :with_allergies, :coming, family:) }
+    let(:stored) do
+      create(:family_member, :runner, :brunching, :teetotal, :vegetarian, :with_allergies, :coming, family:)
+    end
 
     it "reads every stored answer back into the form" do
       expect(form).to have_attributes(attends: true, attends_run: true, attends_brunch: true,
-        no_alcohol: true, allergies: "Arachides")
+        no_alcohol: true, vegetarian: true, allergies: "Arachides")
     end
   end
 
   describe "#submit" do
     it "creates the member on a valid submission" do
       expect { form.submit(params.merge(email: "antoine@exemple.fr")) }.to change(FamilyMember, :count).by(1)
+    end
+
+    it "defaults to a meal with meat" do
+      form.submit(params)
+
+      expect(member.vegetarian).to be(false)
+    end
+
+    context "when the member is vegetarian" do
+      let(:params) { super().merge(vegetarian: "1") }
+
+      it "records it" do
+        form.submit(params)
+
+        expect(member.vegetarian).to be(true)
+      end
+    end
+
+    context "when a child is vegetarian" do
+      let(:params) { super().merge(age_group: FamilyMember::KID, vegetarian: "1") }
+
+      it "keeps it, since no age rule decides the meal" do
+        form.submit(params)
+
+        expect(member.vegetarian).to be(true)
+      end
     end
 
     context "when the first name is padded" do

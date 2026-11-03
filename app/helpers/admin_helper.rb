@@ -27,6 +27,7 @@ module AdminHelper
     tags << t("admin.family_members.tags.run") if member.attends_run
     tags << t("admin.family_members.tags.brunch") if member.attends_brunch
     tags << t("admin.family_members.tags.no_alcohol") if member.no_alcohol && member.adult?
+    tags << t("admin.family_members.tags.vegetarian") if member.vegetarian
     tags
   end
 

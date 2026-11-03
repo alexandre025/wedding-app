@@ -16,6 +16,7 @@ class Admin::ResponseDashboardPresenter
     brunch_names: "#{MEMBER_NAMES} filter (where attends_brunch)",
     alcohol_count: "count(*) filter (where not no_alcohol and #{ADULTS})",
     no_alcohol_count: "count(*) filter (where no_alcohol and #{ADULTS})",
+    vegetarian_count: "count(*) filter (where vegetarian)",
     allergies_count: "count(*) filter (where btrim(coalesce(allergies, '')) <> '')"
   }.freeze
 
@@ -50,6 +51,7 @@ class Admin::ResponseDashboardPresenter
     [
       Diet.new(I18n.t("admin.dashboard.show.diets.alcohol"), tally[:alcohol_count]),
       Diet.new(I18n.t("admin.dashboard.show.diets.no_alcohol"), tally[:no_alcohol_count]),
+      Diet.new(I18n.t("admin.dashboard.show.diets.vegetarian"), tally[:vegetarian_count]),
       Diet.new(I18n.t("admin.dashboard.show.diets.allergies"), tally[:allergies_count])
     ]
   end

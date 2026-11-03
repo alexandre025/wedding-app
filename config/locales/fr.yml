@@ -47,6 +47,7 @@ fr:
         diets:
           alcohol: Avec alcool
           no_alcohol: Sans alcool
+          vegetarian: Végétariens
           allergies: Allergies
         pending_title: En attente de réponse
         manage_families: Gérer les familles →
@@ -129,6 +130,7 @@ fr:
         attends_label: Présence
         attends_hint: Laissez « Pas encore répondu » tant que la famille n'a pas répondu.
         no_alcohol_label: Ne boit pas d'alcool
+        vegetarian_label: Végétarien·ne
         attends_brunch_label: Vient au brunch
         attends_run_label: Court le 5K des mariés
         allergies_label: Allergies et régime alimentaire
@@ -139,6 +141,7 @@ fr:
         not_coming: Ne vient pas
       tags:
         no_alcohol: Sans alcool
+        vegetarian: Végétarien
         brunch: Brunch
         run: 5K
         allergies: "Allergies :"
