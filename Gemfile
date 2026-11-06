@@ -61,6 +61,6 @@ end
 
 gem "tailwindcss-rails", "~> 4.7"
 
-gem "hyperactiveform", "~> 0.4.1"
+gem "hyperactiveform", "~> 0.5.0"
 
 gem "ransack"
