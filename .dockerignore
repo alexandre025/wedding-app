@@ -24,6 +24,10 @@
 /tmp/pids/*
 !/tmp/pids/.keep
 
+# Ignore the SQLite databases, but keep the directory.
+/storage/*
+!/storage/.keep
+
 # Ignore assets.
 /node_modules/
 /app/assets/builds/*

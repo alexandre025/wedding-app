@@ -127,16 +127,27 @@ to a migration, and do not "fix" `db/schema.rb` by adding one. (Solid Queue's
 own `db/queue_schema.rb` keeps the keys Rails ships it with — it is generated,
 not ours.)
 
-Everything else leans on Postgres: `null: false` on columns that must be
+The database is SQLite, one file per database under `storage/` — the app's own,
+and in production one each for Solid Cache, Queue and Cable. A guest list of a
+couple of hundred rows needs no server, and a file needs nothing beside the app
+in development, in CI or on the Kamal host, where `storage/` is a volume.
+
+Everything else leans on the database: `null: false` on columns that must be
 present, unique indexes where uniqueness matters. A nullable unique column is
-the idiom for "optional but unique" — Postgres allows many NULLs under one
+the idiom for "optional but unique" — SQLite allows many NULLs under one
 index — which is why a blank email normalizes to `nil` rather than `""`.
 
+A raw SQL aggregate comes back untyped: `max(updated_at)` through `pluck` is a
+string on SQLite, not a time. A presenter that plucks one casts it back through
+`type_for_attribute(...).deserialize`, so the templates never learn which
+database they sit on.
+
 Search is Ransack with an explicit `ransackable_attributes` allowlist on every
-model, and the `i_cont` predicate rather than `cont`: plain `cont` is `LIKE`,
-case sensitive on Postgres, and would miss "Melchior" for "melch". The
-predicate itself is a model constant so the controller, the view and the specs
-all name the same thing.
+model, and the `i_cont` predicate rather than `cont`: `i_cont` lowercases both
+sides, so "melch" finds "Melchior". SQLite's `LOWER` folds ASCII only, so an
+accented capital — the "É" of "Élodie" — still only matches itself; that is
+accepted for a guest list. The predicate itself is a model constant so the
+controller, the view and the specs all name the same thing.
 
 ## Presenters
 

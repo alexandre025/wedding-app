@@ -28,9 +28,11 @@ Ruby 4.0.6 (see `.ruby-version`) and Node 24 (see `.node-version`) are needed â€
 Node only for the Herb linter and formatter, never for the asset build.
 
 ```sh
-docker compose up -d   # PostgreSQL for development and test
-bin/setup              # installs dependencies, prepares the database, starts the server
+bin/setup   # installs dependencies, prepares the database, starts the server
 ```
+
+The databases are SQLite files under `storage/`, so there is no database server
+to run. `bin/rails db:seed` fills the development one with a sample guest list.
 
 `bin/dev` starts Puma with the Tailwind watcher attached (see the
 `plugin :tailwindcss` line in `config/puma.rb`), so a single process rebuilds
