@@ -17,7 +17,7 @@ class Admin::ResponseDashboardPresenter
     alcohol_count: "count(*) filter (where not no_alcohol and #{ADULTS})",
     no_alcohol_count: "count(*) filter (where no_alcohol and #{ADULTS})",
     vegetarian_count: "count(*) filter (where vegetarian)",
-    allergies_count: "count(*) filter (where btrim(coalesce(allergies, '')) <> '')"
+    allergies_count: "count(*) filter (where trim(coalesce(allergies, '')) <> '')"
   }.freeze
 
   def families_count = Family.count
@@ -71,7 +71,7 @@ class Admin::ResponseDashboardPresenter
       .group(:id)
       .order(Arel.sql("#{ANSWERED_AT} desc"))
       .pluck(:name, Arel.sql(ANSWERED_AT), Arel.sql(coming), Arel.sql(missing))
-      .map { |row| Answer.new(*row) }
+      .map { |name, changed_at, coming, missing| Answer.new(name, timestamp(changed_at), coming, missing) }
   end
 
   private
@@ -84,6 +84,8 @@ class Admin::ResponseDashboardPresenter
     def coming = "#{MEMBER_NAMES} filter (where family_members.attends)"
 
     def missing = "#{MEMBER_NAMES} filter (where not family_members.attends)"
+
+    def timestamp(value) = FamilyMember.type_for_attribute(:updated_at).deserialize(value)
 
     def option(label, count, names) = Option.new(label, count, present_count, share(count, present_count), names)
 

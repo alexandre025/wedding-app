@@ -189,6 +189,10 @@ RSpec.describe Admin::ResponseDashboardPresenter do
       expect(presenter.recent_answers.first).to have_attributes(coming: "Mélanie, Sylvain", missing: "Léna")
     end
 
+    it "dates each family by the last change to any of its members" do
+      expect(presenter.recent_answers.last.changed_at).to be_within(1.second).of(helene.updated_at)
+    end
+
     it "leaves the refusals nil when everyone in the family is coming" do
       expect(presenter.recent_answers.last.missing).to be_nil
     end
