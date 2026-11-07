@@ -1,0 +1,12 @@
+<%# locals: (m:, name:, caption:, detail: nil) %>
+<label class="flex min-h-11 cursor-pointer items-center gap-2.5 text-sm">
+  <%= m.check_box name, class: "size-5 accent-sage-deep" %>
+
+  <span>
+    <%= caption %>
+
+    <% if detail %>
+      <span class="text-ink-muted"><%= detail %></span>
+    <% end %>
+  </span>
+</label>
