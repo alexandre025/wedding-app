@@ -1,0 +1,68 @@
+<% content_for :title, t("rsvp.links.new.title") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/trail_rsvp" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+
+  <div class="relative mx-auto flex w-full max-w-[520px] flex-col gap-6 px-6 pt-14 pb-6 md:gap-7 md:pt-22 md:pb-24">
+    <div class="flex flex-col gap-2.5">
+      <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase"><%= t("rsvp.links.new.eyebrow") %></p>
+      <h1 class="font-display text-[44px] leading-none font-medium md:text-[64px]"><%= t("rsvp.links.new.title") %></h1>
+      <p class="text-[15px] leading-relaxed text-ink-muted md:text-[17px]"><%= t("rsvp.links.new.intro") %></p>
+    </div>
+
+    <% if flash[:alert] %>
+      <p role="alert" class="rounded-[10px] bg-clay-pale px-4 py-3 text-sm leading-snug text-clay-deep">
+        <%= flash[:alert] %>
+      </p>
+    <% end %>
+
+    <% if flash[:link_sent_to] %>
+      <div
+        role="status"
+        class="flex flex-col items-start gap-3 rounded-2xl border border-rule-sage bg-white p-5 md:p-7"
+      >
+        <%= icon("check_badge", class_name: "size-9") %>
+
+        <h2 class="font-display text-[28px] leading-tight font-medium md:text-[34px]">
+          <%= t("rsvp.links.new.sent_title") %>
+        </h2>
+
+        <p class="text-[15px] leading-relaxed break-words text-ink-muted">
+          <%= t("rsvp.links.new.sent_body_html", email: tag.span(flash[:link_sent_to], class: "font-semibold text-ink")) %>
+        </p>
+
+        <%= link_to t("rsvp.links.new.sent_reset"), rsvp_path,
+              class: "flex min-h-11 items-center self-center px-2 text-[15px] font-medium text-ink underline" %>
+      </div>
+    <% else %>
+      <%= form_with model: @form, scope: :link_request, url: rsvp_path, html: { novalidate: true },
+            class: "flex flex-col gap-3 rounded-2xl border border-rule-sage bg-white p-5 md:p-7" do |f| %>
+        <%= f.label :email, t("rsvp.links.new.email_label"), class: "text-sm font-semibold" %>
+
+        <%= f.email_field :email, autocomplete: "email", inputmode: "email",
+              placeholder: t("rsvp.links.new.email_placeholder"),
+              aria: { invalid: (true if @form.errors.any?), describedby: ("link-request-email-error" if @form.errors.any?) },
+              class: [
+                "h-[50px] w-full rounded-[10px] border bg-white px-4 text-base text-ink md:h-[52px]",
+                @form.errors.any? ? "border-[1.5px] border-clay" : "border-rule-sand"
+              ] %>
+
+        <% if @form.errors.any? %>
+          <p id="link-request-email-error" role="alert" class="text-sm leading-snug text-clay">
+            <%= @form.errors.messages_for(:email).first %>
+          </p>
+        <% end %>
+
+        <%= f.button t("rsvp.links.new.submit"), class: "mt-1 h-13 rounded-full bg-sage-deep font-semibold text-ground" %>
+      <% end %>
+    <% end %>
+
+    <p class="text-sm leading-relaxed text-ink-muted">
+      <%= t("rsvp.links.new.help_html",
+            link: link_to(t("rsvp.links.new.help_link"), schedule_path, class: "font-semibold text-sage-deep")) %>
+    </p>
+  </div>
+</main>

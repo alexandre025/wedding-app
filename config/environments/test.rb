@@ -50,4 +50,6 @@ Rails.application.configure do
 
   config.x.admin.username = "admin"
   config.x.admin.password = "admin"
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
 end

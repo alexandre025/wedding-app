@@ -12,7 +12,12 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
   get "schedule", to: "pages#schedule"
-  get "rsvp", to: "pages#rsvp"
+
+  scope "rsvp", module: "rsvp" do
+    get "", to: "links#new", as: :rsvp
+    post "", to: "links#create"
+    resource :answer, path: ":token", only: [ :show, :edit, :update ], as: :rsvp_answer
+  end
 
   namespace :admin do
     root "dashboard#show"
