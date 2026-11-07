@@ -1,0 +1,50 @@
+<%# locals: (member_form:) %>
+<%= fields_for "answer[members][#{member_form.id}]", member_form do |m| %>
+  <div
+    role="group"
+    aria-labelledby="<%= m.field_id(:name) %>"
+    class="group/member flex flex-wrap items-center justify-between gap-x-3 gap-y-2 border-b border-rule-row py-2.5"
+  >
+    <span id="<%= m.field_id(:name) %>" class="text-[15px] font-medium"><%= member_form.first_name %></span>
+
+    <div class="flex gap-2">
+      <%= render "rsvp/answers/attendance_pill", m:, value: true, caption: t("rsvp.answers.edit.present") %>
+      <%= render "rsvp/answers/attendance_pill", m:, value: false, caption: t("rsvp.answers.edit.absent") %>
+    </div>
+
+    <div class="hidden basis-full flex-col gap-1 pt-1 pb-0.5 group-has-[[data-attends=true]:checked]/member:flex">
+      <p class="mt-1 text-xs font-semibold tracking-badge text-sage-deep uppercase">
+        <%= t("rsvp.answers.edit.diet_title") %>
+      </p>
+
+      <div class="flex flex-wrap items-end gap-x-4 gap-y-2">
+        <%= render "rsvp/answers/option", m:, name: :vegetarian, caption: t("rsvp.answers.edit.vegetarian") %>
+
+        <% if member_form.adult? %>
+          <%= render "rsvp/answers/option", m:, name: :no_alcohol, caption: t("rsvp.answers.edit.no_alcohol") %>
+        <% end %>
+
+        <div class="flex min-w-0 flex-[1_1_180px] flex-col gap-1">
+          <%= m.label :allergies, t("rsvp.answers.edit.allergies_label"), class: "text-[13px] font-semibold text-ink-muted" %>
+
+          <%= m.text_field :allergies, placeholder: t("rsvp.answers.edit.allergies_placeholder"),
+                class: "h-11 w-full rounded-[10px] border border-rule-sand bg-white px-3 text-base text-ink" %>
+        </div>
+      </div>
+
+      <p class="mt-3 text-xs font-semibold tracking-badge text-sage-deep uppercase">
+        <%= t("rsvp.answers.edit.sunday_title") %>
+      </p>
+
+      <div class="flex flex-wrap gap-x-5">
+        <% unless member_form.child? %>
+          <%= render "rsvp/answers/option", m:, name: :attends_run,
+                caption: t("rsvp.answers.edit.run"), detail: t("rsvp.answers.edit.run_time") %>
+        <% end %>
+
+        <%= render "rsvp/answers/option", m:, name: :attends_brunch,
+              caption: t("rsvp.answers.edit.brunch"), detail: t("rsvp.answers.edit.brunch_time") %>
+      </div>
+    </div>
+  </div>
+<% end %>

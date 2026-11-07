@@ -74,4 +74,6 @@ Rails.application.configure do
   # config.generators.apply_rubocop_autocorrect_after_generate!
 
   config.x.admin.skip_authentication = true
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
 end

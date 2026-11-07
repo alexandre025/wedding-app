@@ -1,0 +1,10 @@
+<%# locals: (m:, value:, caption:) %>
+<label
+  class="
+    flex h-11 cursor-pointer items-center rounded-full border-[1.5px] border-rule-sand bg-white px-3.5 text-sm font-semibold text-ink has-focus-visible:outline-3 has-focus-visible:outline-offset-2 has-focus-visible:outline-clay
+    <%= value ? "has-checked:border-sage-deep has-checked:bg-sage-deep has-checked:text-ground" : "has-checked:border-clay has-checked:bg-clay has-checked:text-white" %>
+  "
+>
+  <%= m.radio_button :attends, value, class: "sr-only", data: { attends: value } %>
+  <%= caption %>
+</label>
