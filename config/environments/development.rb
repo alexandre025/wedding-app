@@ -76,4 +76,6 @@ Rails.application.configure do
   config.x.admin.skip_authentication = true
 
   config.logtail.enabled = false
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
 end

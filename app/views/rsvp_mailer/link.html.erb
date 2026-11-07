@@ -1,0 +1,16 @@
+<p style="margin: 0 0 16px; font-size: 16px; line-height: 1.55; color: #3b3a2e;">
+  <%= t("rsvp_mailer.link.greeting", name: @family_member.first_name) %>
+</p>
+
+<p style="margin: 0 0 24px; font-size: 16px; line-height: 1.55; color: #3b3a2e;">
+  <%= t("rsvp_mailer.link.body", family: @family.name) %>
+</p>
+
+<p style="margin: 0 0 24px;">
+  <%= link_to t("rsvp_mailer.link.cta"), @url,
+        style: "display: inline-block; padding: 14px 28px; border-radius: 999px; background: #56684f; color: #f5f0e6; font-weight: 600; text-decoration: none;" %>
+</p>
+
+<p style="margin: 0 0 8px; font-size: 14px; line-height: 1.5; color: #5e5a4c;"><%= t("rsvp_mailer.link.keep") %></p>
+
+<p style="margin: 0; font-size: 14px; line-height: 1.5; color: #5e5a4c;"><%= t("rsvp_mailer.link.signature") %></p>

@@ -1,0 +1,71 @@
+<% content_for :title, t("rsvp.answers.show.title") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/trail_rsvp" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+
+  <div
+    role="status"
+    class="
+      relative mx-auto flex w-full max-w-[620px] flex-col items-start gap-4 px-5 pt-18 pb-8 md:px-6 md:pt-22
+      md:pb-24
+    "
+  >
+    <%= icon("check_badge", class_name: "size-12") %>
+
+    <% if @answer.any_present? %>
+      <div class="flex w-full flex-col gap-3.5">
+        <h1 class="font-display text-[40px] leading-none font-medium md:text-[60px]">
+          <%= t("rsvp.answers.show.present_title") %>
+        </h1>
+
+        <p class="text-[15px] leading-relaxed text-ink-muted md:text-[17px]">
+          <%= t("rsvp.answers.show.present_body") %>
+        </p>
+
+        <dl class="flex flex-col gap-3 rounded-2xl border border-rule-sage bg-white p-5 text-[15px] md:p-8">
+          <%= render "rsvp/answers/summary_item", term: t("rsvp.answers.show.present"), names: @answer.present_names %>
+          <%= render "rsvp/answers/summary_item", term: t("rsvp.answers.show.absent"), names: @answer.absent_names %>
+          <%= render "rsvp/answers/summary_item", term: t("rsvp.answers.show.run"), names: @answer.run_names %>
+          <%= render "rsvp/answers/summary_item", term: t("rsvp.answers.show.brunch"), names: @answer.brunch_names %>
+          <%= render "rsvp/answers/summary_item", term: t("rsvp.answers.show.song"), names: Array(@answer.song) %>
+
+          <div class="flex flex-col gap-0.5">
+            <dt class="text-[13px] font-semibold tracking-column text-sage-deep uppercase">
+              <%= t("rsvp.answers.show.diets") %>
+            </dt>
+
+            <% if @answer.diets.any? %>
+              <% @answer.diets.each do |diet| %>
+                <dd><%= rsvp_diet_line(diet) %></dd>
+              <% end %>
+            <% else %>
+              <dd><%= t("rsvp.answers.show.no_diet") %></dd>
+            <% end %>
+          </div>
+        </dl>
+      </div>
+    <% else %>
+      <div class="flex flex-col gap-3.5">
+        <h1 class="font-display text-[40px] leading-none font-medium md:text-[60px]">
+          <%= t("rsvp.answers.show.absent_title") %>
+        </h1>
+
+        <p class="text-[15px] leading-relaxed text-ink-muted md:text-[17px]">
+          <%= t("rsvp.answers.show.absent_body") %>
+        </p>
+      </div>
+    <% end %>
+
+    <p class="text-sm text-ink-muted"><%= t("rsvp.answers.show.editable_until") %></p>
+
+    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
+      <%= link_to t("rsvp.answers.show.edit"), edit_rsvp_answer_path(params[:token]),
+            class: "flex h-13 items-center rounded-full border-[1.5px] border-sage-deep px-7 text-[15px] font-semibold text-sage-deep" %>
+
+      <%= link_to t("rsvp.answers.show.home"), root_path, class: "flex min-h-11 items-center text-[15px] font-medium text-ink" %>
+    </div>
+  </div>
+</main>

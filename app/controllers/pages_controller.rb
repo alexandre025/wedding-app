@@ -4,7 +4,4 @@ class PagesController < ApplicationController
 
   def schedule
   end
-
-  def rsvp
-  end
 end
