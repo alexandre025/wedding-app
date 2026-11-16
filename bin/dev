@@ -1,2 +1,4 @@
 #!/usr/bin/env ruby
+system("mailcatcher", out: File::NULL, err: File::NULL)
+
 exec "./bin/rails", "server", *ARGV
