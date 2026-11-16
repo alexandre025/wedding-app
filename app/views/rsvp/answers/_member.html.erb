@@ -17,19 +17,19 @@
         <%= t("rsvp.answers.edit.diet_title") %>
       </p>
 
-      <div class="flex flex-wrap items-end gap-x-4 gap-y-2">
+      <div class="flex flex-wrap gap-x-5">
         <%= render "rsvp/answers/option", m:, name: :vegetarian, caption: t("rsvp.answers.edit.vegetarian") %>
 
         <% if member_form.adult? %>
           <%= render "rsvp/answers/option", m:, name: :no_alcohol, caption: t("rsvp.answers.edit.no_alcohol") %>
         <% end %>
+      </div>
 
-        <div class="flex min-w-0 flex-[1_1_180px] flex-col gap-1">
-          <%= m.label :allergies, t("rsvp.answers.edit.allergies_label"), class: "text-[13px] font-semibold text-ink-muted" %>
+      <div class="flex flex-col gap-1 pt-1">
+        <%= m.label :allergies, t("rsvp.answers.edit.allergies_label"), class: "text-[13px] font-semibold text-ink-muted" %>
 
-          <%= m.text_field :allergies, placeholder: t("rsvp.answers.edit.allergies_placeholder"),
-                class: "h-11 w-full rounded-[10px] border border-rule-sand bg-white px-3 text-base text-ink" %>
-        </div>
+        <%= m.text_field :allergies, placeholder: t("rsvp.answers.edit.allergies_placeholder"),
+              class: "h-11 w-full rounded-[10px] border border-rule-sand bg-white px-3 text-base text-ink" %>
       </div>
 
       <p class="mt-3 text-xs font-semibold tracking-badge text-sage-deep uppercase">
