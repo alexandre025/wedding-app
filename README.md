@@ -24,7 +24,7 @@ goes live.
 
 ## Getting started
 
-Ruby 4.0.6 (see `.ruby-version`) and Node 24 (see `.node-version`) are needed —
+Ruby 4.0.10 (see `.ruby-version`) and Node 24 (see `.node-version`) are needed —
 Node only for the Herb linter and formatter, never for the asset build.
 
 ```sh
