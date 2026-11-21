@@ -63,13 +63,15 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
+  mail = Rails.application.credentials.mail || {}
+
   # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: ENV["APP_HOST"], protocol: "https" }
+  config.action_mailer.default_url_options = { host: mail[:host], protocol: "https" }
 
   config.action_mailer.smtp_settings = {
-    user_name: ENV["SMTP_USERNAME"],
-    password: ENV["SMTP_PASSWORD"],
-    address: ENV["SMTP_ADDRESS"],
+    user_name: mail.dig(:smtp, :username),
+    password: mail.dig(:smtp, :password),
+    address: mail.dig(:smtp, :address),
     port: 587,
     authentication: :plain
   }
@@ -92,5 +94,5 @@ Rails.application.configure do
   config.x.admin.username = Rails.application.credentials.dig(:admin, :username)
   config.x.admin.password = Rails.application.credentials.dig(:admin, :password)
 
-  config.x.mail_from = ENV["MAIL_FROM"]
+  config.x.mail_from = mail[:from]
 end
