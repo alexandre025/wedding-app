@@ -64,3 +64,7 @@ gem "tailwindcss-rails", "~> 4.7"
 gem "hyperactiveform", "~> 0.5.0"
 
 gem "ransack"
+
+gem "logtail-rails", "~> 0.3.1"
+gem "sentry-ruby", "~> 7.3"
+gem "sentry-rails", "~> 7.3"

@@ -34,6 +34,15 @@ Rails.application.configure do
   config.log_tags = [ :request_id ]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
 
+  better_stack = Rails.application.credentials.better_stack || {}
+  config.logtail.enabled = better_stack[:source_token].present?
+  if config.logtail.enabled?
+    config.logger = ActiveSupport::BroadcastLogger.new(
+      config.logger,
+      Logtail::Logger.create_default_logger(better_stack[:source_token], ingesting_host: better_stack[:ingesting_host])
+    )
+  end
+
   # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 

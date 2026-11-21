@@ -263,6 +263,27 @@ Factories use sequences for anything unique and traits for the interesting
 states (`:answered`, `:with_email`). The suite truncates before it runs, because
 `bin/ci` seeds the test database and nothing else clears it.
 
+## Observability
+
+Better Stack, free tier: logs through `logtail-rails`, errors through
+`sentry-ruby` pointed at a Better Stack DSN, uptime monitors and a heartbeat set up
+in its dashboard. Production only — `config.logtail.enabled = false` in
+development and test, `enabled_environments` on Sentry.
+
+The secrets live in Rails credentials under `better_stack:` (`source_token`,
+`ingesting_host`, `errors_dsn`, `heartbeat_url`), never in `.kamal/secrets`. Each
+integration switches itself on only when its credential is present, so the app
+boots without any of them — CI's `build` job has no master key, and a deploy can
+go out before the dashboard has issued a token.
+
+STDOUT stays a log destination beside Better Stack, so `kamal logs` keeps working.
+Sentry keeps `send_default_pii = false`: guest names and addresses do not leave
+the app through an error report.
+
+`HeartbeatJob`, scheduled in `config/recurring.yml`, pings Better Stack every
+five minutes, so a dead Solid Queue — which sends the RSVP emails from inside
+Puma, where the web uptime check cannot see it — raises an alert.
+
 ## Comments
 
 The code carries no comments. The reasoning behind a change goes in the commit
