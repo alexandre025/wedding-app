@@ -27,14 +27,7 @@ class Rsvp::MemberAnswerForm < ApplicationForm
   def answered? = !attends.nil?
 
   def perform
-    @family_member.attends = attends
-    @family_member.no_alcohol = no_alcohol
-    @family_member.vegetarian = vegetarian
-    @family_member.attends_brunch = attends_brunch
-    @family_member.attends_run = attends_run
-    @family_member.allergies = allergies
-
-    @family_member.save!
+    @family_member.update!(attributes)
   end
 
   private

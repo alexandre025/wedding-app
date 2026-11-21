@@ -19,8 +19,7 @@ class Rsvp::AnswerForm < ApplicationForm
   def perform
     Family.transaction do
       member_forms.each(&:perform)
-      family.song = song
-      family.save!
+      family.update!(song:)
     end
   end
 
