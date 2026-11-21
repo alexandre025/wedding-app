@@ -50,4 +50,6 @@ Rails.application.configure do
 
   config.x.admin.username = "admin"
   config.x.admin.password = "admin"
+
+  config.logtail.enabled = false
 end
