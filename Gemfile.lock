@@ -401,7 +401,7 @@ DEPENDENCIES
   kamal
   propshaft
   puma (>= 5.0)
-  rails (~> 8.1.3, >= 8.1.3.1)
+  rails (~> 8.1.4, >= 8.1.4.1)
   ransack
   rspec-rails
   rubocop-rails-omakase
