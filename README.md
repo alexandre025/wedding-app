@@ -14,13 +14,11 @@ English. All copy lives in `config/locales/fr.yml`.
 |---|---|
 | `/` | Accueil — the invitation itself |
 | `/schedule` | Programme & infos pratiques |
-| `/rsvp` | Réponse — the invitation email gate |
+| `/rsvp` | Réponse — emails a family its RSVP link if the link is lost |
+| `/rsvp/:token/edit` | The RSVP form, one per family |
 
 The couple's own screens live under `/admin`, behind HTTP Basic — the guest list
-is managed there. The RSVP form itself is not built yet: the gate's "invitation
-retrouvée" state is client-side only, checking the shape of the address rather
-than the guest list, so it must be replaced by a real lookup before the site
-goes live.
+is managed there, and each family's page shows the RSVP link to send out.
 
 ## Getting started
 
@@ -37,6 +35,14 @@ to run. `bin/rails db:seed` fills the development one with a sample guest list.
 `bin/dev` starts Puma with the Tailwind watcher attached (see the
 `plugin :tailwindcss` line in `config/puma.rb`), so a single process rebuilds
 `app/assets/builds/tailwind.css` as you edit.
+
+Development email is delivered over SMTP to `127.0.0.1:1025`, the port
+[MailCatcher](https://mailcatcher.me) listens on. It is optional and not part
+of `bin/setup`: install and start it however you like (`brew install
+mailcatcher`, then `mailcatcher`), and sent mail shows up at
+<http://localhost:1080>. Without it, the delivery job fails and says so in the
+log. The templates themselves can be previewed without sending at
+<http://localhost:3000/rails/mailers>.
 
 Design tokens — the palette and the three typefaces — live in the `@theme`
 block of `app/assets/tailwind/application.css`.

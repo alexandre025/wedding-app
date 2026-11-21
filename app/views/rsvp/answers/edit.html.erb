@@ -1,0 +1,50 @@
+<% content_for :title, t("rsvp.answers.edit.title") %>
+
+<main class="relative isolate flex grow flex-col overflow-hidden">
+  <%= render "shared/decorations/trail_rsvp" %>
+
+  <%= render "shared/decorations/branch", inverted: true,
+        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+
+  <div class="relative mx-auto flex w-full max-w-[620px] flex-col gap-5 px-5 pt-8 pb-8 md:gap-6 md:px-6 md:pt-12 md:pb-24">
+    <div class="flex flex-col gap-2.5">
+      <p class="text-xs font-semibold tracking-eyebrow text-clay uppercase"><%= t("rsvp.answers.edit.eyebrow") %></p>
+
+      <h1 class="font-display text-[40px] leading-none font-medium md:text-[60px]">
+        <%= t("rsvp.answers.family_name", name: @form.family.name) %>
+      </h1>
+
+      <p class="text-[15px] leading-relaxed text-ink-muted md:text-[17px]"><%= t("rsvp.answers.edit.intro") %></p>
+    </div>
+
+    <%= form_with model: @form, scope: :answer, url: rsvp_answer_path(params[:token]), method: :patch,
+          html: { novalidate: true },
+          class: "group/form flex flex-col gap-7 rounded-2xl border border-rule-sage bg-white p-5 md:p-8" do |f| %>
+      <fieldset class="flex flex-col border-0 p-0">
+        <legend class="mb-1 p-0 font-semibold"><%= t("rsvp.answers.edit.members_legend") %></legend>
+
+        <p class="mb-2 text-sm leading-normal text-ink-muted"><%= t("rsvp.answers.edit.members_hint") %></p>
+
+        <%= render partial: "rsvp/answers/member", collection: @form.member_forms, as: :member_form %>
+      </fieldset>
+
+      <div class="hidden flex-col gap-2 group-has-[[data-attends=true]:checked]/form:flex">
+        <%= f.label :song, class: "font-semibold" do %>
+          <%= t("rsvp.answers.edit.song_label") %>
+          <span class="font-normal text-ink-muted"><%= t("rsvp.answers.edit.optional") %></span>
+        <% end %>
+
+        <p class="text-sm leading-normal text-ink-muted"><%= t("rsvp.answers.edit.song_hint") %></p>
+
+        <%= f.text_field :song, placeholder: t("rsvp.answers.edit.song_placeholder"),
+              class: "h-[50px] w-full rounded-[10px] border border-rule-sand bg-white px-3.5 text-base text-ink" %>
+      </div>
+
+      <% if @form.errors.any? %>
+        <p role="alert" class="text-sm leading-snug text-clay"><%= @form.errors.full_messages.first %></p>
+      <% end %>
+
+      <%= f.button t("rsvp.answers.edit.submit"), class: "h-[54px] rounded-full bg-sage-deep font-semibold text-ground" %>
+    <% end %>
+  </div>
+</main>
