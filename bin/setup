@@ -15,7 +15,6 @@ FileUtils.chdir APP_ROOT do
   puts "== Installing dependencies =="
   system("bundle check") || system!("bundle install")
   system! "npm ci" if File.exist?("package-lock.json")
-  system("gem list --installed mailcatcher", out: File::NULL) || system!("gem install mailcatcher")
 
   # puts "\n== Copying sample files =="
   # unless File.exist?("config/database.yml")

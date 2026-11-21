@@ -36,11 +36,13 @@ to run. `bin/rails db:seed` fills the development one with a sample guest list.
 `plugin :tailwindcss` line in `config/puma.rb`), so a single process rebuilds
 `app/assets/builds/tailwind.css` as you edit.
 
-Development email goes to [MailCatcher](https://mailcatcher.me), which
-`bin/setup` installs as a standalone gem (it is kept out of the Gemfile, as its
-README asks) and `bin/dev` starts in the background. Sent mail shows up at
-<http://localhost:1080>; the templates themselves can also be previewed without
-sending at <http://localhost:3000/rails/mailers>.
+Development email is delivered over SMTP to `127.0.0.1:1025`, the port
+[MailCatcher](https://mailcatcher.me) listens on. It is optional and not part
+of `bin/setup`: install and start it however you like (`brew install
+mailcatcher`, then `mailcatcher`), and sent mail shows up at
+<http://localhost:1080>. Without it, the delivery job fails and says so in the
+log. The templates themselves can be previewed without sending at
+<http://localhost:3000/rails/mailers>.
 
 Design tokens — the palette and the three typefaces — live in the `@theme`
 block of `app/assets/tailwind/application.css`.
