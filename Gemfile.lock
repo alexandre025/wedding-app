@@ -419,6 +419,7 @@ DEPENDENCIES
   brakeman
   bundler-audit
   debug
+  dotenv
   factory_bot_rails
   hyperactiveform (~> 0.5.0)
   importmap-rails
