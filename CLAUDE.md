@@ -184,7 +184,8 @@ ones redirect with a `notice:` read from the locale file.
 The admin area sits behind HTTP Basic in `Admin::BaseController`, compared with
 `ActiveSupport::SecurityUtils.secure_compare`. Credentials come from
 `config.x.admin` so each environment sets its own — development skips the check
-entirely, test uses `admin`/`admin`, production reads the environment.
+entirely, test uses `admin`/`admin`, production reads them from Rails credentials
+under `admin.username` and `admin.password`.
 
 ## Views
 
