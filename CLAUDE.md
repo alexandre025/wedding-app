@@ -184,8 +184,11 @@ ones redirect with a `notice:` read from the locale file.
 The admin area sits behind HTTP Basic in `Admin::BaseController`, compared with
 `ActiveSupport::SecurityUtils.secure_compare`. Credentials come from
 `config.x.admin` so each environment sets its own — development skips the check
-entirely, test uses `admin`/`admin`, production reads them from Rails credentials
-under `admin.username` and `admin.password`.
+entirely, test uses `admin`/`admin`, production reads `admin.username` and
+`admin.password` from its own credentials file, `config/credentials/production.yml.enc`.
+Its key, `config/credentials/production.key`, never enters git; Kamal sends it as
+`RAILS_MASTER_KEY`. The shared `config/credentials.yml.enc` holds nothing production
+reads.
 
 ## Views
 
