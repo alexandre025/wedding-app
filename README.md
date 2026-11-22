@@ -62,3 +62,32 @@ GitHub Actions runs the same checks as six jobs — `scan_ruby`, `scan_js`,
 `lint`, `lint_erb`, `test` and `build` — on every pull request and every push to
 `main`. All six must be green before a pull request can be merged; `main` takes
 no direct pushes.
+
+## Local settings
+
+Per-developer settings that are not secrets live in a git-ignored `.env`, read
+by `bin/kamal` and, in development, by Rails. `.env.example` lists every
+variable with an empty value:
+
+```sh
+cp .env.example .env
+```
+
+## Deploying
+
+Kamal deploys to the VPS. The production credentials key is never kept on disk:
+`.kamal/secrets` reads it from the Bitwarden item
+`rails credentials production`, so a deploy needs the
+[Bitwarden CLI](https://bitwarden.com/help/cli/) and your account in `.env`:
+
+```sh
+brew install bitwarden-cli
+bin/kamal deploy
+```
+
+Kamal runs `bw login` / `bw unlock` itself when the vault is locked. To edit the
+production credentials:
+
+```sh
+RAILS_MASTER_KEY=$(bw get password "rails credentials production") bin/rails credentials:edit --environment production
+```
