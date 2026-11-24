@@ -13,7 +13,7 @@ RSpec.describe RsvpMailer do
     end
 
     it "sends replies to the couple" do
-      expect(mail.reply_to).to eq(Rails.application.config.x.mail_reply_to)
+      expect(mail.reply_to).to eq([ Rails.application.config.x.mail_reply_to ])
     end
 
     it "carries a link that opens the family's form" do
