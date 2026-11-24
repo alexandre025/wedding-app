@@ -1,5 +1,5 @@
 class Rsvp::AnswersController < ApplicationController
-  before_action :set_family
+  before_action :set_family, :remember_token
 
   rescue_from ActiveSupport::MessageVerifier::InvalidSignature, ActiveRecord::RecordNotFound, with: :reject_link
 
@@ -28,7 +28,12 @@ class Rsvp::AnswersController < ApplicationController
       @family = Family.includes(:family_members).find_signed!(params[:token], purpose: :rsvp)
     end
 
+    def remember_token
+      cookies.permanent.signed[:rsvp_token] = params[:token]
+    end
+
     def reject_link
+      cookies.delete(:rsvp_token)
       redirect_to rsvp_path, alert: t("rsvp.answers.invalid_link")
     end
 

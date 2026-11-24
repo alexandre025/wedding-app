@@ -1,16 +1,13 @@
 <% content_for :title, t("rsvp.answers.show.title") %>
 
 <main class="relative isolate flex grow flex-col overflow-hidden">
-  <%= render "shared/decorations/trail_rsvp" %>
-
-  <%= render "shared/decorations/branch", inverted: true,
-        class_name: "pointer-events-none absolute -top-2.5 -right-4 h-[104px] w-[120px] -scale-x-100 lg:top-15 lg:-right-8 lg:h-[225px] lg:w-[260px]" %>
+  <%= render "shared/decorations/side_branches" %>
 
   <div
     role="status"
     class="
-      relative mx-auto flex w-full max-w-[620px] flex-col items-start gap-4 px-5 pt-18 pb-8 md:px-6 md:pt-22
-      md:pb-24
+      relative mx-auto flex w-full max-w-[620px] flex-col items-start gap-4 px-5 pt-28 pb-8 md:px-6 md:pb-24
+      lg:pt-22
     "
   >
     <%= icon("check_badge", class_name: "size-12") %>
@@ -61,11 +58,9 @@
 
     <p class="text-sm text-ink-muted"><%= t("rsvp.answers.show.editable_until") %></p>
 
-    <div class="flex flex-wrap items-center gap-x-6 gap-y-2">
-      <%= link_to t("rsvp.answers.show.edit"), edit_rsvp_answer_path(params[:token]),
-            class: "flex h-13 items-center rounded-full border-[1.5px] border-sage-deep px-7 text-[15px] font-semibold text-sage-deep" %>
+    <%= link_to t("rsvp.answers.show.edit"), edit_rsvp_answer_path(params[:token]),
+          class: "flex h-13 items-center rounded-full border-[1.5px] border-sage-deep px-7 text-[15px] font-semibold text-sage-deep" %>
 
-      <%= link_to t("rsvp.answers.show.home"), root_path, class: "flex min-h-11 items-center text-[15px] font-medium text-ink" %>
-    </div>
+    <%= render "rsvp/answers/forget_link" %>
   </div>
 </main>
