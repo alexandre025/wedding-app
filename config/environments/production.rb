@@ -95,4 +95,5 @@ Rails.application.configure do
   config.x.admin.password = Rails.application.credentials.dig(:admin, :password)
 
   config.x.mail_from = mail[:from]
+  config.x.mail_reply_to = mail[:reply_to]
 end

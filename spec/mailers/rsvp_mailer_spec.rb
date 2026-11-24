@@ -12,6 +12,10 @@ RSpec.describe RsvpMailer do
       expect(mail.subject).to eq(I18n.t("rsvp_mailer.link.subject"))
     end
 
+    it "sends replies to the couple" do
+      expect(mail.reply_to).to eq(Rails.application.config.x.mail_reply_to)
+    end
+
     it "carries a link that opens the family's form" do
       token = mail.text_part.body.decoded[%r{/rsvp/([^/\s]+)/edit}, 1]
 
