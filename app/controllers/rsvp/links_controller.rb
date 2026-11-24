@@ -1,5 +1,7 @@
 class Rsvp::LinksController < ApplicationController
   def new
+    return redirect_to rsvp_answer_path(cookies.signed[:rsvp_token]) if remembered_family?
+
     @form = Rsvp::LinkRequestForm.new
   end
 
@@ -13,7 +15,19 @@ class Rsvp::LinksController < ApplicationController
     end
   end
 
+  def destroy
+    cookies.delete(:rsvp_token)
+    redirect_to rsvp_path
+  end
+
   private
+    def remembered_family?
+      return true if Family.find_signed(cookies.signed[:rsvp_token], purpose: :rsvp)
+
+      cookies.delete(:rsvp_token)
+      false
+    end
+
     def link_request_params
       params.require(:link_request)
     end

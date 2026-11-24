@@ -4,17 +4,7 @@
   <%= render "shared/decorations/trail_mobile" %>
   <%= render "shared/decorations/trail_desktop" %>
 
-  <%= render "shared/decorations/branch",
-        class_name: "pointer-events-none absolute -top-2 -left-3.5 h-[130px] w-[150px] lg:hidden" %>
-
-  <%= render "shared/decorations/branch", inverted: true,
-        class_name: "pointer-events-none absolute -top-2 -right-3.5 h-[130px] w-[150px] -scale-x-100 lg:hidden" %>
-
-  <%= render "shared/decorations/branch",
-        class_name: "pointer-events-none absolute -bottom-8 -left-8 hidden h-[225px] w-[260px] -scale-y-100 lg:block" %>
-
-  <%= render "shared/decorations/branch", inverted: true,
-        class_name: "pointer-events-none absolute top-15 -right-8 hidden h-[225px] w-[260px] -scale-x-100 lg:block" %>
+  <%= render "shared/decorations/side_branches" %>
 
   <div
     class="

@@ -11,10 +11,29 @@ RSpec.describe "The guest RSVP form" do
       expect(response).to redirect_to(rsvp_path)
       expect(flash[:alert]).to eq(I18n.t("rsvp.answers.invalid_link"))
     end
+
+    it "forgets the link" do
+      expect(cookies[:rsvp_token]).to be_blank
+    end
+  end
+
+  shared_examples "a page that can forget the link" do
+    it "offers to forget the link on this device" do
+      assert_select "form[action=?][method=post]", rsvp_path do
+        assert_select "input[name=_method][value=delete]", count: 1
+        assert_select "button", text: I18n.t("rsvp.answers.forget")
+      end
+    end
   end
 
   describe "GET /rsvp/:token/edit" do
     before { get edit_rsvp_answer_path(token) }
+
+    it "remembers the link" do
+      expect(cookies[:rsvp_token]).to be_present
+    end
+
+    it_behaves_like "a page that can forget the link"
 
     it "lists every member of the family" do
       expect(response).to have_http_status(:success)
@@ -93,6 +112,8 @@ RSpec.describe "The guest RSVP form" do
         assert_select "dd", text: "Léna"
         assert_select "a[href=?]", edit_rsvp_answer_path(token), text: I18n.t("rsvp.answers.show.edit")
       end
+
+      it_behaves_like "a page that can forget the link"
     end
 
     context "when nobody is coming" do

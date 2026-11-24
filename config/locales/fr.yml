@@ -244,12 +244,13 @@ fr:
         submit: Recevoir le lien
         sent_title: Lien envoyé
         sent_body_html: Nous avons envoyé le lien de votre invitation à %{email}. Pensez à regarder dans vos indésirables.
-        sent_reset: Utiliser une autre adresse
         help_html: Un souci ? Nos coordonnées sont dans les %{link}.
         help_link: infos pratiques
     answers:
       family_name: Famille %{name}
       invalid_link: Ce lien n’est plus valide. Indiquez votre adresse email, nous vous en renvoyons un.
+      forget_hint: Ce n’est pas votre invitation ?
+      forget: Retrouver mon invitation
       edit:
         title: Votre réponse
         eyebrow: Invitation de
@@ -293,7 +294,6 @@ fr:
         allergies: "allergies : %{allergies}"
         editable_until: Vous pouvez modifier votre réponse jusqu’au 31 janvier 2028.
         edit: Modifier ma réponse
-        home: Retour à l’accueil
 
   mailer:
     header:

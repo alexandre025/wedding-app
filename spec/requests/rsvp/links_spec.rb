@@ -12,6 +12,46 @@ RSpec.describe "The RSVP link gate" do
       assert_select "label[for=?]", "link_request_email", text: I18n.t("rsvp.links.new.email_label")
       assert_select "input#link_request_email[type=email]"
     end
+
+    context "after opening the family's link" do
+      let(:token) { melanie.family.signed_id(purpose: :rsvp) }
+
+      before { get edit_rsvp_answer_path(token) }
+
+      it "goes back to the family's answer" do
+        get rsvp_path
+
+        expect(response).to redirect_to(rsvp_answer_path(token))
+      end
+
+      context "when the family has been removed since" do
+        before { melanie.family.destroy }
+
+        it "asks for the address and forgets the link" do
+          get rsvp_path
+
+          expect(response).to have_http_status(:success)
+          assert_select "[role=alert]", count: 0
+          expect(cookies[:rsvp_token]).to be_blank
+        end
+      end
+    end
+  end
+
+  describe "DELETE /rsvp" do
+    let(:token) { melanie.family.signed_id(purpose: :rsvp) }
+
+    before { get edit_rsvp_answer_path(token) }
+
+    it "forgets the link and returns to the gate" do
+      delete rsvp_path
+
+      expect(response).to redirect_to(rsvp_path)
+      expect(cookies[:rsvp_token]).to be_blank
+
+      follow_redirect!
+      expect(response).to have_http_status(:success)
+    end
   end
 
   describe "POST /rsvp" do

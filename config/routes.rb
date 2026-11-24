@@ -16,6 +16,7 @@ Rails.application.routes.draw do
   scope "rsvp", module: "rsvp" do
     get "", to: "links#new", as: :rsvp
     post "", to: "links#create"
+    delete "", to: "links#destroy"
     resource :answer, path: ":token", only: [ :show, :edit, :update ], as: :rsvp_answer
   end
 
