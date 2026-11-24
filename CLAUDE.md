@@ -282,6 +282,11 @@ boots without any of them — CI's `build` job has no master key, and a deploy c
 go out before the dashboard has issued a token.
 
 STDOUT stays a log destination beside Better Stack, so `kamal logs` keeps working.
+It is added with the Logtail logger's own `broadcast_to`, never by wrapping both in
+an `ActiveSupport::BroadcastLogger`: that one forwards `tagged` to every logger
+that answers it, block included, and both do — so every block run under a log
+tag ran once per logger. ActiveJob enqueues and performs inside
+`logger.tagged("ActiveJob")`, and every job ran twice.
 Sentry keeps `send_default_pii = false`: guest names and addresses do not leave
 the app through an error report.
 

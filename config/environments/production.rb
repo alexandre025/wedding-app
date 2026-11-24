@@ -37,10 +37,9 @@ Rails.application.configure do
   better_stack = Rails.application.credentials.better_stack || {}
   config.logtail.enabled = better_stack[:source_token].present?
   if config.logtail.enabled?
-    config.logger = ActiveSupport::BroadcastLogger.new(
-      config.logger,
-      Logtail::Logger.create_default_logger(better_stack[:source_token], ingesting_host: better_stack[:ingesting_host])
-    )
+    config.logger = Logtail::Logger
+      .create_default_logger(better_stack[:source_token], ingesting_host: better_stack[:ingesting_host])
+      .tap { it.broadcast_to(config.logger) }
   end
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!).
