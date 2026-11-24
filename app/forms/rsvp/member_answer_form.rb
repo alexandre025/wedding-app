@@ -34,14 +34,6 @@ class Rsvp::MemberAnswerForm < ApplicationForm
     def normalize
       self.allergies = allergies&.strip.presence
 
-      unless attends
-        self.no_alcohol = false
-        self.vegetarian = false
-        self.attends_brunch = false
-        self.attends_run = false
-        self.allergies = nil
-      end
-
       self.no_alcohol = true unless adult?
       self.attends_run = false if child?
     end

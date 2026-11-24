@@ -58,11 +58,11 @@ RSpec.describe Rsvp::AnswerForm do
     context "when an absent member's hidden options are still submitted" do
       let(:melanie_answer) { super().merge(attends: "false", allergies: "Arachides") }
 
-      it "clears them" do
+      it "keeps them for when the answer changes back" do
         form.submit(params)
 
-        expect(melanie.reload).to have_attributes(attends: false, no_alcohol: false, attends_run: false,
-          attends_brunch: false, allergies: nil)
+        expect(melanie.reload).to have_attributes(attends: false, no_alcohol: true, attends_run: true,
+          attends_brunch: true, allergies: "Arachides")
       end
     end
 
