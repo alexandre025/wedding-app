@@ -12,7 +12,7 @@ class Rsvp::AnswerPresenter
 
   def present_names = members_present.map(&:first_name)
 
-  def absent_names = @members.select { |member| member.attends == false }.map(&:first_name)
+  def absent_names = @members.select(&:absent?).map(&:first_name)
 
   def run_names = members_present.select(&:attends_run).map(&:first_name)
 

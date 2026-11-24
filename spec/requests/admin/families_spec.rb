@@ -191,6 +191,20 @@ RSpec.describe "The admin families screens" do
       end
     end
 
+    context "when an absent member still has options saved" do
+      let(:sylvain_attributes) do
+        super().merge(attends: false, attends_run: true, vegetarian: true, allergies: "Arachides et fruits à coque")
+      end
+
+      it "leaves their tags and allergies off" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/, count: 0
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.vegetarian"))}/, count: 0
+        assert_select "li", text: /Arachides et fruits à coque/, count: 0
+      end
+    end
+
     it "says so when the family has no members at all" do
       get admin_family_path(roux), headers: admin_headers
 

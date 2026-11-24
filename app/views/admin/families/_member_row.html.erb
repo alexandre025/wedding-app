@@ -13,21 +13,23 @@
       <%= member.email.presence || t("admin.families.show.no_email") %>
     </span>
 
-    <% tags = member_tags(member) %>
+    <% unless member.absent? %>
+      <% tags = member_tags(member) %>
 
-    <% if tags.any? %>
-      <span class="flex flex-wrap items-center gap-1.5">
-        <% tags.each do |member_tag| %>
-          <span class="member-tag"><%= member_tag %></span>
-        <% end %>
-      </span>
-    <% end %>
+      <% if tags.any? %>
+        <span class="flex flex-wrap items-center gap-1.5">
+          <% tags.each do |member_tag| %>
+            <span class="member-tag"><%= member_tag %></span>
+          <% end %>
+        </span>
+      <% end %>
 
-    <% if member.allergies.present? %>
-      <span class="flex flex-wrap gap-x-1.5 rounded-[10px] bg-clay-pale px-2.5 py-1.5 text-[13px] text-clay-deep">
-        <span class="font-semibold"><%= t("admin.family_members.tags.allergies") %></span>
-        <span class="break-words"><%= member.allergies %></span>
-      </span>
+      <% if member.allergies.present? %>
+        <span class="flex flex-wrap gap-x-1.5 rounded-[10px] bg-clay-pale px-2.5 py-1.5 text-[13px] text-clay-deep">
+          <span class="font-semibold"><%= t("admin.family_members.tags.allergies") %></span>
+          <span class="break-words"><%= member.allergies %></span>
+        </span>
+      <% end %>
     <% end %>
   </div>
 
