@@ -93,6 +93,8 @@ fr:
       show:
         back: ← Toutes les familles
         rename: Modifier le nom
+        rsvp_link_label: Lien de réponse
+        rsvp_link_hint: À joindre à l’invitation. La famille y répond et peut y revenir pour modifier sa réponse.
         members: Membres de la famille
         add_member: Ajouter une personne
         edit_member: Modifier
@@ -229,22 +231,95 @@ fr:
         cta:
           name: Prêts à prendre le départ ?
 
-    rsvp:
-      title: Votre réponse
-      eyebrow: Réponse attendue avant le 31 janvier 2028
-      intro: Pour accéder au formulaire, indiquez l’adresse email à laquelle vous avez reçu notre invitation.
-      email_label: Adresse email
-      email_placeholder: prenom.nom@exemple.fr
-      submit: Accéder au formulaire
-      error_invalid: Cette adresse ne semble pas valide. Vérifiez qu’elle est complète.
-      error_unknown: Nous ne retrouvons pas cette adresse dans notre liste. Essayez celle à laquelle vous avez reçu le faire-part, ou contactez-nous.
-      found_title: Invitation retrouvée
-      found_body_html: Nous avons bien trouvé l’invitation liée à %{email}.
-      found_continue: Continuer
-      found_pending: Le formulaire arrive bientôt.
-      found_reset: Utiliser une autre adresse
-      help_html: Un souci ? Nos coordonnées sont dans les %{link}.
-      help_link: infos pratiques
+  rsvp:
+    links:
+      new:
+        title: Votre réponse
+        eyebrow: Réponse attendue avant le 31 janvier 2028
+        intro: Le formulaire de réponse s’ouvre depuis le lien reçu avec notre invitation. Vous l’avez égaré ? Indiquez votre adresse email, nous vous le renvoyons.
+        email_label: Adresse email
+        email_placeholder: prenom.nom@exemple.fr
+        submit: Recevoir le lien
+        sent_title: Lien envoyé
+        sent_body_html: Nous avons envoyé le lien de votre invitation à %{email}. Pensez à regarder dans vos indésirables.
+        sent_reset: Utiliser une autre adresse
+        help_html: Un souci ? Nos coordonnées sont dans les %{link}.
+        help_link: infos pratiques
+    answers:
+      family_name: Famille %{name}
+      invalid_link: Ce lien n’est plus valide. Indiquez votre adresse email, nous vous en renvoyons un.
+      edit:
+        title: Votre réponse
+        eyebrow: Invitation de
+        intro: Merci de nous répondre avant le 31 janvier 2028. Vous pourrez modifier votre réponse jusqu’à cette date.
+        members_legend: Qui sera des nôtres ?
+        members_hint: Répondez pour chaque personne de l’invitation.
+        present: Présent·e
+        absent: Absent·e
+        diet_title: Régime alimentaire
+        vegetarian: Végétarien·ne
+        no_alcohol: Sans alcool
+        allergies_label: Allergies
+        allergies_placeholder: Arachides, lactose…
+        sunday_title: Options du dimanche
+        run: Le 5K des mariés
+        run_time: · dim. 10h
+        brunch: Brunch
+        brunch_time: · dim. 11h
+        song_label: Une chanson pour la soirée
+        optional: (facultatif)
+        song_hint: Celle qui vous fera immanquablement rejoindre la piste de danse.
+        song_placeholder: Titre, artiste
+        submit: Envoyer ma réponse
+      show:
+        title: Votre réponse
+        present_title: Merci, c’est noté !
+        present_body: Nous avons hâte de vous retrouver. Rendez-vous le 1er juillet sur la ligne de départ !
+        absent_title: Merci de nous avoir répondu
+        absent_body: Vous allez nous manquer. Nous penserons à vous le 1er juillet.
+        present: Présents
+        absent: Absents
+        run: Le 5K des mariés
+        brunch: Brunch
+        song: Votre chanson
+        diets: Régimes & allergies
+        none: —
+        no_diet: Rien à signaler
+        diet_line: "%{name} — %{details}"
+        vegetarian: végétarien·ne
+        no_alcohol: sans alcool
+        allergies: "allergies : %{allergies}"
+        editable_until: Vous pouvez modifier votre réponse jusqu’au 31 janvier 2028.
+        edit: Modifier ma réponse
+        home: Retour à l’accueil
+
+  rsvp_mailer:
+    link:
+      subject: Votre lien pour répondre à notre invitation
+      greeting: Bonjour %{name},
+      body: Voici le lien pour répondre à notre invitation au nom de la famille %{family}. Vous pourrez y revenir pour modifier votre réponse jusqu’au 31 janvier 2028.
+      cta: Répondre à l’invitation
+      keep: Ce lien est personnel à votre famille, gardez-le précieusement.
+      signature: Chloé & Alexandre
+
+  support:
+    array:
+      words_connector: ", "
+      two_words_connector: " et "
+      last_word_connector: " et "
+
+  activemodel:
+    errors:
+      models:
+        rsvp/link_request_form:
+          attributes:
+            email:
+              invalid: Cette adresse ne semble pas valide. Vérifiez qu’elle est complète.
+              unknown: Nous ne retrouvons pas cette adresse dans notre liste. Essayez celle à laquelle vous avez reçu le faire-part, ou contactez-nous.
+        rsvp/answer_form:
+          attributes:
+            base:
+              unanswered: Indiquez pour chaque personne si elle sera présente.
 
   date:
     formats:

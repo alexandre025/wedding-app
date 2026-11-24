@@ -28,8 +28,9 @@ Rails.application.configure do
   # Change to :null_store to avoid any caching.
   config.cache_store = :memory_store
 
-  # Don't care if the mailer can't send.
-  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = { address: "127.0.0.1", port: 1025 }
 
   # Make template changes take effect immediately.
   config.action_mailer.perform_caching = false
@@ -76,4 +77,7 @@ Rails.application.configure do
   config.x.admin.skip_authentication = true
 
   config.logtail.enabled = false
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
+  config.x.mail_reply_to = [ "alexandre@exemple.fr", "chloe@exemple.fr" ]
 end

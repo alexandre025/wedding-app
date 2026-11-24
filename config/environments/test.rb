@@ -52,4 +52,7 @@ Rails.application.configure do
   config.x.admin.password = "admin"
 
   config.logtail.enabled = false
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
+  config.x.mail_reply_to = [ "alexandre@exemple.fr", "chloe@exemple.fr" ]
 end
