@@ -212,6 +212,24 @@ HTML+ERB is linted and formatted by [Herb](https://herb-tools.dev) — it sorts
 the Tailwind classes and wraps at 120 columns, so write the markup and let
 `npm run herb:format` settle the layout.
 
+## Emails
+
+Every email follows the "Email · modèle" artboard of the same canvas. The frame —
+monogram, leaf ornament, card, footer — lives in `layouts/mailer.html.erb`, and a
+message is composed from the pieces in `app/views/layouts/mailer/`: `title`,
+`paragraph`, `button`, `note`. The inbox preview text goes in
+`content_for :preheader`.
+
+Mail templates are the one place a raw hex is allowed. A mail client loads no
+stylesheet of ours and Gmail drops most `<style>`, so the tokens are copied as
+inline `style=""` values, and the layout is tables rather than flex. The one
+`<style>` block in the layout carries only the phone-width overrides, which
+degrade to the desktop layout where it is stripped.
+
+Images are PNGs under `app/assets/images/email/`, referenced through `image_url`
+against `config.action_mailer.asset_host` — never an inline SVG, which Gmail
+removes, and never the `icon()` partials.
+
 ## JavaScript
 
 Hotwire only. Turbo frames for in-place updates (the families list refreshes

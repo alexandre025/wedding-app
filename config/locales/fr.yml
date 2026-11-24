@@ -293,14 +293,24 @@ fr:
         edit: Modifier ma réponse
         home: Retour à l’accueil
 
+  mailer:
+    header:
+      bride: Chloé
+      ampersand: "&"
+      groom: Alexandre
+    footer:
+      event: Mariage de Chloé & Alexandre · 1er & 2 juillet 2028 · Pont-Saint-Mard
+      reply: Une question ? Répondez simplement à cet email.
+
   rsvp_mailer:
     link:
       subject: Votre lien pour répondre à notre invitation
+      preheader: Votre lien personnel pour nous répondre, à garder précieusement.
+      title: Votre lien de réponse
       greeting: Bonjour %{name},
       body: Voici le lien pour répondre à notre invitation au nom de la famille %{family}. Vous pourrez y revenir pour modifier votre réponse jusqu’au 31 janvier 2028.
       cta: Répondre à l’invitation
       keep: Ce lien est personnel à votre famille, gardez-le précieusement.
-      signature: Chloé & Alexandre
 
   support:
     array:

@@ -1,11 +1,77 @@
 <!DOCTYPE html>
 
-<html>
+<html lang="fr">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="x-apple-disable-message-reformatting">
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&family=DM+Sans:wght@400;600&family=Pinyon+Script&display=swap"
+    >
+
+    <style>
+      a:hover { color: #56684f; }
+
+      @media (max-width: 480px) {
+        .mail-frame { padding: 16px 10px 24px !important; }
+        .mail-card { padding: 36px 22px 32px !important; }
+        .mail-title { font-size: 28px !important; }
+        .mail-button-table { width: 100% !important; }
+        .mail-button { display: block !important; }
+      }
+    </style>
   </head>
 
-  <body style="margin: 0; padding: 24px; background: #f5f0e6; font-family: 'DM Sans', Helvetica, Arial, sans-serif;">
-    <%= yield %>
+  <body style="margin: 0; padding: 0; background: #f5f0e6;">
+    <div style="display: none; max-height: 0; overflow: hidden; mso-hide: all;">
+      <%= yield :preheader %>
+    </div>
+
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background: #f5f0e6;">
+      <tr>
+        <td align="center" class="mail-frame" style="padding: 32px 40px 24px;">
+          <table
+            role="presentation"
+            width="100%"
+            cellpadding="0"
+            cellspacing="0"
+            border="0"
+            style="max-width: 600px; font-family: 'DM Sans', Helvetica, Arial, sans-serif; color: #3b3a2e;"
+          >
+            <tr>
+              <td align="center" style="padding-bottom: 18px;">
+                <p
+                  style="margin: 0 0 6px; font-family: 'Cormorant Garamond', Georgia, serif; font-size: 24px; font-weight: 500; line-height: 1.2; color: #3b3a2e;"
+                >
+                  <%= t("mailer.header.bride") %>
+                  <span style="font-family: 'Pinyon Script', Georgia, cursive; color: #a6533a;"><%= t("mailer.header.ampersand") %></span>
+                  <%= t("mailer.header.groom") %>
+                </p>
+
+                <%= image_tag image_url("email/ornament.png"), alt: "", width: 100, height: 15, style: "display: block; margin: 0 auto; border: 0;" %>
+              </td>
+            </tr>
+
+            <tr>
+              <td
+                class="mail-card"
+                style="padding: 36px 44px 32px; background: #fffdf8; border: 1px solid #e3dccb; border-radius: 16px;"
+              >
+                <%= yield %>
+              </td>
+            </tr>
+
+            <tr>
+              <td align="center" style="padding-top: 18px; font-size: 12px; line-height: 1.6; color: #5e5a4c;">
+                <%= t("mailer.footer.event") %><br>
+                <%= t("mailer.footer.reply") %>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
   </body>
 </html>
