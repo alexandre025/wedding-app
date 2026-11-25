@@ -1,0 +1,7 @@
+<% content_for :preheader, t("rsvp_mailer.link.preheader") %>
+
+<%= render "layouts/mailer/title", text: t("rsvp_mailer.link.title") %>
+<%= render "layouts/mailer/paragraph", text: t("rsvp_mailer.link.greeting", name: @family_member.first_name) %>
+<%= render "layouts/mailer/paragraph", text: t("rsvp_mailer.link.body", family: @family.name) %>
+<%= render "layouts/mailer/button", text: t("rsvp_mailer.link.cta"), url: @url %>
+<%= render "layouts/mailer/note", text: t("rsvp_mailer.link.keep") %>

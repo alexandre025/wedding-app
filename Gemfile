@@ -55,6 +55,8 @@ group :development, :test do
 end
 
 group :development do
+  gem "dotenv"
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
@@ -64,3 +66,7 @@ gem "tailwindcss-rails", "~> 4.7"
 gem "hyperactiveform", "~> 0.5.0"
 
 gem "ransack"
+
+gem "logtail-rails", "~> 0.3.1"
+gem "sentry-ruby", "~> 7.3"
+gem "sentry-rails", "~> 7.3"

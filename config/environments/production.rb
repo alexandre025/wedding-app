@@ -22,17 +22,25 @@ Rails.application.configure do
   # config.asset_host = "http://assets.example.com"
 
   # Assume all access to the app is happening through a SSL-terminating reverse proxy.
-  # config.assume_ssl = true
+  config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Skip http-to-https redirect for the default health check endpoint.
-  # config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
+  config.ssl_options = { redirect: { exclude: ->(request) { request.path == "/up" } } }
 
   # Log to STDOUT with the current request id as a default log tag.
   config.log_tags = [ :request_id ]
   config.logger   = ActiveSupport::TaggedLogging.logger(STDOUT)
+
+  better_stack = Rails.application.credentials.better_stack || {}
+  config.logtail.enabled = better_stack[:source_token].present?
+  if config.logtail.enabled?
+    config.logger = Logtail::Logger
+      .create_default_logger(better_stack[:source_token], ingesting_host: better_stack[:ingesting_host])
+      .tap { it.broadcast_to(config.logger) }
+  end
 
   # Change to "debug" to log everything (including potentially personally-identifiable information!).
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
@@ -54,17 +62,19 @@ Rails.application.configure do
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
 
-  # Set host to be used by links generated in mailer templates.
-  config.action_mailer.default_url_options = { host: "example.com" }
+  mail = Rails.application.credentials.mail || {}
 
-  # Specify outgoing SMTP server. Remember to add smtp/* credentials via bin/rails credentials:edit.
-  # config.action_mailer.smtp_settings = {
-  #   user_name: Rails.application.credentials.dig(:smtp, :user_name),
-  #   password: Rails.application.credentials.dig(:smtp, :password),
-  #   address: "smtp.example.com",
-  #   port: 587,
-  #   authentication: :plain
-  # }
+  # Set host to be used by links generated in mailer templates.
+  config.action_mailer.default_url_options = { host: mail[:host], protocol: "https" }
+  config.action_mailer.asset_host = "https://#{mail[:host]}"
+
+  config.action_mailer.smtp_settings = {
+    user_name: mail.dig(:smtp, :username),
+    password: mail.dig(:smtp, :password),
+    address: mail.dig(:smtp, :address),
+    port: 587,
+    authentication: :plain
+  }
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -77,14 +87,13 @@ Rails.application.configure do
   config.active_record.attributes_for_inspect = [ :id ]
 
   # Enable DNS rebinding protection and other `Host` header attacks.
-  # config.hosts = [
-  #   "example.com",     # Allow requests from example.com
-  #   /.*\.example\.com/ # Allow requests from subdomains like `www.example.com`
-  # ]
-  #
+  config.hosts = [ ENV["APP_HOST"], "www.#{ENV["APP_HOST"]}" ]
   # Skip DNS rebinding protection for the default health check endpoint.
-  # config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
+  config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 
-  config.x.admin.username = ENV["ADMIN_USERNAME"]
-  config.x.admin.password = ENV["ADMIN_PASSWORD"]
+  config.x.admin.username = Rails.application.credentials.dig(:admin, :username)
+  config.x.admin.password = Rails.application.credentials.dig(:admin, :password)
+
+  config.x.mail_from = mail[:from]
+  config.x.mail_reply_to = mail[:reply_to]
 end

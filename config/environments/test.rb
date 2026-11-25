@@ -35,6 +35,7 @@ Rails.application.configure do
 
   # Set host to be used by links generated in mailer templates.
   config.action_mailer.default_url_options = { host: "example.com" }
+  config.action_mailer.asset_host = "http://example.com"
 
   # Print deprecation notices to the stderr.
   config.active_support.deprecation = :stderr
@@ -50,4 +51,9 @@ Rails.application.configure do
 
   config.x.admin.username = "admin"
   config.x.admin.password = "admin"
+
+  config.logtail.enabled = false
+
+  config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
+  config.x.mail_reply_to = "mariage@exemple.fr"
 end

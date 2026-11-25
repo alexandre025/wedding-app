@@ -9,6 +9,7 @@
 
 # Ignore all environment files.
 /.env*
+!/.env.example
 
 # Ignore all logfiles and tempfiles.
 /log/*
@@ -29,6 +30,7 @@
 
 # Ignore key files for decrypting credentials and more.
 /config/*.key
+/config/credentials/*.key
 
 
 /app/assets/builds/*
@@ -38,3 +40,7 @@
 
 # Bundler installs gems here in CI (bundler-cache: true).
 /vendor/bundle
+
+# Ignore key files for decrypting credentials and more.
+/config/credentials/*.key
+

@@ -96,4 +96,12 @@ RSpec.describe FamilyMember do
       expect(member).not_to be_child
     end
   end
+
+  describe "#absent?" do
+    it "is true only once the member has said they are not coming" do
+      expect(build(:family_member, :not_coming)).to be_absent
+      expect(build(:family_member, :coming)).not_to be_absent
+      expect(member).not_to be_absent
+    end
+  end
 end
