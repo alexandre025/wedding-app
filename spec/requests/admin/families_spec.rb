@@ -114,6 +114,12 @@ RSpec.describe "The admin families screens" do
       assert_select "li", text: /#{Regexp.escape(I18n.t("admin.families.show.no_email"))}/
     end
 
+    it "gives the family's RSVP link to paste into the invitation" do
+      get admin_family_path(melchior), headers: admin_headers
+
+      assert_select "input#rsvp_link[readonly][value=?]", edit_rsvp_answer_url(melchior.signed_id(purpose: :rsvp))
+    end
+
     context "when a member is a teenager" do
       let(:sylvain_attributes) { super().merge(age_group: FamilyMember::TEEN) }
 
@@ -182,6 +188,20 @@ RSpec.describe "The admin families screens" do
         get admin_family_path(melchior), headers: admin_headers
 
         assert_select "li", text: /Arachides et fruits à coque/
+      end
+    end
+
+    context "when an absent member still has options saved" do
+      let(:sylvain_attributes) do
+        super().merge(attends: false, attends_run: true, vegetarian: true, allergies: "Arachides et fruits à coque")
+      end
+
+      it "leaves their tags and allergies off" do
+        get admin_family_path(melchior), headers: admin_headers
+
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.run"))}/, count: 0
+        assert_select "li", text: /#{Regexp.escape(I18n.t("admin.family_members.tags.vegetarian"))}/, count: 0
+        assert_select "li", text: /Arachides et fruits à coque/, count: 0
       end
     end
 

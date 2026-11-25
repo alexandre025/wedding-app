@@ -14,17 +14,15 @@ English. All copy lives in `config/locales/fr.yml`.
 |---|---|
 | `/` | Accueil — the invitation itself |
 | `/schedule` | Programme & infos pratiques |
-| `/rsvp` | Réponse — the invitation email gate |
+| `/rsvp` | Réponse — emails a family its RSVP link if the link is lost |
+| `/rsvp/:token/edit` | The RSVP form, one per family |
 
 The couple's own screens live under `/admin`, behind HTTP Basic — the guest list
-is managed there. The RSVP form itself is not built yet: the gate's "invitation
-retrouvée" state is client-side only, checking the shape of the address rather
-than the guest list, so it must be replaced by a real lookup before the site
-goes live.
+is managed there, and each family's page shows the RSVP link to send out.
 
 ## Getting started
 
-Ruby 4.0.6 (see `.ruby-version`) and Node 24 (see `.node-version`) are needed —
+Ruby 4.0.10 (see `.ruby-version`) and Node 24 (see `.node-version`) are needed —
 Node only for the Herb linter and formatter, never for the asset build.
 
 ```sh
@@ -37,6 +35,14 @@ to run. `bin/rails db:seed` fills the development one with a sample guest list.
 `bin/dev` starts Puma with the Tailwind watcher attached (see the
 `plugin :tailwindcss` line in `config/puma.rb`), so a single process rebuilds
 `app/assets/builds/tailwind.css` as you edit.
+
+Development email is delivered over SMTP to `127.0.0.1:1025`, the port
+[MailCatcher](https://mailcatcher.me) listens on. It is optional and not part
+of `bin/setup`: install and start it however you like (`brew install
+mailcatcher`, then `mailcatcher`), and sent mail shows up at
+<http://localhost:1080>. Without it, the delivery job fails and says so in the
+log. The templates themselves can be previewed without sending at
+<http://localhost:3000/rails/mailers>.
 
 Design tokens — the palette and the three typefaces — live in the `@theme`
 block of `app/assets/tailwind/application.css`.
@@ -62,3 +68,32 @@ GitHub Actions runs the same checks as six jobs — `scan_ruby`, `scan_js`,
 `lint`, `lint_erb`, `test` and `build` — on every pull request and every push to
 `main`. All six must be green before a pull request can be merged; `main` takes
 no direct pushes.
+
+## Local settings
+
+Per-developer settings that are not secrets live in a git-ignored `.env`, read
+by `bin/kamal` and, in development, by Rails. `.env.example` lists every
+variable with an empty value:
+
+```sh
+cp .env.example .env
+```
+
+## Deploying
+
+Kamal deploys to the VPS. The production credentials key is never kept on disk:
+`.kamal/secrets` reads it from the Bitwarden item
+`rails credentials production`, so a deploy needs the
+[Bitwarden CLI](https://bitwarden.com/help/cli/) and your account in `.env`:
+
+```sh
+brew install bitwarden-cli
+bin/kamal deploy
+```
+
+Kamal runs `bw login` / `bw unlock` itself when the vault is locked. To edit the
+production credentials:
+
+```sh
+RAILS_MASTER_KEY=$(bw get password "rails credentials production") bin/rails credentials:edit --environment production
+```

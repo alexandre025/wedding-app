@@ -184,7 +184,11 @@ ones redirect with a `notice:` read from the locale file.
 The admin area sits behind HTTP Basic in `Admin::BaseController`, compared with
 `ActiveSupport::SecurityUtils.secure_compare`. Credentials come from
 `config.x.admin` so each environment sets its own — development skips the check
-entirely, test uses `admin`/`admin`, production reads the environment.
+entirely, test uses `admin`/`admin`, production reads `admin.username` and
+`admin.password` from its own credentials file, `config/credentials/production.yml.enc`.
+Its key, `config/credentials/production.key`, never enters git; Kamal sends it as
+`RAILS_MASTER_KEY`. The shared `config/credentials.yml.enc` holds nothing production
+reads.
 
 ## Views
 
@@ -207,6 +211,29 @@ site. No icon font, no sprite sheet, no inline SVG in a page template.
 HTML+ERB is linted and formatted by [Herb](https://herb-tools.dev) — it sorts
 the Tailwind classes and wraps at 120 columns, so write the markup and let
 `npm run herb:format` settle the layout.
+
+## Emails
+
+Every email follows the "Email · modèle" artboard of the same canvas. The frame —
+monogram, leaf ornament, card, footer — lives in `layouts/mailer.html.erb`, and a
+message is composed from the pieces in `app/views/layouts/mailer/`: `title`,
+`paragraph`, `button`, `note`. The inbox preview text goes in
+`content_for :preheader`.
+
+Mail templates are the one place a raw hex is allowed. A mail client loads no
+stylesheet of ours and Gmail drops most `<style>`, so the tokens are copied as
+inline `style=""` values, and the layout is tables rather than flex. The one
+`<style>` block in the layout carries only the phone-width overrides, which
+degrade to the desktop layout where it is stripped.
+
+Images are PNGs under `app/assets/images/email/`, referenced through `image_url`
+against `config.action_mailer.asset_host` — never an inline SVG, which Gmail
+removes, and never the `icon()` partials.
+
+`config.x.mail_reply_to` is one address, never a list. Production sends through
+Brevo's SMTP relay, which rewrites `Reply-To` and keeps a single address: given
+two, it turns the second into a display name for the first. Replies go to
+the `mariage@` address, which forwards to both of the couple's inboxes.
 
 ## JavaScript
 
@@ -262,6 +289,33 @@ against a literal French string.
 Factories use sequences for anything unique and traits for the interesting
 states (`:answered`, `:with_email`). The suite truncates before it runs, because
 `bin/ci` seeds the test database and nothing else clears it.
+
+## Observability
+
+Better Stack, free tier: logs through `logtail-rails`, errors through
+`sentry-ruby` pointed at a Better Stack DSN, uptime monitors and a heartbeat set up
+in its dashboard. Production only — `config.logtail.enabled = false` in
+development and test, `enabled_environments` on Sentry.
+
+The secrets live in the production credentials file,
+`config/credentials/production.yml.enc`, under `better_stack:` (`source_token`,
+`ingesting_host`, `errors_dsn`, `heartbeat_url`), never in `.kamal/secrets`. Each
+integration switches itself on only when its credential is present, so the app
+boots without any of them — CI's `build` job has no master key, and a deploy can
+go out before the dashboard has issued a token.
+
+STDOUT stays a log destination beside Better Stack, so `kamal logs` keeps working.
+It is added with the Logtail logger's own `broadcast_to`, never by wrapping both in
+an `ActiveSupport::BroadcastLogger`: that one forwards `tagged` to every logger
+that answers it, block included, and both do — so every block run under a log
+tag ran once per logger. ActiveJob enqueues and performs inside
+`logger.tagged("ActiveJob")`, and every job ran twice.
+Sentry keeps `send_default_pii = false`: guest names and addresses do not leave
+the app through an error report.
+
+`HeartbeatJob`, scheduled in `config/recurring.yml`, pings Better Stack every
+five minutes, so a dead Solid Queue — which sends the RSVP emails from inside
+Puma, where the web uptime check cannot see it — raises an alert.
 
 ## Comments
 

@@ -1,0 +1,9 @@
+<%= t("rsvp_mailer.link.title") %>
+
+<%= t("rsvp_mailer.link.greeting", name: @family_member.first_name) %>
+
+<%= t("rsvp_mailer.link.body", family: @family.name) %>
+
+<%= t("rsvp_mailer.link.cta") %> : <%= @url %>
+
+<%= t("rsvp_mailer.link.keep") %>

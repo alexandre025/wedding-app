@@ -19,4 +19,6 @@ class FamilyMember < ApplicationRecord
   def child? = CHILD_AGE_GROUPS.include?(age_group)
 
   def adult? = age_group == ADULT
+
+  def absent? = attends == false
 end

@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 8.1.3", ">= 8.1.3.1"
+gem "rails", "~> 8.1.4", ">= 8.1.4.1"
 # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "propshaft"
 # Use sqlite3 as the database for Active Record
@@ -55,6 +55,8 @@ group :development, :test do
 end
 
 group :development do
+  gem "dotenv"
+
   # Use console on exceptions pages [https://github.com/rails/web-console]
   gem "web-console"
 end
@@ -64,3 +66,7 @@ gem "tailwindcss-rails", "~> 4.7"
 gem "hyperactiveform", "~> 0.5.0"
 
 gem "ransack"
+
+gem "logtail-rails", "~> 0.3.1"
+gem "sentry-ruby", "~> 7.3"
+gem "sentry-rails", "~> 7.3"

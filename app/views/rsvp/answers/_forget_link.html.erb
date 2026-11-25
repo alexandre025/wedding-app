@@ -1,0 +1,7 @@
+<%# locals: () %>
+<div class="flex flex-wrap items-center gap-x-1.5 text-sm text-ink-muted">
+  <span><%= t("rsvp.answers.forget_hint") %></span>
+
+  <%= button_to t("rsvp.answers.forget"), rsvp_path, method: :delete,
+        class: "min-h-11 cursor-pointer font-medium text-ink underline underline-offset-2" %>
+</div>

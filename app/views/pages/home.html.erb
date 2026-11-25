@@ -4,17 +4,7 @@
   <%= render "shared/decorations/trail_mobile" %>
   <%= render "shared/decorations/trail_desktop" %>
 
-  <%= render "shared/decorations/branch",
-        class_name: "pointer-events-none absolute -top-2 -left-3.5 h-[130px] w-[150px] lg:hidden" %>
-
-  <%= render "shared/decorations/branch", inverted: true,
-        class_name: "pointer-events-none absolute -top-2 -right-3.5 h-[130px] w-[150px] -scale-x-100 lg:hidden" %>
-
-  <%= render "shared/decorations/branch",
-        class_name: "pointer-events-none absolute -bottom-8 -left-8 hidden h-[225px] w-[260px] -scale-y-100 lg:block" %>
-
-  <%= render "shared/decorations/branch", inverted: true,
-        class_name: "pointer-events-none absolute top-15 -right-8 hidden h-[225px] w-[260px] -scale-x-100 lg:block" %>
+  <%= render "shared/decorations/side_branches" %>
 
   <div
     class="
@@ -31,7 +21,7 @@
       <h1
         class="
           flex flex-col items-center font-display text-[46px] leading-none font-medium lg:flex-row lg:flex-wrap
-          lg:items-baseline lg:gap-x-[18px] lg:text-[84px]
+          lg:items-baseline lg:gap-x-[18px] lg:text-[76px]
         "
       >
         <span><%= t("wedding.partner_one") %></span>
@@ -39,7 +29,7 @@
         <span><%= t("wedding.partner_two") %></span>
       </h1>
 
-      <%= render "shared/decorations/sprig_divider", class_name: "h-5 w-[140px] lg:h-[26px] lg:w-[180px]" %>
+      <%= render "shared/decorations/sprig_divider", class_name: "h-6 w-40 lg:h-[30px] lg:w-[200px]" %>
 
       <div class="flex flex-col gap-1 lg:gap-1.5">
         <p class="text-lg font-medium lg:text-[22px]"><%= t("wedding.dates") %></p>
@@ -47,11 +37,20 @@
       </div>
     </div>
 
-    <figure class="m-0 w-full max-w-[420px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:max-w-none">
+    <figure class="m-0 mb-4 w-full max-w-[420px] lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:mb-0 lg:max-w-none">
       <div class="rounded-[18px] border border-rule-sand p-[5px] lg:rounded-3xl lg:p-2.5">
         <%= image_tag "engagement.jpg", alt: t("pages.home.photo_alt"),
               class: "block aspect-[3/2] w-full rounded-[14px] object-cover lg:rounded-2xl" %>
       </div>
+
+      <figcaption class="mt-2.5 flex flex-col items-center gap-0.5 lg:items-start">
+        <span class="flex items-center gap-2 text-[11px] font-semibold tracking-label text-ink uppercase lg:text-xs">
+          <%= icon("finish_flag", class_name: "size-[18px] flex-none") %>
+          <%= t("pages.home.photo_caption") %>
+        </span>
+
+        <span class="text-[13px] text-ink-muted lg:text-sm"><%= t("pages.home.photo_story") %></span>
+      </figcaption>
     </figure>
 
     <div

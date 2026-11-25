@@ -30,16 +30,4 @@ RSpec.describe "The public pages" do
       assert_select "h3", text: /#{Regexp.escape(I18n.t("pages.schedule.info_cards.dress.name"))}/
     end
   end
-
-  describe "GET /rsvp" do
-    before { get rsvp_path }
-
-    it "renders the email gate" do
-      expect(response).to have_http_status(:success)
-      assert_select "h1", text: /#{Regexp.escape(I18n.t("pages.rsvp.title"))}/
-      assert_select "label[for=?]", "rsvp-email", text: /#{Regexp.escape(I18n.t("pages.rsvp.email_label"))}/
-      assert_select "input#rsvp-email[type=email]"
-      assert_select "[data-controller=?]", "email-gate"
-    end
-  end
 end
