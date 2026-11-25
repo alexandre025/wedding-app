@@ -230,6 +230,11 @@ Images are PNGs under `app/assets/images/email/`, referenced through `image_url`
 against `config.action_mailer.asset_host` — never an inline SVG, which Gmail
 removes, and never the `icon()` partials.
 
+`config.x.mail_reply_to` is one address, never a list. Production sends through
+Brevo's SMTP relay, which rewrites `Reply-To` and keeps a single address: given
+two, it turns the second into a display name for the first. Replies go to
+the `mariage@` address, which forwards to both of the couple's inboxes.
+
 ## JavaScript
 
 Hotwire only. Turbo frames for in-place updates (the families list refreshes
