@@ -194,7 +194,7 @@ fr:
               body: Champagne, petits fours et autres joyeusetés. La scène est ouverte à celles et ceux qui veulent jouer ou chanter.
             - time: 20h30
               name: Repas & soirée dansante
-              body: C'est le dernier ravito ! Et aussi le plus copieux.
+              body: C’est le dernier ravito ! Et aussi le plus copieux.
         - badge: Étape 2
           label: Dimanche
           date: 2 juillet
@@ -202,7 +202,7 @@ fr:
           items:
             - time: 10h00
               name: Le 5K des mariés
-              body: Pour bien commencer la journée petite sortie running de 5 km à votre rythme (mais en courant tout de même). Des douches seront disponibles à l'arrivée.
+              body: Pour bien commencer la journée petite sortie running de 5 km à votre rythme (mais en courant tout de même). Des douches seront disponibles à l’arrivée.
               highlight: true
             - time: 11h00
               name: Brunch
