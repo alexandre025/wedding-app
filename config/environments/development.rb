@@ -80,5 +80,5 @@ Rails.application.configure do
   config.logtail.enabled = false
 
   config.x.mail_from = "Chloé & Alexandre <mariage@exemple.fr>"
-  config.x.mail_reply_to = [ "alexandre@exemple.fr", "chloe@exemple.fr" ]
+  config.x.mail_reply_to = "mariage@exemple.fr"
 end
