@@ -32,7 +32,7 @@
             <%= cards[:access][:body] %>
           </p>
 
-          <%= link_to cards[:access][:link], t("wedding.maps_url"),
+          <%= link_to cards[:access][:link], Rails.application.config.x.venue_maps_url,
                 class: "inline-flex min-h-11 items-center text-sm font-semibold text-sage-deep lg:text-[15px]" %>
         <% end %>
 
