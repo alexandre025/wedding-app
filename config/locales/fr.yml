@@ -179,7 +179,7 @@ fr:
     schedule:
       title: Programme
       eyebrow: Le parcours du week-end
-      subtitle: Tout le week-end au Domaine de la Ferme au Moulin · Pont-Saint-Mard
+      subtitle: Tout le week-end se déroule au Domaine de la Ferme au Moulin à Pont-Saint-Mard
       days:
         - badge: Étape 1
           label: Samedi
@@ -188,13 +188,13 @@ fr:
           items:
             - time: 15h30
               name: Cérémonie laïque
-              body: On échange nos vœux, entourés de celles et ceux qu’on aime.
+              body: On échange nos vœux, devant ni dieux ni représentant de la République mais plutôt celles et ceux qu’on aime.
             - time: 17h00
               name: Vin d’honneur & scène musicale ouverte
-              body: On trinque ensemble, et la scène est ouverte à celles et ceux qui veulent jouer ou chanter.
+              body: Champagne, petits fours et autres joyeusetés. La scène est ouverte à celles et ceux qui veulent jouer ou chanter.
             - time: 20h30
               name: Repas & soirée dansante
-              body: On passe à table tous ensemble, puis place à la piste de danse.
+              body: C'est le dernier ravito ! Et aussi le plus copieux.
         - badge: Étape 2
           label: Dimanche
           date: 2 juillet
@@ -202,7 +202,7 @@ fr:
           items:
             - time: 10h00
               name: Le 5K des mariés
-              body: 5 km à votre rythme, en courant, pour bien commencer la journée.
+              body: Pour bien commencer la journée petite sortie running de 5 km à votre rythme (mais en courant tout de même). Des douches seront disponibles à l'arrivée.
               highlight: true
             - time: 11h00
               name: Brunch
@@ -238,12 +238,12 @@ fr:
       new:
         title: Votre réponse
         eyebrow: Réponse attendue avant le 31 janvier 2028
-        intro: Le formulaire de réponse s’ouvre depuis le lien reçu avec notre invitation. Vous l’avez égaré ? Indiquez votre adresse email, nous vous le renvoyons.
+        intro: Le formulaire de réponse s’ouvre depuis le lien reçu avec votre invitation. Vous l’avez égaré ? Indiquez votre adresse email, nous vous le renvoyons.
         email_label: Adresse email
         email_placeholder: prenom.nom@exemple.fr
         submit: Recevoir le lien
         sent_title: Lien envoyé
-        sent_body_html: Nous avons envoyé le lien de votre invitation à %{email}. Pensez à regarder dans vos indésirables.
+        sent_body_html: Nous avons envoyé le lien de votre invitation à %{email}. Pensez à regarder dans vos spams.
         help_html: Un souci ? Nos coordonnées sont dans les %{link}.
         help_link: infos pratiques
     answers:
