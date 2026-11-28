@@ -29,5 +29,10 @@ RSpec.describe "The public pages" do
 
       assert_select "h3", text: /#{Regexp.escape(I18n.t("pages.schedule.info_cards.dress.name"))}/
     end
+
+    it "links the venue to its map" do
+      assert_select "a[href=?]", Rails.application.config.x.venue_maps_url,
+        text: I18n.t("pages.schedule.info_cards.access.link")
+    end
   end
 end

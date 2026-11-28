@@ -37,6 +37,8 @@ module WeddingApp
     config.i18n.default_locale = :fr
     config.i18n.available_locales = [ :fr ]
 
+    config.x.venue_maps_url = "https://www.google.com/maps/place//data=!4m2!3m1!1s0x47e842ea3afced99:0x547de3def424dc85"
+
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end
